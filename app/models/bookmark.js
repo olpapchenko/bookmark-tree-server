@@ -1,8 +1,9 @@
 var bookshelf = require ('../../config/db/bookshelf');
 
-var Comment = require('comment');
-var User = require('user');
-var Marker = require('marker');
+var Comment = require('./comment');
+var User = require('./user');
+var Marker = require('./marker');
+var Rights = require('./rights');
 
 module.exports  = bookshelf.Model.extend({
     tableName: "bookmark",
@@ -15,8 +16,12 @@ module.exports  = bookshelf.Model.extend({
         return this.hasMany(Marker);
     },
 
-    owners: function () {
+    users: function () {
         return this.belongsToMany(User);
+    },
+
+    rights: function ( ) {
+        return this.hasMany(Rights);
     }
 
 });
