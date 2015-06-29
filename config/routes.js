@@ -16,8 +16,11 @@ router.post("/bookmark", bookmark.post);
 
 ///users routes
 router.get("/user/:id", user.get);
-router.put("/user", user.post);
+router.get("/user", user.current);
+router.put("/user", user.put);
 router.post("/user", user.post);
+router.post("/login", user.login);
+router.post("/logout", user.logout);
 
 ///entry point
 router.get("/", function (req, res){

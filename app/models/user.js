@@ -15,13 +15,21 @@ module.exports = bookshelf.Model.extend({
     }
 }, {
     login: function (mail, password) {
-        var user  = new this({mail: mail}).fetch();
-        if (user) {
-            return user.password == encodeSHA(password) ? user.id : null;
-        } else
-        return null;
+        return new this({mail: mail}).fetch().then(function (user) {
+            if (user) {
+                return user.get("password") == encodeSHA(password) ? user.omit("password") : null;
+            } else
+                return null;
+        });
     },
+
     register: function (userData){
-        new this({userName: userData.userName, password: encodeSHA(userData.password), about: userData.about, mail: userData.mail}).save();
+        return new this({name: userData.name,
+                  password: encodeSHA(userData.password),
+                  about: userData.about,
+                  mail: userData.mail}).save()
+        .then(function  (model) {
+           return model.omit("password");
+        });
     }
 });

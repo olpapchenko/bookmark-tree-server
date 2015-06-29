@@ -2,8 +2,22 @@ var User = require("../models/user");
 
 module.exports.get = function (req, resp) {
     new User({id: req.params.id}).fetch().then(function(model) {
-        resp.json({userName: model.userName, about: model.about, avatar: model.avatar});
+        resp.json(model.omit("password"));
     });
+}
+
+module.exports.current = function(req,resp){
+    if(req.session.userId) {
+        new User({id: req.session.userId}).fetch().then(function(model){
+            if(model) {
+                resp.json(model);
+            }else {
+                resp.sendStatus(400);
+            }
+        });
+    } else {
+        resp.sendStatus(400);
+    }
 }
 
 module.exports.put = function (req, resp) {
@@ -22,36 +36,35 @@ module.exports.put = function (req, resp) {
 }
 
 module.exports.post = function (req,resp) {
-    if(req.body.userName && req.body.password){
-        User.register(req.body.user).then(function (user){
-            resp.json(user);
+    if(req.body.name && req.body.password){
+        User.register(req.body).then(function(model) {
+            resp.json(model);
         });
     } else {
         resp.sendStatus(400);
-        resp.end();
     }
 }
 
 module.exports.login= function (req, resp) {
-    if(req.body.userName && req.body.password){
-        User.login(req.body.userName, req.body.password).then(function (user) {
+    if(req.body.mail && req.body.password && !req.session.userId){
+        User.login(req.body.mail, req.body.password).then(function (user) {
             if (user) {
-                resp.session.userId = user.id;
+                req.session.userId = user.id;
                 resp.json(user);
             } else {
-                resp.statusCode(403);
-                resp.end();
+                resp.sendStatus(403);
             }
         });
+    } else {
+        resp.sendStatus(403);
     }
 }
 
 module.exports.logout = function(req, resp) {
-    if (resp.session) {
-        resp.destroy();
-        resp.statusCode(200);
+    if (req.session) {
+        req.session.destroy();
+        resp.sendStatus(200);
     } else resp.statusCode(400)
-    resp.end();
 }
 
 
