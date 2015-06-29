@@ -35,3 +35,4 @@ public/js/vendor
 #ide files
 .idea
 BookmarkTree.iml
+sessions

@@ -6,12 +6,23 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require("../config/routes");
+//
+var session = require("express-session");
+var FileStore = require("session-file-store")(session);
 
 var app = express();
 
 // static files
 app.use(app_config.views);
 app.use(app_config.static);
+
+//session store
+app.use(session({
+  store: new FileStore,
+  resave: false,
+  saveUninitialized: true,
+  secret: app_config.salt
+}));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));

@@ -1,8 +1,6 @@
 var router = require("express").Router();
 var app_config = require("./app_config");
 
-///controllers section
-var authorize = require("../app/controllers/authorizeController");
 
 ///=====api section
 var bookmark = require("../app/api/bookmarkController");
@@ -13,7 +11,7 @@ var user = require("../app/api/usersController");
 ///=====api section
 ///bookmarks routes
 router.get("/bookmark/:id", bookmark.get);
-router.put("/bookmarak", bookmark.put);
+router.put("/bookmark", bookmark.put);
 router.post("/bookmark", bookmark.post);
 
 ///users routes
@@ -22,8 +20,7 @@ router.put("/user", user.post);
 router.post("/user", user.post);
 
 ///entry point
-router.get("/d", function (req, res){
-    console.log("asdfasd");
+router.get("/", function (req, res){
     res.redirect("/index.html");
 })
 
