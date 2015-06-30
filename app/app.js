@@ -10,6 +10,9 @@ var routes = require("../config/routes");
 var session = require("express-session");
 var FileStore = require("session-file-store")(session);
 
+//filters
+var authorizeFilter = require("./filters/authorizeFilter");
+
 var app = express();
 
 // static files
@@ -31,6 +34,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+//authorize filter
+app.use(/^(?!\/login|\/logout|\/registration)/, authorizeFilter);
 
 //register routes
 app.use("/",routes);

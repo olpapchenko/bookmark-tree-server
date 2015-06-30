@@ -1,3 +1,7 @@
-/**
- * Created by user on 28.06.2015.
- */
+module.exports = function (req, resp, next) {
+    if (!req.session.userId) {
+        resp.status(400).send("You are not logged in");
+    } else {
+        next();
+    }
+}

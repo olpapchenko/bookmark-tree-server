@@ -18,7 +18,7 @@ router.post("/bookmark", bookmark.post);
 router.get("/user/:id", user.get);
 router.get("/user", user.current);
 router.put("/user", user.put);
-router.post("/user", user.post);
+router.post("/registration", user.post);
 router.post("/login", user.login);
 router.post("/logout", user.logout);
 

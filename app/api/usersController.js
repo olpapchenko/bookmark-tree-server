@@ -7,33 +7,25 @@ module.exports.get = function (req, resp) {
 }
 
 module.exports.current = function(req,resp){
-    if(req.session.userId) {
-        new User({id: req.session.userId}).fetch().then(function(model){
-            if(model) {
-                resp.json(model.omit("password"));
-            }else {
-                resp.sendStatus(400);
-            }
-        });
-    } else {
-        resp.sendStatus(400);
-    }
+    new User({id: req.session.userId}).fetch().then(function(model){
+        if(model) {
+            resp.json(model.omit("password"));
+        }else {
+            resp.sendStatus(400);
+        }
+    });
 }
 
 //todo implement avatar change
 module.exports.put = function (req, resp) {
-    if(req.session.userId) {
-        new User({id: req.session.userId}).fetch().then(
-            function (model) {
-                model.set({ name :req.body.name, about: req.body.about});
-                return model.save();
-            }
-        ).then(function () {
-            resp.sendStatus(200);
-        });
-    } else {
-        resp.status(403).send("you are not logged in");
-    }
+    new User({id: req.session.userId}).fetch().then(
+        function (model) {
+            model.set({ name :req.body.name, about: req.body.about});
+            return model.save();
+        }
+    ).then(function () {
+        resp.sendStatus(200);
+    });
 }
 
 module.exports.post = function (req,resp) {
@@ -71,10 +63,8 @@ module.exports.login= function (req, resp) {
 }
 
 module.exports.logout = function(req, resp) {
-    if (req.session) {
-        req.session.destroy();
-        resp.sendStatus(200);
-    } else resp.statusCode(400)
+    req.session.destroy();
+    resp.sendStatus(200);
 }
 
 
