@@ -7,10 +7,11 @@ module.exports.get = function (req, resp) {
 }
 
 module.exports.current = function(req,resp){
+    console.log(req.session.userId);
     if(req.session.userId) {
         new User({id: req.session.userId}).fetch().then(function(model){
             if(model) {
-                resp.json(model);
+                resp.json(model.omit("password"));
             }else {
                 resp.sendStatus(400);
             }
@@ -36,27 +37,36 @@ module.exports.put = function (req, resp) {
 }
 
 module.exports.post = function (req,resp) {
-    if(req.body.name && req.body.password){
+    if(req.body.mail && req.body.password){
         User.register(req.body).then(function(model) {
             resp.json(model);
+        }, function (model) {
+            if(model.code == 23505){
+                resp.status(400).send("user with this mail already exists");
+            } else {
+                resp.status(500).send("Internal server error, please contact administrator");
+            }
         });
     } else {
-        resp.sendStatus(400);
+        resp.status(400).send("mail or username missing");
     }
 }
 
 module.exports.login= function (req, resp) {
-    if(req.body.mail && req.body.password && !req.session.userId){
+    if(req.session.userId) {
+        resp.status(400).send("you are already logged in");
+    }
+    else if(req.body.mail && req.body.password){
         User.login(req.body.mail, req.body.password).then(function (user) {
             if (user) {
                 req.session.userId = user.id;
                 resp.json(user);
             } else {
-                resp.sendStatus(403);
+                resp.status(400).send("mail/password is incorrect");
             }
         });
     } else {
-        resp.sendStatus(403);
+        resp.status(403).send("you have not specified password/mail");
     }
 }
 

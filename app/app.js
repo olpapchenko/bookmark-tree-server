@@ -18,10 +18,11 @@ app.use(app_config.static);
 
 //session store
 app.use(session({
-  store: new FileStore,
+  store: new FileStore({ttl: 3600*24*30, reapInterval: 3600}),
   resave: false,
   saveUninitialized: true,
-  secret: app_config.salt
+  secret: app_config.salt,
+  maxAge: 1000*60*60*24*500
 }));
 
 // uncomment after placing your favicon in /public
