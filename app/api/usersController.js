@@ -7,7 +7,6 @@ module.exports.get = function (req, resp) {
 }
 
 module.exports.current = function(req,resp){
-    console.log(req.session.userId);
     if(req.session.userId) {
         new User({id: req.session.userId}).fetch().then(function(model){
             if(model) {
@@ -21,19 +20,20 @@ module.exports.current = function(req,resp){
     }
 }
 
+//todo implement avatar change
 module.exports.put = function (req, resp) {
-    if(req.body.id && req.body.id == resp.session.userId) {
-        new User({id: req.id}).fetch(function (model) {
-            model.name = req.body.name;
-            model.about = req.body.about;
-            return model.save();
-        }).then(function () {
+    if(req.session.userId) {
+        new User({id: req.session.userId}).fetch().then(
+            function (model) {
+                model.set({ name :req.body.name, about: req.body.about});
+                return model.save();
+            }
+        ).then(function () {
             resp.sendStatus(200);
         });
     } else {
-        resp.sendStatus(400);
+        resp.status(403).send("you are not logged in");
     }
-    resp.end();
 }
 
 module.exports.post = function (req,resp) {
