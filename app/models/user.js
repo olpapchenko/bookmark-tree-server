@@ -6,8 +6,8 @@ var Rights = require('./rights');
 module.exports = bookshelf.Model.extend({
     tableName: 'users',
 
-    bookmark: function () {
-        return this.hasMany(Bookmark);
+    bookmarks: function () {
+        return this.belongsToMany(Bookmark);
     },
 
     rights: function () {
