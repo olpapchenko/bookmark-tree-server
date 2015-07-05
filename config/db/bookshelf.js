@@ -10,4 +10,4 @@ var dbConfig = {
 }
 
 var knex = require('knex')(dbConfig);
-module.exports  = require('bookshelf')(knex);
+module.exports  = require('bookshelf')(knex).plugin('registry');

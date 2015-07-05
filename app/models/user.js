@@ -3,15 +3,15 @@ var encodeSHA = require("../helpers/encodeSHA");
 var Bookmark = require('./bookmark');
 var Rights = require('./rights');
 
-module.exports = bookshelf.Model.extend({
+var user = bookshelf.Model.extend({
     tableName: 'users',
 
     bookmarks: function () {
-        return this.belongsToMany(Bookmark);
+        return this.belongsToMany("Bookmark").through(Rights);
     },
 
     rights: function () {
-        return this.hasMany(Rights);
+        return this.hasMany("Right");
     }
 }, {
     login: function (mail, password) {
@@ -33,3 +33,5 @@ module.exports = bookshelf.Model.extend({
         });
     }
 });
+
+module.exports = bookshelf.model("User", user);

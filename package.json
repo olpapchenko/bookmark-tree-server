@@ -19,7 +19,8 @@
     "morgan": "~1.5.3",
     "pg": "^4.3.0",
     "serve-favicon": "~2.2.1",
-    "session-file-store": "0.0.14"
+    "session-file-store": "0.0.14",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "grunt": "*",
