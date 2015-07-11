@@ -2,40 +2,33 @@ var bookmark = require("../models/bookmark");
 var user = require("../models/user");
 
 module.all = function (req, resp) {
-    new user({id: req.session.userId}).fetch({
-        withRelated: ['bookmarks']
-    }).then(function (user) {
-        resp.json(user.related('bookmarks'));
+    bookmark.getByUserId(req.session.userId).then(function(bookmarks){
+        resp.json(bookmarks);
     });
 }
 
 module.exports.get = function (req, resp) {
-    bookmark.where({id: req.params.id}).fetch({
-        withRelated: ['users']
-    }).then(function (b) {
-        if(b.related('users').filter(function (c) {return c.id == res.session.userId})){
-            resp.json(b);
-        } else {
-            resp.json({});
-        }
+    bookmark.getById(req.session.userId, req.params.id).then(function(bookmark){
+        resp.json(bookmark);
     });
 }
 
 module.exports.put = function (req, resp) {
-
+    bookmark.update(req.body.bookmark, req.session.userId).then(function(res){
+        if(res) {
+            resp.sendStatus(200);
+        }else {
+            resp.status(403).send("You have no right to edit this bookmark");
+        }
+    }, function(){
+        resp.status(200).send("can not update bookmark, please contact your administrator");
+    });
 }
 
 module.exports.post = function (req, resp){
-    if(req.body.name && req.body.url){
-        new bookmark(req.body).save().then(
-            function (model) {
-                resp.json(model);
-            },
-            function () {
-                resp.status(500).send("Internal server error contact your administrator");
-            }
-        );
-    } else {
-        resp.status(400).send("name and url can not be empty");
-    }
+    bookmark.create(req.body.bookmark, req.session.userId).then(function(){
+        resp.sendStatus(200);
+    }, function(){
+        resp.status(200).send("can not create bookmark, please contact your administrator");
+    });
 }

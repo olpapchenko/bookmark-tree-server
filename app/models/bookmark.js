@@ -27,25 +27,41 @@ bookmark = bookshelf.Model.extend({
 
 }, {
 
-    getByUserId: function (userId, rights) {
-        rights = rights || {read: true};
-       return  Rights.forge(_.extend(rights, {user_id: userId})).fetchAll({withRelated: ["bookmark"]})
-           .then(function(rights) {
-               if(rights) {
-                   console.log(rights.at(0).related("bookmark"));
-                  return rights.map(function (r){return r.related("bookmark")});
-               }
-           });
-    },
+        getByUserId: function (userId, rights) {
+            rights = rights || {read: true};
+           return  Rights.forge(_.extend(rights, {user_id: userId})).fetchAll({withRelated: ["bookmark"]})
+               .then(function(rights) {
+                   if(rights) {
+                      return rights.map(function (r){return r.related("bookmark")});
+                   }
+               });
+        },
 
-    getById: function (userId, id, rights) {
-        rights = rights || {read: true};
-       return  Rights.forge(_.extend(rights, {user_id: userId, bookmark_id: id}))
-           .fetch({withRelated:  ["bookmark"]})
-           .then(function (right) {
-               return rights != null ? right.related("bookmark"): null;
-           });
+        getById: function (id, userId, rights) {
+            rights = rights || {read: true};
+           return  Rights.forge(_.extend(rights, {user_id: userId, bookmark_id: id}))
+               .fetch({withRelated:  ["bookmark"]})
+               .then(function (right) {
+                   return rights != null ? right.related("bookmark"): null;
+               });
+        },
+        create: function(bookmark, userId) {
+           return  user.forge({id: userId}).then(function(user){
+                user.attach(new bookmark(bookmark));
+            });
+        },
+
+        update: function(bookmark,userId){
+            getById(bookmark.id,userId, {write: true}).then(function(model) {
+                if(model) {
+                    model.set(bookmark);
+                    return model.save();
+                }else {
+                    return null;
+                }
+            });
+        }
     }
-});
+);
 
 module.exports = bookshelf.model("Bookmark", bookmark);
