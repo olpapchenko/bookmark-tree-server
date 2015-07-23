@@ -1,4 +1,6 @@
 var bookshelf = require ('../../config/db/bookshelf');
+var Promise = require("bluebird");
+var Bookshelf = require("../../config/db/bookshelf");
 
 var Comment = require('./comment');
 var User = require('./user');
@@ -45,21 +47,32 @@ bookmark = bookshelf.Model.extend({
                    return rights != null ? right.related("bookmark"): null;
                });
         },
-        create: function(bookmark, userId) {
-           return  user.forge({id: userId}).then(function(user){
-                user.attach(new bookmark(bookmark));
-            });
-        },
 
-        update: function(bookmark,userId){
-            getById(bookmark.id,userId, {write: true}).then(function(model) {
-                if(model) {
-                    model.set(bookmark);
-                    return model.save();
-                }else {
-                    return null;
-                }
-            });
+        persist: function(bookmark, userId) {
+            var bookmarks  = [].concat(bookmark);
+            _this = this;
+           return  Bookshelf.transaction(function(t) {
+                 return Promise.map(bookmarks, function (bookmark) {
+                   return  _this.forge(_.omit(bookmark, "comments", "markers"))
+                        .save(null,{transacting: t})
+                        .tap(function(model) {
+                           if(!bookmark.comments){
+                               return;
+                           }
+                           return Promise.map(bookmark.comments, function (comment) {
+                               return Comment.forge(comment).save({bookmark_id: model.id}, {transacting: t});
+                           });
+                        }
+                        ).tap(function(model){
+                           if(!bookmark.markers){
+                               return;
+                           }
+                           return Promise.map(bookmark.markers, function (marker){
+                               return Marker.forge(marker).save({bookmark_id: model.id}, {transacting: t});
+                           });
+                        });
+                 });
+            }).then(function(p){return p.length > 1 ? p : p[0]});
         }
     }
 );
