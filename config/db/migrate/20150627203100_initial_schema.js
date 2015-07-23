@@ -31,8 +31,7 @@ exports.up = function(knex, Promise) {
         }),
         knex.schema.createTable("comments", function(t) {
             t.increments("id").primary();
-            t.integer("bookmark_id").references("id").inTable("bookmarks");
-            t.integer("comment").notNull();
+            t.integer("bookmark_id").references("id").inTable("bookmarks").onDelete("cascade");
             t.text("selector").notNull();
             t.integer("x");
             t.integer("y");
@@ -40,7 +39,7 @@ exports.up = function(knex, Promise) {
         }),
         knex.schema.createTable("markers", function(t){
             t.increments("id").primary();
-            t.integer("bookmark_id").references("id").inTable("bookmarks");
+            t.integer("bookmark_id").references("id").inTable("bookmarks").onDelete("cascade");
             t.text("marker");
             t.string("selector",500);
             t.string("colour",10)
