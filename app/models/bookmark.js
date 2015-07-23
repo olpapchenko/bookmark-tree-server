@@ -30,7 +30,7 @@ bookmark = bookshelf.Model.extend({
 }, {
 
         getByUserId: function (userId, rights) {
-            rights = rights || {read: true};
+           rights = rights || {read: true};
            return  Rights.forge(_.extend(rights, {user_id: userId})).fetchAll({withRelated: ["bookmark"]})
                .then(function(rights) {
                    if(rights) {
@@ -40,17 +40,17 @@ bookmark = bookshelf.Model.extend({
         },
 
         getById: function (id, userId, rights) {
-            rights = rights || {read: true};
+           rights = rights || {read: true};
            return  Rights.forge(_.extend(rights, {user_id: userId, bookmark_id: id}))
                .fetch({withRelated:  ["bookmark"]})
                .then(function (right) {
-                   return rights != null ? right.related("bookmark"): null;
+                   return right != null ? right.related("bookmark").load(['comments', 'markers']): null;
                });
         },
 
-        persist: function(bookmark, userId) {
-            var bookmarks  = [].concat(bookmark);
-            _this = this;
+        persist: function(bookmark, userId, rights) {
+           var bookmarks  = [].concat(bookmark);
+           _this = this;
            return  Bookshelf.transaction(function(t) {
                  return Promise.map(bookmarks, function (bookmark) {
                    return  _this.forge(_.omit(bookmark, "comments", "markers"))

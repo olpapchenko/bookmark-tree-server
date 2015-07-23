@@ -11,7 +11,6 @@ var user = require("../app/api/usersController");
 ///=====api section
 ///bookmarks routes
 router.get("/bookmark/:id", bookmark.get);
-router.put("/bookmark", bookmark.put);
 router.post("/bookmark", bookmark.post);
 
 ///users routes
