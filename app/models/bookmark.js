@@ -49,12 +49,18 @@ bookmark = bookshelf.Model.extend({
         },
 
         persist: function(bookmark, userId, rights) {
+            rights = rights || {read: true, write: true};
            var bookmarks  = [].concat(bookmark);
            _this = this;
            return  Bookshelf.transaction(function(t) {
                  return Promise.map(bookmarks, function (bookmark) {
                    return  _this.forge(_.omit(bookmark, "comments", "markers"))
                         .save(null,{transacting: t})
+                        .tap(function(model){
+                            return User.forge({id: userId}).fetch({require: true}).then(function(user){
+                                user.bookmarks().attach(model);
+                            });
+                        })
                         .tap(function(model) {
                            if(!bookmark.comments){
                                return;
