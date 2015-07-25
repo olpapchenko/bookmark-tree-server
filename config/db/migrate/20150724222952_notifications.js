@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-    knex.schema.createTable("notifications", function (t) {
+    return knex.schema.createTable("notifications", function (t) {
         t.increments("id").primary();
         t.integer("type").notNull();
         t.integer("user_id").references("id").inTable("users").onDelete("cascade");
@@ -9,5 +9,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-    knex.schema.dropTable("notification");
+    return knex.schema.dropTable("notifications");
 };

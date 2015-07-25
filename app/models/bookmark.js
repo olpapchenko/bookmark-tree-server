@@ -54,30 +54,36 @@ bookmark = bookshelf.Model.extend({
            _this = this;
            return  Bookshelf.transaction(function(t) {
                  return Promise.map(bookmarks, function (bookmark) {
-                   return  _this.forge(_.omit(bookmark, "comments", "markers"))
-                        .save(null,{transacting: t})
-                        .tap(function(model){
-                            return User.forge({id: userId}).fetch({require: true}).then(function(user){
-                                user.bookmarks().attach(model);
-                            });
-                        })
-                        .tap(function(model) {
-                           if(!bookmark.comments){
-                               return;
-                           }
-                           return Promise.map(bookmark.comments, function (comment) {
-                               return Comment.forge(comment).save({bookmark_id: model.id}, {transacting: t});
-                           });
-                        }
-                        ).tap(function(model){
-                           if(!bookmark.markers){
-                               return;
-                           }
-                           return Promise.map(bookmark.markers, function (marker){
-                               return Marker.forge(marker).save({bookmark_id: model.id}, {transacting: t});
-                           });
-                        });
-                 });
+                     return User.forge(userId).defaultBranch().fetch().then(function(defaultBranch) {
+                         bookmark.branch_id = bookmark.branch_id || defaultBranch[0];
+                         return bookmark;
+                     }).then(function(bookmark) {
+                         return  _this.forge(_.omit(bookmark, "comments", "markers"))
+                             .save(null,{transacting: t})
+                             .tap(function(model){
+                                 return User.forge({id: userId}).fetch({require: true}).then(function(user){
+                                     user.bookmarks().attach(model);
+                                 });
+                             })
+                             .tap(function(model) {
+                                 if(!bookmark.comments){
+                                     return;
+                                 }
+                                 return Promise.map(bookmark.comments, function (comment) {
+                                     return Comment.forge(comment).save({bookmark_id: model.id}, {transacting: t});
+                                 });
+                             })
+                             .tap(function(model){
+                                 if(!bookmark.markers){
+                                     return;
+                                 }
+                                 return Promise.map(bookmark.markers, function (marker){
+                                     return Marker.forge(marker).save({bookmark_id: model.id}, {transacting: t});
+                                 });
+                             });
+
+                     });
+               });
             }).then(function(p){return p.length > 1 ? p : p[0]});
         }
     }

@@ -12,6 +12,12 @@ var user = bookshelf.Model.extend({
 
     rights: function () {
         return this.hasMany("Right");
+    },
+    braches: function() {
+        return this.belongsToMany("Branch");
+    },
+    defaultBranch: function() {
+        return this.belongsToMany().where({default: true});
     }
 }, {
     login: function (mail, password) {
