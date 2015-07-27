@@ -3,11 +3,11 @@ exports.up = function(knex, Promise) {
     return Promise.all([
         knex.schema.createTable("users", function (t){
             t.increments("id").primary();
-            t.string("name", 20);
-            t.string("mail",20).unique().notNull();
-            t.string("avatar", 40);
+            t.string("name", 100);
+            t.string("mail", 100).unique().notNull();
+            t.string("avatar", 100);
             t.string("password",50).notNull();
-            t.string("about");
+            t.text("about");
         }),
         knex.schema.createTable("rights", function (t) {
             t.increments("id").primary();
@@ -24,10 +24,6 @@ exports.up = function(knex, Promise) {
         knex.schema.createTable("bookmarks_bookmarks", function (t) {
             t.integer("bookmark").notNull().references("id").inTable("bookmarks").onDelete("cascade");
             t.integer("references").notNull().references("id").inTable("bookmarks").onDelete("cascade");
-        }),
-        knex.schema.createTable("bookmarks_users", function (t) {
-            t.integer("bookmark_id").notNull().references("id").inTable("bookmarks").onDelete("cascade");
-            t.integer("user_id").notNull().references("id").inTable("users").onDelete("cascade");
         }),
         knex.schema.createTable("comments", function(t) {
             t.increments("id").primary();
