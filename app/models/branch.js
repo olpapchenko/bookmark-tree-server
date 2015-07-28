@@ -7,11 +7,11 @@ var branch = bookshelf.Model.extend({
         return this.belongsTo("Branch");
     },
     bookmarks: function() {
-        return this.hashMany("Bookmark");
+        return this.hasMany("Bookmark");
     },
     users: function(){
         return this.belongsToMany("User");
     }
 });
 
-bookshelf.model("Branch", branch);
+module.exports = bookshelf.model("Branch", branch);

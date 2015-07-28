@@ -3,15 +3,25 @@ var app_config = require("./app_config");
 
 
 ///=====api section
-var bookmark = require("../app/api/bookmarkController");
-var user = require("../app/api/usersController");
+var bookmark = require("../app/api/bookmarkController"),
+    user = require("../app/api/usersController"),
+    branch = require("../app/api/branchController"),
+    notifications = require("../app/api/notificationsController");
 
 ///routes
 
-///=====api section
+///=====api section=====
 ///bookmarks routes
 router.get("/bookmark/:id", bookmark.get);
 router.post("/bookmark", bookmark.post);
+
+//branches routes
+router.get("/branch/:id", branch.get);
+router.get("/branches", branch.all);
+router.post("/branch", branch.post);
+
+//notifications routes
+router.get("/notifications", notifications.get);
 
 ///users routes
 router.get("/user/:id", user.get);

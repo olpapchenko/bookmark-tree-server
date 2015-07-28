@@ -28,7 +28,7 @@ bookmark = bookshelf.Model.extend({
     },
 
     branch: function(){
-        return this.belongsTo("");
+        return this.belongsTo("Branch");
     }
 
 }, {

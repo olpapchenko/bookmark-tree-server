@@ -1,4 +1,4 @@
-var bookshelf = require ('../../config/db/bookshelf');
+var Bookshelf = require ('../../config/db/bookshelf');
 
 var notification = Bookshelf.Model.extend({
     tableName: "notifications",
@@ -7,4 +7,4 @@ var notification = Bookshelf.Model.extend({
     }
 });
 
-bookshelf.model("Notification", notification);
+Bookshelf.model("Notification", notification);

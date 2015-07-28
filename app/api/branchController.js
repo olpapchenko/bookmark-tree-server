@@ -1,13 +1,21 @@
 var Branches = require("../models/branch");
+var User = require("../models/user");
 
 module.exports={
+
+    all: function(req, resp){
+        User.forge({id: req.session.userId}).load(["branches"]).then(function(user){
+            resp.json(user.related("branches").models);
+        });
+    },
+
     get: function(req, resp){
 
         if(!req.params.id){
             resp.status(400).send("id must be provided");
         }
 
-        Branches.forge({id: req.params.id, user_id: req.session.userId}).fetch(
+        User.forge({id: req.params.id, user_id: req.session.userId}).fetch(
             function(model){
                 resp.json(model);
             }
