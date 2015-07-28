@@ -2,22 +2,23 @@ var bookshelf = require ('../../config/db/bookshelf');
 var encodeSHA = require("../helpers/encodeSHA");
 var Bookmark = require('./bookmark');
 var Rights = require('./rights');
+var Branch = require('./branch');
 
 var user = bookshelf.Model.extend({
     tableName: 'users',
 
     bookmarks: function () {
-        return this.belongsToMany("Bookmark").through(Rights);
+        return this.belongsToMany("Bookmark").through("Right");
     },
 
     rights: function () {
         return this.hasMany("Right");
     },
-    braches: function() {
+    branches: function() {
         return this.belongsToMany("Branch");
     },
     defaultBranch: function() {
-        return this.belongsToMany().where({default: true});
+        return this.belongsToMany("Branch").query({where: {default: true}});
     }
 }, {
     login: function (mail, password) {

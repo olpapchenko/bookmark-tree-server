@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
         t.timestamp("created_at").defaultTo(knex.raw('current_timestamp'));
     }),
 
-    knex.schema.createTable("users_branches", function(t){
+    knex.schema.createTable("branches_users", function(t){
         t.integer("user_id").references("id").inTable("users").onDelete("cascade");
         t.integer("branch_id").references("id").inTable("branches").onDelete("cascade");
     }),

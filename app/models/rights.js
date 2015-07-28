@@ -15,4 +15,4 @@ var right  = bookshelf.Model.extend({
     }
 });
 
-module.exports = bookshelf.model("right", right);
+module.exports = bookshelf.model("Right", right);

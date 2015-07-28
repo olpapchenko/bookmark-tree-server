@@ -1,6 +1,6 @@
 var bookshelf = require ('../../config/db/bookshelf');
 
-var branch = bokshelf.Model.extend({
+var branch = bookshelf.Model.extend({
     tableName: "branches",
 
     parent: function(){
