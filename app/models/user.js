@@ -5,17 +5,23 @@ var Rights = require('./rights');
 var Branch = require('./branch');
 
 var user = bookshelf.Model.extend({
+
     tableName: 'users',
 
     bookmarks: function () {
         return this.belongsToMany("Bookmark").through("Right");
     },
-
+    bookmark: function(id) {
+        return this.belongsToMany("Bookmark").through("Right").query({where: {id: id}});
+    },
     rights: function () {
         return this.hasMany("Right");
     },
     branches: function() {
         return this.belongsToMany("Branch");
+    },
+    branch: function(id){
+        return this.belongsToMany("Branch").query({where: {id: id}});
     },
     defaultBranch: function() {
         return this.belongsToMany("Branch").query({where: {default: true}});
