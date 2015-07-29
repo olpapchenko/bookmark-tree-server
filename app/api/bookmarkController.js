@@ -31,7 +31,7 @@ module.exports.post = function (req, resp) {
 
 module.exports.share = function(req, resp) {
     if(req.body.bookmark_id && req.body.user_id) {
-        bookmark.forge({id: req.body.bookmark_id}).share(req.body.user_id).then(function(m){
+        bookmark.forge({id: req.body.bookmark_id}).shareSecure(req.session.userId, req.body.user_id).then(function(m){
             resp.send(m);
         },function(m){
             resp.status(400).send(m);
@@ -43,7 +43,7 @@ module.exports.share = function(req, resp) {
 
 module.exports.unshare = function(req, resp){
     if(req.body.bookmark_id && req.body.user_id) {
-        bookmark.forge({id: req.body.bookmark_id}).unshare(req.body.user_id).then(function(m){
+        bookmark.forge({id: req.body.bookmark_id}).unshareSecure(req.session.userId, req.body.user_id).then(function(m){
             resp.send(m);
         },function(m){
             resp.status(400).send(m);

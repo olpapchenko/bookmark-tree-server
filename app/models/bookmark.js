@@ -22,7 +22,9 @@ bookmark = bookshelf.Model.extend({
     users: function () {
         return this.belongsToMany("User").through("Right");
     },
-
+    user: function(user_id){
+        return this.belongsToMany("User").through("Right").query({where: {user_id: user_id}});
+    },
     rights: function ( ) {
         return this.hasMany("Right");
     },
@@ -30,33 +32,41 @@ bookmark = bookshelf.Model.extend({
     branch: function(){
         return this.belongsTo("Branch");
     },
-    share: function(userId){
-        return this.related("users").attach(User.forge({id: userId})).then(
-            function(){
-                return "bookmark successfully shared";
+    shareSecure: function(owner, userId){
+        return this.user(owner).fetch().then(function(m){
+                if(!m.isEmpty()){
+                   return this.attach(User.forge({id: userId}));
+                } else {
+                    return Promise.reject("You are not eligible to unshare this bookmark!");
+                }
+            }).then(function(){
+                return "Bookmark was shared successfully";
             },
             function(m){
-                if(m.message.indexOf("повторяющееся значение") > -1){
+                var message = m.message || m;
+                if(message.indexOf("повторяющееся значение") > -1){
                     return "bookmark is already shared";
                 }
-                return "please report issue, bookmark was not shared";
-            }
-        );
+                return message;
+            });
     },
 
-    unshare: function(userId) {
-        return this.related("users").detach(User.forge({id: userId})).then(
-            function(){
-                return "bookmark successfully unshared";
-            },
-            function(m){
-                if(m.message == "EmptyResponse"){
-                    return "bookmark was not shared, so you can not unshare it"
+    unshareSecure: function(owner, userId) {
+        return this.user(owner).fetch().then(function(m){
+                if(!m.isEmpty()) {
+                    return this.detach(User.forge({id: userId}));
+                } else {
+                    return Promise.reject("You are not eligible to unshare this bookmark!");
                 }
-
-                return "please report issue, bookmark was not unshared";
+        }).then(function(){
+            return "Bookmark was successfully unshared";
+        }, function(m){
+            var message = m.message || m;
+            if(message == "EmptyResponse"){
+                return "You you can not unshare not shared bookmark";
             }
-        )
+            return message;
+        });
     }
 }, {
 
