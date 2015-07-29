@@ -35,7 +35,10 @@ bookmark = bookshelf.Model.extend({
             function(){
                 return "bookmark successfully shared";
             },
-            function(){
+            function(m){
+                if(m.message.indexOf("повторяющееся значение") > -1){
+                    return "bookmark is already shared";
+                }
                 return "please report issue, bookmark was not shared";
             }
         );
@@ -50,6 +53,7 @@ bookmark = bookshelf.Model.extend({
                 if(m.message == "EmptyResponse"){
                     return "bookmark was not shared, so you can not unshare it"
                 }
+
                 return "please report issue, bookmark was not unshared";
             }
         )
