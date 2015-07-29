@@ -14,6 +14,8 @@ var bookmark = require("../app/api/bookmarkController"),
 ///bookmarks routes
 router.get("/bookmark/:id", bookmark.get);
 router.post("/bookmark", bookmark.post);
+router.post("/bookmark/share", bookmark.share);
+router.post("/bookmark/unshare", bookmark.unshare);
 
 //branches routes
 router.get("/branch/:id", branch.get);

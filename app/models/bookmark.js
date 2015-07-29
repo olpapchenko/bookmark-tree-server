@@ -29,8 +29,31 @@ bookmark = bookshelf.Model.extend({
 
     branch: function(){
         return this.belongsTo("Branch");
-    }
+    },
+    share: function(userId){
+        return this.related("users").attach(User.forge({id: userId})).then(
+            function(){
+                return "bookmark successfully shared";
+            },
+            function(){
+                return "please report issue, bookmark was not shared";
+            }
+        );
+    },
 
+    unshare: function(userId) {
+        return this.related("users").detach(User.forge({id: userId})).then(
+            function(){
+                return "bookmark successfully unshared";
+            },
+            function(m){
+                if(m.message == "EmptyResponse"){
+                    return "bookmark was not shared, so you can not unshare it"
+                }
+                return "please report issue, bookmark was not unshared";
+            }
+        )
+    }
 }, {
 
         getByUserId: function (userId, rights) {

@@ -28,3 +28,27 @@ module.exports.post = function (req, resp) {
         resp.status(500).send("can not update bookmark, please contact your administrator");
     });
 }
+
+module.exports.share = function(req, resp) {
+    if(req.body.bookmark_id && req.body.user_id) {
+        bookmark.forge({id: req.body.bookmark_id}).share(req.body.user_id).then(function(m){
+            resp.send(m);
+        },function(m){
+            resp.status(400).send(m);
+        })
+    } else {
+        resp.status(400).send("bookmark or user were not specified");
+    }
+}
+
+module.exports.unshare = function(req, resp){
+    if(req.body.bookmark_id && req.body.user_id) {
+        bookmark.forge({id: req.body.bookmark_id}).unshare(req.body.user_id).then(function(m){
+            resp.send(m);
+        },function(m){
+            resp.status(400).send(m);
+        })
+    } else {
+        resp.status(400).send("bookmark or user were not specified");
+    }
+}
