@@ -5,7 +5,7 @@ module.exports={
 
     all: function(req, resp){
         User.forge({id: req.session.userId}).load(["branches"]).then(function(user){
-            resp.json(user.related("branches").models);
+            resp.json(user.related("branches"));
         });
     },
 

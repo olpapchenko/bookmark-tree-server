@@ -7,4 +7,4 @@ var notification = Bookshelf.Model.extend({
     }
 });
 
-Bookshelf.model("Notification", notification);
+module.exports = Bookshelf.model("Notification", notification);
