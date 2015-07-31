@@ -37,7 +37,7 @@ router.post("/logout", user.logout);
 
 ///entry point
 router.get("/", function (req, res){
-    res.redirect("/index.html");
+    res.redirect("/login.html");
 })
 
 module.exports = router;

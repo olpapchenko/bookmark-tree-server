@@ -2,9 +2,16 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <script type="text/javascript" src="/js/vendor/angular/angular.js"></script>
+    <script type="text/javascript" src="/js/vendor/oclazyload/dist/ocLazyLoad.js"></script>
+    <script type="text/javascript" src="/js/vendor/angular-ui-router/release/angular-ui-router.js"></script>
+    <script type="text/javascript" src="/js/app/app.js"></script>
+    <script type="text/javascript" src="/js/app/config.route.js"></script>
     <title></title>
 </head>
 <body>
-index
+<div ng-app="app">
+    <div ui-view></div>
+</div>
 </body>
 </html>
