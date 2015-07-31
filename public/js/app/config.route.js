@@ -17,12 +17,15 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/login.html",
             controller: "loginController",
             resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["/js/app/controllers/loginController.js",
+                return $ocLazyLoad.load([
+                "/js/app/controllers/loginController.js",
+
                 "/js/vendor/jquery-1.11.1.min.js",
                 "/js/vendor/bootstrap/bootstrap.min.js",
                 "/js/vendor/jquery.backstretch.min.js",
                 "/js/vendor/scripts.js",
-                "js/vendor/placeholder.js"]);
+                "js/vendor/placeholder.js",
+                "/js/app/services/userService.js"]);
             }]
         })
         .state("register",{
