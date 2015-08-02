@@ -10,9 +10,20 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             abstract: true,
             templateUrl: PAGES_URL + "/app.html",
             controller: "appController",
-            resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["/js/app/controllers/appController.js"]);
-            }]
+            resolve:{
+                files: ["$ocLazyLoad", "$injector",
+                    function($ocLazyLoad){
+                        return $ocLazyLoad.load(["/js/app/controllers/appController.js"])
+                    }],
+                user: ["$ocLazyLoad", "$injector", "$rootScope", function ($ocLazyLoad, $injector, $rootScope) {
+                    return $ocLazyLoad.load(["/js/app/services/userService.js"]).then(function(){
+                        var userService = $injector.get("userService");
+                        return userService.getUser();
+                    }).then(function(user){
+                        $rootScope.user = user;
+                    });
+                }]
+            }
         })
         .state("login",{
             url: "/login",
