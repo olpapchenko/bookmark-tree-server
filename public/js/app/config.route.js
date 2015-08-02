@@ -42,13 +42,29 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             }],
             controller: "overviewController"
         })
-        .state("app.branch", {
-            url: "/branch/:id",
-            templateUrl: PAGES_URL + "/branch.html",
+        .state("app.shared", {
+            url: "/shared",
+            templateUrl: PAGES_URL + "/shared.html",
             resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["/js/app/controllers/branchController.js"]);
+                return $ocLazyLoad.load(["/js/app/controllers/sharedController.js"]);
             }],
-            controller: "branchController"
+            controller: "sharedController"
+        })
+        .state("app.profile", {
+            url: "/profile",
+            templateUrl: PAGES_URL + "/profile.html",
+            resolve: ["$ocLazyLoad", function($ocLazyLoad){
+                return $ocLazyLoad.load(["/js/app/controllers/profileController.js"]);
+            }],
+            controller: "profileController"
+        })
+        .state("app.friends", {
+            url: "/friends",
+            templateUrl: PAGES_URL + "/friends.html",
+            resolve: ["$ocLazyLoad", function($ocLazyLoad){
+                return $ocLazyLoad.load(["/js/app/controllers/friendsController.js"]);
+            }],
+            controller: "friendsController"
         })
 }]);
 
