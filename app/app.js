@@ -1,7 +1,6 @@
 var express = require('express');
 var path = require('path');
 var app_config = require("../config/app_config");
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
