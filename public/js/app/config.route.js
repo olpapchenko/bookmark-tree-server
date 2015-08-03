@@ -49,7 +49,8 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/overview.html",
             resolve: ["$ocLazyLoad", function($ocLazyLoad){
                 return $ocLazyLoad.load(["/js/app/controllers/overviewController.js",
-                                         "/js/vendor/jquery.backstretch.min.js"]);
+                                         "/js/vendor/jquery.backstretch.min.js",
+                                         {type: 'css', path: '/css/vendor/five.css'}]);
             }],
             controller: "overviewController"
         })
