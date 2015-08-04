@@ -51,6 +51,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                 return $ocLazyLoad.load(["/js/app/controllers/overviewController.js",
                                          "/js/vendor/jquery.backstretch.min.js",
                                          "/js/app/services/branchService.js",
+                                         "/js/app/controllers/shareController.js",
                                          {type: 'css', path: '/css/vendor/five.css'}]);
             }],
             controller: "overviewController"
