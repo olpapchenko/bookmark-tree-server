@@ -20,6 +20,11 @@ angular.module("app").controller("shareController",["$scope","userService","bran
     }
 
     $scope.$watch("name", function(){
+        if($scope.name && $scope.name.length == 0) {
+            friendsService.get().then(function(data){
+                $scope.userList = data;
+            });
+        }
         if(!$scope.name || $scope.name.length < 3){
             return;
         }
