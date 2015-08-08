@@ -6,7 +6,8 @@ var app_config = require("./app_config");
 var bookmark = require("../app/api/bookmarkController"),
     user = require("../app/api/usersController"),
     branch = require("../app/api/branchController"),
-    notifications = require("../app/api/notificationsController");
+    notifications = require("../app/api/notificationsController"),
+    friends = require("../app/api/friendsController");
 
 ///routes
 
@@ -34,6 +35,9 @@ router.put("/user", user.put);
 router.post("/registration", user.post);
 router.post("/login", user.login);
 router.post("/logout", user.logout);
+
+// friends routes
+router.get("/friends", friends.get);
 
 ///entry point
 router.get("/", function (req, res){
