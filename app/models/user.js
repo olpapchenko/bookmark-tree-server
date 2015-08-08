@@ -27,7 +27,7 @@ var user = bookshelf.Model.extend({
         return this.belongsToMany("Branch").query({where: {default: true}});
     },
     friends: function(){
-        return this.belongsToMany("User", "friends");
+        return this.belongsToMany("User", "friends", "user_id", "friend_id");
     }
 }, {
     login: function (mail, password) {
