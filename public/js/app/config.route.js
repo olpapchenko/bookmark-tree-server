@@ -22,7 +22,6 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                     }).then(function(user){
                         $rootScope.user = user;
                     },  function( ){
-                        console.log("goes to the login ")
                         $state.go("login");
                     });
                 }]
@@ -55,6 +54,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                                          "/js/vendor/jquery.backstretch.min.js",
                                          "/js/app/services/branchService.js",
                                          "/js/app/controllers/shareController.js",
+                                         "/js/app/services/friendsService.js",
                                          {type: 'css', path: '/css/vendor/five.css'}]);
             }],
             controller: "overviewController"

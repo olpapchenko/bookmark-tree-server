@@ -4,19 +4,31 @@
 <div class="form-group" style="overflow: hidden; margin-top: 30px;">
     <label class="col-sm-3 control-label">Share with:</label>
     <div class="col-sm-9 input-group">
-        <input type="text" class="form-control">
-        <div class="input-group-btn open">
-            <button type="button" class="btn btn-default dropdown-toggle" >
-                <span class="caret" ng-click="showFriends()"></span>
-             </button>
+        <input ng-model = "name" type="text" class="form-control">
+        <div style="height: 300px; overflow: auto; width: 450px;">
+            <div class="list-group">
+                <a class="list-group-item" ng-click="addToShare(friend)"  ng-repeat="user in userList">{{user.name}}</a>
+                <a class="list-group-item" href="javascript:;">Praesent tempus eleifend risus</a>
+                <a class="list-group-item" href="javascript:;">Praesent tempus eleifend risus</a>
+                <a class="list-group-item" href="javascript:;">Praesent tempus eleifend risus</a>
+                <a class="list-group-item" href="javascript:;">Porta ac consectetur ac</a>
+                <a class="list-group-item" href="javascript:;">Vestibulum at eros</a>
+                <a class="list-group-item" href="javascript:;">Vestibulum at eros</a>
+                <a class="list-group-item" href="javascript:;">Vestibulum at eros</a>
+                <a class="list-group-item" href="javascript:;">Vestibulum at eros</a>
+            </div>
         </div>
-        <div ng-show="showFriends">
 
+        <div id="tagsinput_tagsinput" class="tagsinput " style="height: 100%;">
+            <span class="tag" ng-repeat="friend in shareWith">
+                <span>{{friend.name}}&nbsp;&nbsp;</span>
+                <a class="tagsinput-remove-link"></a>
+            </span>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-md-2 col-md-offset-5">
-        <a ng-click="share()" class="btn btn-success btn-lg" href="" title="Bootstrap 3 themes generator">Share</a>
+        <a ng-click="share()" class="btn btn-success btn-lg" href="" title="Share with friends">Share</a>
     </div>
 </div>
