@@ -1,18 +1,23 @@
 angular.module("app").controller("shareController",["$scope","userService","branchService" , "friendsService",function($scope, userService, branchService, friendsService){
-    var shareWith = [];
+    $scope.shareWith = [];
 
-    $scope.userList = friendsService.get();
+    friendsService.get().then(function(data){
+        $scope.userList= data;
+    });
 
     $scope.share = function(){
 
     }
 
     $scope.addToShare = function(friend) {
-        shareWith.push(friend);
+        console.log("f"+friend);
+        if($scope.shareWith.indexOf(friend) == -1){
+            $scope.shareWith.push(friend);
+        }
     }
 
     $scope.removeFromShare = function (friend) {
-        shareWith.splice(shareWith.indexOf(friend), 1);
+        $scope.shareWith.splice($scope.shareWith.indexOf(friend), 1);
     }
 
     $scope.$watch("name", function(){

@@ -5,24 +5,17 @@
     <label class="col-sm-3 control-label">Share with:</label>
     <div class="col-sm-9 input-group">
         <input ng-model = "name" type="text" class="form-control">
-        <div style="height: 300px; overflow: auto; width: 450px;">
+        <div style="max-height: 300px; overflow: auto; width: 450px;">
             <div class="list-group">
-                <a class="list-group-item" ng-click="addToShare(friend)"  ng-repeat="user in userList">{{user.name}}</a>
-                <a class="list-group-item" href="javascript:;">Praesent tempus eleifend risus</a>
-                <a class="list-group-item" href="javascript:;">Praesent tempus eleifend risus</a>
-                <a class="list-group-item" href="javascript:;">Praesent tempus eleifend risus</a>
-                <a class="list-group-item" href="javascript:;">Porta ac consectetur ac</a>
-                <a class="list-group-item" href="javascript:;">Vestibulum at eros</a>
-                <a class="list-group-item" href="javascript:;">Vestibulum at eros</a>
-                <a class="list-group-item" href="javascript:;">Vestibulum at eros</a>
-                <a class="list-group-item" href="javascript:;">Vestibulum at eros</a>
+                <a class="list-group-item" ng-click="addToShare(user)"  ng-repeat="user in userList">{{user.name}}</a>
             </div>
+
         </div>
 
         <div id="tagsinput_tagsinput" class="tagsinput " style="height: 100%;">
-            <span class="tag" ng-repeat="friend in shareWith">
-                <span>{{friend.name}}&nbsp;&nbsp;</span>
-                <a class="tagsinput-remove-link"></a>
+            <span class="tag" ng-repeat="user in shareWith" ng-click="removeFromShare(user)">
+                <span>{{user.name}}</span>
+                <a class="tagsinput-remove-link"><i class="glyphicon glyphicon-remove remove"></i></a>
             </span>
         </div>
     </div>
