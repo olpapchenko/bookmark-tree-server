@@ -15,12 +15,15 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                     function($ocLazyLoad){
                         return $ocLazyLoad.load(["/js/app/controllers/appController.js"])
                     }],
-                user: ["$ocLazyLoad", "$injector", "$rootScope", function ($ocLazyLoad, $injector, $rootScope) {
+                user: ["$ocLazyLoad", "$injector", "$rootScope", "$state", function ($ocLazyLoad, $injector, $rootScope, $state) {
                     return $ocLazyLoad.load(["/js/app/services/userService.js"]).then(function(){
                         var userService = $injector.get("userService");
                         return userService.getUser();
                     }).then(function(user){
                         $rootScope.user = user;
+                    },  function( ){
+                        console.log("goes to the login ")
+                        $state.go("login");
                     });
                 }]
             }
