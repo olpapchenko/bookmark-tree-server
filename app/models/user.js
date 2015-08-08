@@ -47,6 +47,10 @@ var user = bookshelf.Model.extend({
         .then(function  (model) {
            return model.omit("password");
         });
+    },
+
+    byName: function(name){
+        return this.query("where", bookshelf.knex.raw("lower(name)"), "like", name.toLowerCase()+"%").fetchAll();
     }
 });
 

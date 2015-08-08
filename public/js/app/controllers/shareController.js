@@ -2,7 +2,7 @@ angular.module("app").controller("shareController",["$scope","userService","bran
     $scope.shareWith = [];
 
     friendsService.get().then(function(data){
-        $scope.userList= data;
+        $scope.userList = data;
     });
 
     $scope.share = function(){
@@ -10,7 +10,6 @@ angular.module("app").controller("shareController",["$scope","userService","bran
     }
 
     $scope.addToShare = function(friend) {
-        console.log("f"+friend);
         if($scope.shareWith.indexOf(friend) == -1){
             $scope.shareWith.push(friend);
         }
@@ -21,8 +20,11 @@ angular.module("app").controller("shareController",["$scope","userService","bran
     }
 
     $scope.$watch("name", function(){
+        if(!$scope.name || $scope.name.length < 3){
+            return;
+        }
         userService.getByName($scope.name).then(function(data){
-            $scope.userLilst = data.data;
+            $scope.userList = data;
         });
     });
 }]);

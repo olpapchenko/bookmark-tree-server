@@ -9,10 +9,9 @@
             <div class="list-group">
                 <a class="list-group-item" ng-click="addToShare(user)"  ng-repeat="user in userList">{{user.name}}</a>
             </div>
-
         </div>
 
-        <div id="tagsinput_tagsinput" class="tagsinput " style="height: 100%;">
+        <div ng-show="shareWith.length != 0" id="tagsinput_tagsinput" class="tagsinput " style="height: 100%;">
             <span class="tag" ng-repeat="user in shareWith" ng-click="removeFromShare(user)">
                 <span>{{user.name}}</span>
                 <a class="tagsinput-remove-link"><i class="glyphicon glyphicon-remove remove"></i></a>

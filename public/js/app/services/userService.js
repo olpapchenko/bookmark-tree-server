@@ -10,7 +10,7 @@ angular.module("app").service("userService", ["$http",function($http){
     }
 
     this.getByName = function(name){
-        return $http.get("/user", {name: name}).then(function(data){
+        return $http.get("/user/" + name).then(function(data){
             return data.data;
         });
     }

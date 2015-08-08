@@ -6,6 +6,12 @@ module.exports.get = function (req, resp) {
     });
 }
 
+module.exports.byName = function(req, resp){
+    User.byName(req.params.name).then(function(users){
+        resp.json(users);
+    })
+}
+
 module.exports.current = function(req,resp){
     new User({id: req.session.userId}).fetch().then(function(model){
         if(model) {
