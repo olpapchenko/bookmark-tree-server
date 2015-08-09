@@ -19,4 +19,13 @@ angular.module("app").controller("overviewController", ["$scope", "branchService
             scope: $scope
         });
     }
+
+    $scope.remove = function(id){
+        $scope.id = id;
+        var dialog = ngDialog.open({
+            template: '/html/templates/removeBranch.html',
+            controller: "removeBranchController",
+            scope: $scope
+        });
+    }
 }]);

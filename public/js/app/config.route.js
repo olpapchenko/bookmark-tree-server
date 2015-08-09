@@ -56,6 +56,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                                          "/js/app/controllers/shareController.js",
                                          "/js/app/services/friendsService.js",
                                          "/js/app/controllers/editBranchController.js",
+                                         "/js/app/controllers/removeBranchController.js",
                                          {type: 'css', path: '/css/vendor/five.css'}]);
             }],
             controller: "overviewController"
