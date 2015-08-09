@@ -28,6 +28,9 @@ var user = bookshelf.Model.extend({
     },
     friends: function(){
         return this.belongsToMany("User", "friends", "user_id", "friend_id");
+    },
+    notifications: function(){
+        return this.hasMany("Notification");
     }
 }, {
     login: function (mail, password) {

@@ -7,8 +7,12 @@ module.exports = {
          });
     },
     read : function(req, resp){
-        notifications.forge(req.body.id).destroy().then(function(){
-            resp.sendStatus(200);
+        var promise = [];
+        user.forge({id: req.session.id}).related("notifications").load().then(function(user){
+            user.related("notifications").forEach(function(model){
+                promise.push(model.destroy());
+            });
         });
+        Promise.all(promise).then(function(){resp.sendStatus(200)});
     }
 }
