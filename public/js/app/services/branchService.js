@@ -6,6 +6,6 @@ angular.module("app").service("branchService", ["$http",function($http){
     }
 
     this.share = function(id, users) {
-        return $http.post("/branch/share", {id: id, });
+        return $http.post("/branch/share", {id: id, users: users});
     }
 }]);
