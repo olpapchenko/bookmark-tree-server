@@ -1,12 +1,13 @@
 var Branche = require("../models/branch");
 var User = require("../models/user");
 var Promise = require("bluebird");
+var _  = require("underscore");
 
 module.exports={
 
     all: function(req, resp){
         User.forge({id: req.session.userId}).load(["branches"]).then(function(user){
-            resp.json(user.related("branches"));
+            resp.json(user.related("branches").toJSON({omitPivot: true}));
         });
     },
 
@@ -47,7 +48,7 @@ module.exports={
         }
     },
     post: function(req,resp){
-        Branche.forge(req.body.branch).then(function(model){
+        Branche.forge(req.body.branch).save().then(function(model){
             resp.json(model);
         });
     }

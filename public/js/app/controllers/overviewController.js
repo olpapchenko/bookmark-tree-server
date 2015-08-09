@@ -11,4 +11,12 @@ angular.module("app").controller("overviewController", ["$scope", "branchService
             scope: $scope
         });
     }
+    $scope.edit = function(branch){
+        $scope.branch = branch;
+        var dialog = ngDialog.open({
+            template: '/html/templates/editBranch.html',
+            controller: "editBranchController",
+            scope: $scope
+        });
+    }
 }]);
