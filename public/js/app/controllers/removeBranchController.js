@@ -2,6 +2,6 @@ angular.module("app").controller("removeBranchController", ["$scope", "branchSer
     $scope.remove = function(){
         branchService.remove($scope.id).then(function(){
             $scope.closeThisDialog();
-        });
+        }, function(message){alert(message);});
     }
 }]);

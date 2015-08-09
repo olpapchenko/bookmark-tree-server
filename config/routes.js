@@ -22,6 +22,7 @@ router.post("/bookmark/unshare", bookmark.unshare);
 router.get("/branch/:id", branch.get);
 router.get("/branches", branch.all);
 router.post("/branch", branch.post);
+router.post("/branch/remove", branch.remove);
 router.post("/branch/share", branch.share);
 router.post("/branch/unshare", branch.unshare);
 

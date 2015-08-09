@@ -51,5 +51,22 @@ module.exports={
         Branche.forge(req.body.branch).save().then(function(model){
             resp.json(model);
         });
+    },
+    remove: function(req, resp){
+        console.log(req.body);
+        console.log(req.params);
+        if(!req.body.id){
+            resp.status(400).send("Branch id is empty.");
+            return;
+        }
+        Branch.forge({id: req.body.id}).fetch().then(function(model){
+            if(model.default){
+                resp.status(400).send("Can not remove default branch");
+            } else{
+                return model.destroy();
+            }
+        }).then(function(){
+            resp.sendStatus(200);
+        }, function(){resp.sendStatus(500);});
     }
 }
