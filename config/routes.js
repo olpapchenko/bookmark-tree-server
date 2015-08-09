@@ -28,6 +28,7 @@ router.post("/branch/unshare", branch.unshare);
 
 //notifications routes
 router.get("/notifications", notifications.get);
+router.post("/notifications/read", notifications.read);
 
 ///users routes
 router.get("/user/:id(\\d+)", user.get);
