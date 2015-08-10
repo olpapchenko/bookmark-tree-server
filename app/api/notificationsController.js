@@ -1,4 +1,6 @@
 var notifications = require("../models/notification");
+var user = require("../models/user");
+var Promise = require("bluebird");
 
 module.exports = {
     get: function(req, resp){
@@ -8,7 +10,7 @@ module.exports = {
     },
     read : function(req, resp){
         var promise = [];
-        user.forge({id: req.session.id}).related("notifications").load().then(function(user){
+        user.forge({id: req.session.userId}).load(["notifications"]).then(function(user){
             user.related("notifications").forEach(function(model){
                 promise.push(model.destroy());
             });

@@ -11,11 +11,11 @@
         <!-- notificatoin dropdown start-->
         <ul class="nav pull-right top-menu">
             <!-- alert notification start-->
-            <li id="alert_notificatoin_bar" class="dropdown">
+            <li id="alert_notificatoin_bar" class="dropdown" ng-click="markAllRead()">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
                     <i class="icon-bell-l"></i>
-                    <span class="badge bg-important">{{notificationsCount}}</span>
+                    <span class="badge bg-important" ng-show="notificationsCount != 0">{{notificationsCount}}</span>
                 </a>
                 <ul class="dropdown-menu extended notification">
                     <div class="notify-arrow notify-arrow-blue"></div>

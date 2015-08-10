@@ -6,4 +6,8 @@ angular.module("app").controller("appController", ["$scope", "notificationServic
         });
         $scope.notificationsCount = not.length;
     });
+
+    $scope.markAllRead = function(){
+        notificationService.markAllRead();
+    }
 }]);

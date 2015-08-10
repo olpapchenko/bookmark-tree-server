@@ -2,6 +2,7 @@ var Branche = require("../models/branch");
 var User = require("../models/user");
 var Promise = require("bluebird");
 var _  = require("underscore");
+var notificationService = require("../helpers/NotificationService");
 
 module.exports={
 
@@ -27,6 +28,7 @@ module.exports={
         if(req.body.id){
             req.body.users.forEach(function(user_id){
                 promises.push(Branche.forge({id: req.body.id}).shareSecure(req.session.userId, user_id));
+                notificationService.branchShare(req.body.id ,req.session.userId ,user_id);
             });
             Promise.all(promises).then(function(){
                 resp.sendStatus(200);
@@ -63,9 +65,17 @@ module.exports={
             if(model.default){
                 resp.status(400).send("Can not remove default branch");
             } else{
-                return model.destroy();
+                return model.load("users");
             }
-        }).then(function(){
+        })
+        .then(function(model){
+            var promises = [];
+            model.related("users").forEach(function(user){
+                promises.push(notificationService.branchRemove(req.body.id ,req.session.userId, user.id)   );
+            });
+            return Promise.all(promises);
+        })
+        .then(function() {
             resp.sendStatus(200);
         }, function(){resp.sendStatus(500);});
     }
