@@ -1,4 +1,4 @@
-var Branche = require("../models/branch");
+var Branch = require("../models/branch");
 var User = require("../models/user");
 var Promise = require("bluebird");
 var _  = require("underscore");
@@ -27,8 +27,8 @@ module.exports={
         var promises =[];
         if(req.body.id){
             req.body.users.forEach(function(user_id){
-                promises.push(Branche.forge({id: req.body.id}).shareSecure(req.session.userId, user_id));
-                notificationService.branchShare(req.body.id ,req.session.userId ,user_id);
+                promises.push(Branch.forge({id: req.body.id}).shareSecure(req.session.userId, user_id));
+                promises.push(notificationService.branchShareNotification([req.body.id ,req.session.userId] ,user_id));
             });
             Promise.all(promises).then(function(){
                 resp.sendStatus(200);
@@ -41,7 +41,7 @@ module.exports={
     },
     unshare: function(req, resp){
         if(req.body.branch_id){
-            Branche.forge({id: req.body.branch_id}).unshareSecure(req.session.userId, req.body.user_id).then(
+            Branch.forge({id: req.body.branch_id}).unshareSecure(req.session.userId, req.body.user_id).then(
                 function(m){resp.send(m)},
                 function(m){resp.status(400).send(m)}
             );
@@ -50,33 +50,38 @@ module.exports={
         }
     },
     post: function(req,resp){
-        Branche.forge(req.body.branch).save().then(function(model){
+        Branch.forge(req.body.branch).save().then(function(model){
             resp.json(model);
         });
     },
     remove: function(req, resp){
-        console.log(req.body);
-        console.log(req.params);
         if(!req.body.id){
             resp.status(400).send("Branch id is empty.");
             return;
         }
-        Branch.forge({id: req.body.id}).fetch().then(function(model){
+
+        Branch.forge({id: req.body.id}).fetch()
+        .then(function(model){
             if(model.default){
-                resp.status(400).send("Can not remove default branch");
+                throw "defaultBranch";
             } else{
                 return model.load("users");
             }
         })
         .then(function(model){
             var promises = [];
+                console.log(notificationService);
             model.related("users").forEach(function(user){
-                promises.push(notificationService.branchRemove(req.body.id ,req.session.userId, user.id)   );
+                promises.push(notificationService.branchRemoveNotification([req.body.id ,req.session.userId], user.id));
             });
+            model.destroy();
             return Promise.all(promises);
+        })
+        .catch(function(e){return e == "defaultBranch"}, function() {
+              resp.status(400).message("Can not remove default branch");
         })
         .then(function() {
             resp.sendStatus(200);
-        }, function(){resp.sendStatus(500);});
+        });
     }
 }
