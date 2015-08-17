@@ -60,21 +60,15 @@ module.exports={
             return;
         }
 
-        Branch.forge({id: req.body.id}).fetch()
-        .then(function(model){
-            if(model.default){
-                throw "defaultBranch";
-            } else{
-                return model.load("users");
-            }
-        })
+        Branch.forge({id: req.body.id})
+        .remove()
         .then(function(model){
             var promises = [];
-                console.log(notificationService);
             model.related("users").forEach(function(user){
-                promises.push(notificationService.branchRemoveNotification([req.body.id ,req.session.userId], user.id));
+                if(req.session.userId != user.id) {
+                    promises.push(notificationService.branchRemoveNotification([req.body.id, req.session.userId], user.id))
+                };
             });
-            model.destroy();
             return Promise.all(promises);
         })
         .catch(function(e){return e == "defaultBranch"}, function() {

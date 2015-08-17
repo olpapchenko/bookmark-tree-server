@@ -28,21 +28,26 @@ var MESSAGE_BODIES = [
 ];
 
 var getMessageDs = function(str){
+    console.log("start ds fetch");
     return str.match(/\{\{\w+\}\}/g).map(function(item){
         item = item.substring(2,item.indexOf("}"));
-        return repos["item"];
+        console.log("cur repo is " + repos[item] + "for item " + item);
+        return repos[item];
     });
 }
 
 var renderMessage = function(data, str){
-    return Promise.map(function(item, index) {
-       return item.forge(data[index]).fetch();
-    },getMessageDs(str))
-    .then(function(data){
-        data.forEach(function(item) {
-            str.replace(/\{\{\w+\}\}/, item);
-        });
+    console.log("render message start");
+    return Promise.map(getMessageDs(str), function(item, index) {
+        console.log("current item is " + item);
+        return item.forge({id: data[index]}).fetch();
+    })
+    .each(function(item) {
+        str = str.replace(/\{\{\w+\}\}/, item.get("name"));
+            console.log(str);
         return str;
+    }).then(function(){
+            return str;
     });
 }
 
@@ -51,7 +56,7 @@ var service = {
         //todo: send mail here
     },
     persist: function(message, user_id){
-        return Notification.forge({message: message, user_id: userId}).save();
+        return Notification.forge({message: message, user_id: user_id}).save();
     }
 }
 
@@ -59,7 +64,8 @@ MESSAGE_BODIES.forEach(function (message) {
     Object.defineProperty(service, message.name, {
         value: function(data, user_id){
                    return renderMessage(data, message.str).then(function(message) {
-                        return this.persist(message, user_id);
+                       console.log("rendered messege " + message);
+                        return service.persist(message, user_id);
                });
         }
     });

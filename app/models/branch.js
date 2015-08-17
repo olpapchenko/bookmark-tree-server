@@ -51,6 +51,18 @@ var branch = Bookshelf.Model.extend({
             } else
             return message;
         })
+    },
+    remove: function () {
+        return this.fetch().then(function(model){
+            if(model.default){
+                throw "defaultBranch";
+            } else{
+                return model.load("users");
+            }
+        })
+        .tap(function(model) {
+            model.destroy();
+        });
     }
 });
 
