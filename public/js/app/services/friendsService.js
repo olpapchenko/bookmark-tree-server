@@ -5,4 +5,8 @@ angular.module("app").service("friendsService", ["$http", function($http){
             return data.data;
         });
     }
+
+    this.addFriend = function(id){
+        return $http.post("/friends",{id: id});
+    }
 }]);

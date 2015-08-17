@@ -1,1 +1,11 @@
-friends
+<h3 class="page-header ng-scope"><i class="glyphicon glyphicon-user"></i> Friends</h3>
+<div class="form-group">
+    <div class="col-sm-12">
+        <input ng-model="userName" type="text" class="form-control round-input">
+        <div style="max-height: 300px; overflow: auto;">
+            <div class="list-group">
+                <a class="list-group-item" href="#" ng-click="addToFriends(user.id)" ng-repeat="user in userList">{{user.name}} <span class="glyphicon glyphicon-plus-sign pull-right"></span></a>
+            </div>
+        </div>
+    </div>
+</div>
