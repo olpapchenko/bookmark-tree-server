@@ -44,9 +44,10 @@ var user = bookshelf.Model.extend({
                 if(_this.related("friends").any(function(user){
                     return user.id == friend.id;
                 })){
+                    console.log(friend.id);
                     friend.isFriend = true;
-                    return friend;
                 };
+                return friend;
             });
         });
     }

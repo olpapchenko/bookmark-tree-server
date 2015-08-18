@@ -10,8 +10,7 @@ module.exports.byName = function(req, resp){
     User.byName(req.params.name).then(function(users){
        return User.forge({id: req.session.userId}).isFrineds(users);
     }).then(function(users) {
-        console.log(users[0].isFriend);
-        return resp.json(users);
+         return resp.json(users);
     });
 }
 

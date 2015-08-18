@@ -2,7 +2,7 @@ angular.module("app").controller("shareController",["$scope","userService","bran
     var friendsList;
     $scope.shareWith = [];
 
-    friendsService.get().then(function(data){
+    friendsService.all().then(function(data){
         $scope.userList = data;
         friendsList = data;
     });
