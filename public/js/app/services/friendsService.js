@@ -1,6 +1,6 @@
 angular.module("app").service("friendsService", ["$http", function($http){
 
-    this.get= function(){
+    this.all= function(){
         return $http.get("/friends").then(function(data){
             return data.data;
         });
@@ -8,5 +8,9 @@ angular.module("app").service("friendsService", ["$http", function($http){
 
     this.addFriend = function(id){
         return $http.post("/friends",{id: id});
+    }
+
+    this.removeFriend = function(id) {
+        return $http.post("/friends/delete", {id: id});
     }
 }]);

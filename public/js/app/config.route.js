@@ -80,9 +80,15 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
         .state("app.friends", {
             url: "/friends",
             templateUrl: PAGES_URL + "/friends.html",
-            resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["/js/app/controllers/friendsController.js"]);
-            }],
+            resolve: {
+                files: ["$ocLazyLoad", function($ocLazyLoad){
+                return $ocLazyLoad.load(["/js/app/controllers/friendsController.js",
+                                         "/js/app/services/friendsService.js"]);
+                }],
+                friends: ["friendsService", function(friendsService){
+                    return friendsService.all();
+                }]
+            },
             controller: "friendsController"
         })
 }]);
