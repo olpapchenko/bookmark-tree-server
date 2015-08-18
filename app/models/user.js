@@ -44,7 +44,6 @@ var user = bookshelf.Model.extend({
                 if(_this.related("friends").any(function(user){
                     return user.id == friend.id;
                 })){
-                    console.log(friend.id);
                     friend.isFriend = true;
                 };
                 return friend;
@@ -72,7 +71,9 @@ var user = bookshelf.Model.extend({
     },
 
     byName: function(name){
-        return this.query("where", bookshelf.knex.raw("lower(name)"), "like", name.toLowerCase()+"%")
+        return this.query(function(qb) {
+            qb.where(bookshelf.knex.raw("lower(name)"), "like", name.toLowerCase()+"%").limit(10).orderBy("name");
+        })
         .fetchAll()
         .then (function (users){
             return users.map(omitPassword);
