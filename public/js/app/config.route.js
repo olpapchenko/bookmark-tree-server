@@ -83,7 +83,8 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
                 return $ocLazyLoad.load(["/js/app/controllers/friendsController.js",
-                                         "/js/app/services/friendsService.js"]);
+                                         "/js/app/services/friendsService.js",
+                                         "/js/app/controllers/removeFriendController.js"]);
                 }],
                 friends: ["friendsService", function(friendsService){
                     return friendsService.all();

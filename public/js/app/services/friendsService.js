@@ -11,6 +11,6 @@ angular.module("app").service("friendsService", ["$http", function($http){
     }
 
     this.removeFriend = function(id) {
-        return $http.post("/friends/delete", {id: id});
+        return $http.post("/friends/remove", {id: id});
     }
 }]);

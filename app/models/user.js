@@ -4,6 +4,11 @@ var Bookmark = require('./bookmark');
 var Rights = require('./rights');
 var Branch = require('./branch');
 
+
+var omitPassword = function (item) {
+    return item.omit("password");
+}
+
 var user = bookshelf.Model.extend({
 
     tableName: 'users',
@@ -31,6 +36,19 @@ var user = bookshelf.Model.extend({
     },
     notifications: function(){
         return this.hasMany("Notification");
+    },
+    isFrineds: function(users) {
+        _this = this;
+       return this.load("friends").then(function() {
+            return users.map(function(friend){
+                if(_this.related("friends").any(function(user){
+                    return user.id == friend.id;
+                })){
+                    friend.isFriend = true;
+                    return friend;
+                };
+            });
+        });
     }
 }, {
     login: function (mail, password) {
@@ -53,7 +71,11 @@ var user = bookshelf.Model.extend({
     },
 
     byName: function(name){
-        return this.query("where", bookshelf.knex.raw("lower(name)"), "like", name.toLowerCase()+"%").fetchAll();
+        return this.query("where", bookshelf.knex.raw("lower(name)"), "like", name.toLowerCase()+"%")
+        .fetchAll()
+        .then (function (users){
+            return users.map(omitPassword);
+        });
     }
 });
 

@@ -1,4 +1,4 @@
-angular.module("app").controller("friendsController", ["friends","$scope","userService", "friendsService", function(friends, $scope, userService, friendsService){
+angular.module("app").controller("friendsController", ["friends","$scope","userService", "friendsService","ngDialog", function(friends, $scope, userService, friendsService, ngDialog){
     $scope.friends = friends;
 
     $scope.$watch("userName", function(){
@@ -17,9 +17,14 @@ angular.module("app").controller("friendsController", ["friends","$scope","userS
         });
     };
 
+
     $scope.removeFriend = function(id) {
-        friendsService.removeFriend(id).then(function(){
-            $scope.$state.reload();
+        console.log("sdfasdf");
+        $scope.id = id;
+        var dialog = ngDialog.open({
+            template: '/html/templates/removeBranch.html',
+            controller: "removeFriendController",
+            scope: $scope
         });
-    }
+        }
 }]);

@@ -5,7 +5,7 @@
         <div style="max-height: 300px; overflow: auto;">
             <div class="list-group">
                 <a class="list-group-item" href="#"  ng-repeat="user in userList">{{user.name}}
-                    <span ng-click="addToFriends(user.id)" class="glyphicon glyphicon-plus-sign pull-right" title="add to friends list"></span>
+                    <span ng-show = "!user.isFriend" ng-click="addToFriends(user.id)" class="glyphicon glyphicon-plus-sign pull-right" title="add to friends list"></span>
                 </a>
             </div>
         </div>
@@ -13,7 +13,7 @@
             <button data-dismiss="alert" class="close close-sm" type="button">
                 <i class="icon-remove"></i>
             </button>
-            <strong>{{friend.name}} </strong>{{friend.mail}} <span ng-click="remove(friend.id)" class="pull-right glyphicon glyphicon-remove-sign" title="remove"></span>
+            <strong>{{friend.name}} </strong>{{friend.mail}} <span ng-click="removeFriend(friend.id)" class="pull-right glyphicon glyphicon-remove-sign" title="remove"></span>
         </div>
     </div>
 </div>

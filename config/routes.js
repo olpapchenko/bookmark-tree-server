@@ -42,6 +42,7 @@ router.post("/logout", user.logout);
 // friends routes
 router.get("/friends", friends.get);
 router.post("/friends", friends.post);
+router.post("/friends/remove", friends.remove);
 
 ///entry point
 router.get("/", function (req, res){

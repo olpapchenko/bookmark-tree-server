@@ -8,9 +8,13 @@ module.exports = {
         });
     },
     post: function(req, resp) {
-        console.log("asdfasdfasdfasdf");
         User.forge({id: req.session.userId}).related("friends").create(User.forge({id: req.body.id})).then(function(){
             resp.sendStatus(200);
         });
+    },
+    remove: function(req, resp) {
+        User.forge({id: req.session.userId}).related("friends").detach(User.forge({id: req.body.id})).then(function() {
+            resp.sendStatus(200);
+        })
     }
 }

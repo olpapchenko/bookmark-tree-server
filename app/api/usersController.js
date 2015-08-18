@@ -8,8 +8,11 @@ module.exports.get = function (req, resp) {
 
 module.exports.byName = function(req, resp){
     User.byName(req.params.name).then(function(users){
-        resp.json(users);
-    })
+       return User.forge({id: req.session.userId}).isFrineds(users);
+    }).then(function(users) {
+        console.log(users[0].isFriend);
+        return resp.json(users);
+    });
 }
 
 module.exports.current = function(req,resp){
