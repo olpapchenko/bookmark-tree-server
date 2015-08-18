@@ -50,10 +50,15 @@ module.exports={
         }
     },
     post: function(req,resp){
-        Branch.forge(req.body.branch).save().then(function(model){
-            resp.json(model);
-        });
+        (function(){if(req.body.branch.id){
+            return Branch.forge(req.body.branch).save()
+        } else {
+            return User.forge({id : req.session.userId}).related("branches").create(Branch.forge(req.body.branch));
+        }})().then(function(){
+            resp.sendStatus(200);
+        })
     },
+
     remove: function(req, resp){
         if(!req.body.id){
             resp.status(400).send("Branch id is empty.");

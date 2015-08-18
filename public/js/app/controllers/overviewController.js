@@ -11,6 +11,7 @@ angular.module("app").controller("overviewController", ["$scope", "branchService
         });
     }
     $scope.edit = function(branch){
+        $scope.header = "Edit branch";
         $scope.branch = branch;
         var dialog = ngDialog.open({
             template: '/html/templates/editBranch.html',
@@ -26,5 +27,17 @@ angular.module("app").controller("overviewController", ["$scope", "branchService
             controller: "removeBranchController",
             scope: $scope
         });
+    }
+
+    $scope.addBranch = function () {
+        $scope.header = "Add branch";
+        var dialog = ngDialog.open({
+            template: '/html/templates/editBranch.html',
+            controller: "editBranchController",
+            scope: $scope
+        });
+        dialog.closePromise.then(function(){
+            $scope.$state.reload();
+        })
     }
 }]);
