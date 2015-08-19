@@ -34,7 +34,7 @@
 <!-- Top content -->
 <div class="top-content" ng-controller="loginController" style="">
 
-    <div class="inner-bg">
+    <div>
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2 text">
@@ -69,6 +69,22 @@
                             </div>
                             <button ng-click ="submit()" type="submit" class="btn">Sign in!</button>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 social-login">
+                    <h3>...or login with:</h3>
+                    <div class="social-login-buttons">
+                        <a class="btn btn-link-2" href="{{vk_login}}">
+                            <i class="fa fa-vk"></i> Vkontacte
+                        </a>
+                        <a class="btn btn-link-2" href="#">
+                            <i class="fa fa-twitter"></i> Twitter
+                        </a>
+                        <a class="btn btn-link-2" href="#">
+                            <i class="fa fa-google-plus"></i> Google Plus
+                        </a>
                     </div>
                 </div>
             </div>

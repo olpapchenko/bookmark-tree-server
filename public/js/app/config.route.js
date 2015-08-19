@@ -38,6 +38,14 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                 ]);
             }]
         })
+        .state("logout",{
+            controller: "logoutController",
+            resolve: ["$ocLazyLoad", function($ocLazyLoad){
+                return $ocLazyLoad.load([
+                    "/js/app/controllers/logoutController.js"
+                ]);
+            }]
+        })
         .state("register",{
             url: "/register",
             templateUrl: PAGES_URL + "/register.html",

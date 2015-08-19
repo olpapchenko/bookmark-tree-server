@@ -2,6 +2,9 @@ angular.module("app").service("notificationService", ["$http","$interval", funct
     var TRACK_PERIOD = 30;
 
     this.trackNotifications = function(fn){
+        $http.get("/notifications").success(function(not){
+            fn(not);
+        });
         $interval(function () {
             $http.get("/notifications").success(function(not){
                 fn(not);
