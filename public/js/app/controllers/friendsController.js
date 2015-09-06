@@ -28,4 +28,9 @@ angular.module("app").controller("friendsController", ["friends","$scope","userS
             scope: $scope
         });
     }
+
+    $scope.loadDetails = function (index) {
+        friends[index].showDetails = !friends[index].showDetails;
+
+     }
 }]);
