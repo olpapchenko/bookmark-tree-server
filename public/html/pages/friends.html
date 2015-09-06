@@ -16,9 +16,10 @@
                     <div class="col-lg-3">
                         <strong>{{friend.name}} </strong>{{friend.mail}}
                     </div>
-                    <div class="col-lg-2 col-md-offset-2">
+                    <div class="col-lg-2 col-md-offset-1">
                         <div style="display: inline-block; margin-left: 50%">
-                             <img src="/images/down.png" style="height: 25px; width: auto;">
+                             <img src="/images/down.png" style="height: 25px; width: auto;" ng-show="!details">
+                             <img src="/images/up.png" style="height: 25px; width: auto;" ng-show="details">
                          </div>
                     </div>
                     <div class="col-lg-5">
@@ -27,7 +28,8 @@
                 </div>
             </div>
 
-            <div ng-show="details" class="well well-lg" ng-class="{openWell: details}">
+            <div ng-show="details" class="well well-lg" ng-class="{openWell: details}" style="overflow: hidden;">
+                <div class="col-md-2 col-md-offset-5"><img style="height: 30px"  src="/images/loader.gif"/></div>
 
             </div>
         </div>
