@@ -43,6 +43,7 @@ router.post("/logout", user.logout);
 router.get("/friends", friends.get);
 router.post("/friends", friends.post);
 router.post("/friends/remove", friends.remove);
+route.get("friends/shared", friends.shared);
 
 ///entry point
 router.get("/", function (req, res){

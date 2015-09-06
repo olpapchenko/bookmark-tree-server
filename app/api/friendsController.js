@@ -16,5 +16,9 @@ module.exports = {
         User.forge({id: req.session.userId}).related("friends").detach(User.forge({id: req.body.id})).then(function() {
             resp.sendStatus(200);
         })
+    },
+
+    shared: function(res, resp){
+        var sharedResults = {};
     }
 }
