@@ -69,9 +69,9 @@ bookmark = bookshelf.Model.extend({
         });
     }
 }, { //todo escape raw variables
-        getShared: function(userId) {
+        getShared: function(userId, sharedWith) {
             var _this = this;
-            return  Bookshelf.knex.raw("select distinct(bookmark_id) from rights where user_id != " + userId + " and bookmark_id in (select bookmark_id from rights where user_id =" + userId + ")").then(function(res) {
+            return  Bookshelf.knex.raw("select distinct(bookmark_id) from rights where user_id = " + sharedWith + " and bookmark_id in (select bookmark_id from rights where user_id =" + userId + ")").then(function(res) {
                 var bookmarkPromises = []
                  res.rows.forEach(function(id){
                     bookmarkPromises.push(_this.forge({id: id.bookmark_id}).fetch());

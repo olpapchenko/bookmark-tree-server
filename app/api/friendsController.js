@@ -1,4 +1,6 @@
 var User = require("../models/user");
+var Bookmark = require("../models/bookmark");
+
 var _ = require("underscore");
 
 module.exports = {
@@ -18,7 +20,11 @@ module.exports = {
         })
     },
 
-    shared: function(res, resp){
+    shared: function(req, resp){
         var sharedResults = {};
+        Bookmark.getShared(req.session.userId, req.params.id).then(function(bookmark){
+            sharedResults.sharedBookmarks = bookmark;
+            resp.json(sharedResults);
+        });
     }
 }
