@@ -99,7 +99,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                 }]
             },
             controller: "friendsController"
-        })
+        });
 }]);
 
 

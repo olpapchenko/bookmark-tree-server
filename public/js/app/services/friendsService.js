@@ -13,4 +13,8 @@ angular.module("app").service("friendsService", ["$http", function($http){
     this.removeFriend = function(id) {
         return $http.post("/friends/remove", {id: id});
     }
+
+    this.getSharedEntities = function (id){
+        return $http.get("/friends/shared", {id: id});
+    }
 }]);

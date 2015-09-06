@@ -1,4 +1,5 @@
-angular.module("app").controller("friendsController", ["friends","$scope","userService", "friendsService","ngDialog", function(friends, $scope, userService, friendsService, ngDialog){
+angular.module("app").controller("friendsController", ["friends","$scope","userService", "friendsService","ngDialog",
+    function(friends, $scope, userService, friendsService, ngDialog){
     $scope.friends = friends;
 
     $scope.$watch("userName", function(){
@@ -26,5 +27,5 @@ angular.module("app").controller("friendsController", ["friends","$scope","userS
             controller: "removeFriendController",
             scope: $scope
         });
-        }
+    }
 }]);
