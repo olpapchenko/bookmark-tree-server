@@ -23,7 +23,7 @@ module.exports = {
     shared: function(req, resp){
         var sharedResults = {};
         Bookmark.getShared(req.session.userId, req.params.id).then(function(bookmark){
-            sharedResults.sharedBookmarks = bookmark;
+            sharedResults.branches = bookmark;
             resp.json(sharedResults);
         });
     }
