@@ -1,18 +1,4 @@
-.collapseble .open {
-  margin-bottom: 0px;
-  -webkit-border-bottom-right-radius: 0px;
-  -webkit-border-bottom-left-radius: 0px;
-  -moz-border-radius-bottomright: 0px;
-  -moz-border-radius-bottomleft: 0px;
-  border-bottom-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
-
-.collapseble .openWell {
-  -webkit-border-top-left-radius: 0px;
-  -webkit-border-top-right-radius: 0px;
-  -moz-border-radius-topleft: 0px;
-  -moz-border-radius-topright: 0px;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
+.custom-panel-header {
+  background-color: #427282 !important;
+  color: #ffffff !important;
 }
