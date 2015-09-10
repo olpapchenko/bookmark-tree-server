@@ -1,5 +1,7 @@
 var User = require("../models/user");
 var Bookmark = require("../models/bookmark");
+var Branches = require("../models/branch");
+var Promise = require("bluebird");
 
 var _ = require("underscore");
 
@@ -22,9 +24,22 @@ module.exports = {
 
     shared: function(req, resp){
         var sharedResults = {};
-        Bookmark.getShared(req.session.userId, req.params.id).then(function(bookmark){
+        Promise.all([
+            Bookmark.getShared(req.session.userId, req.params.id),
+            Branches.getShared(req.session.userId, req.params.id)
+         ]).then(function(data){
+            sharedResults.bookmarks = data[0];
+            sharedResults.branches = [] || data[1];
+            resp.json(sharedResults);
+        });
+    },
+
+    sharedBranches: function(req, resp){
+        var sharedResults = {};
+        Branches.getShared(req.session.userId, req.params.id).then(function(bookmark){
             sharedResults.branches = bookmark;
             resp.json(sharedResults);
         });
     }
+
 }

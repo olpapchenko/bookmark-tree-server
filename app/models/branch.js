@@ -64,6 +64,17 @@ var branch = Bookshelf.Model.extend({
             model.destroy();
         });
     }
+},{
+    getShared: function(userId, coOwner) {
+        var _this = this;
+        return  Bookshelf.knex.raw("select distinct(branch_id) from branches_users where user_id = " + coOwner + " and branch_id in (select branch_id from branches_users where owner = true and user_id =" + userId + ")").then(function(res) {
+            var branchPromises = []
+            res.rows.forEach(function(id){
+                branchPromises.push(_this.forge({id: id.bookmark_id}).fetch());
+            });
+            return Promise.all(branchPromises);
+        });
+    }
 });
 
 module.exports = Bookshelf.model("Branch", branch);
