@@ -4,8 +4,8 @@ angular.module("app")
         return $http.post("/bookmark/share", {id: id, users: users});
     }
 
-    this.persist = function(branch){
-        return $http.post("/bookmark", {branch: branch});
+    this.persist = function(bookmark){
+        return $http.post("/bookmark", {bookmark: bookmark});
     }
 
     this.remove = function(id){

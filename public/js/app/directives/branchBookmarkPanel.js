@@ -34,11 +34,7 @@
                             controller: "editBranchController",
                             scope: scope
                         });
-                        dialog.closePromise.then(function(){
-                            $state.reload();
-                        });
                     }
-
                 };
                 $rootScope.$on('$stateNotFound',
                     function(event, toState, toParams, fromState, fromParams){ console.log("to" + JSON.stringify(toState))})

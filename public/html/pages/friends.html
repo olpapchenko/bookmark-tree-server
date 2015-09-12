@@ -11,7 +11,7 @@
         </div>
 
         <div ng-repeat="friend in friends" class="collapseble panel panel-primary" >
-             <div class="panel-heading custom-panel-header" style = "overflow: hidden;"   ng-click="loadDetails($index)" ng-class="{open: friend.showDetails}">
+             <div class="panel-heading custom-panel-header" style = "overflow: hidden; cursor: pointer;"   ng-click="loadDetails($index)" ng-class="{open: friend.showDetails}">
                 <div class="row">
                     <div class="col-lg-3">
                         <strong>{{friend.name}} </strong>{{friend.mail}}
