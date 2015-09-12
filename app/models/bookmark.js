@@ -118,24 +118,22 @@ bookmark = bookshelf.Model.extend({
                                      user.bookmarks().attach(model,{transacting: t});
                                  });
                              })
-                     .tap(function(model) {
-                         if(!bookmark.comments){
-                             return;
-                         }
-                         return Promise.map(bookmark.comments, function (comment) {
-                             console.log(JSON.stringify(comment)  + " comment");
-                             return Comment.forge(comment).save({bookmark_id: model.id}, {transacting: t});
+                         .tap(function(model) {
+                             if(!bookmark.comments){
+                                 return;
+                             }
+                             return Promise.map(bookmark.comments, function (comment) {
+                                  return Comment.forge(comment).save({bookmark_id: model.id}, {transacting: t});
+                             });
+                         })
+                         .tap(function(model){
+                             if(!bookmark.markers){
+                                 return;
+                             }
+                             return Promise.map(bookmark.markers, function (marker){
+                                 return Marker.forge(marker).save({bookmark_id: model.id}, {transacting: t});
+                             });
                          });
-                     })
-                     .tap(function(model){
-                         if(!bookmark.markers){
-                             return;
-                         }
-                         return Promise.map(bookmark.markers, function (marker){
-                             return Marker.forge(marker).save({bookmark_id: model.id}, {transacting: t});
-                         });
-                     });
-
                      });
                });
             }).then(function(p){return p.length > 1 ? p : p[0]});

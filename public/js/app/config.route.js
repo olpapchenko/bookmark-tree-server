@@ -66,6 +66,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                                          "/js/app/controllers/editBranchController.js",
                                          "/js/app/controllers/removeBranchController.js",
                                          "/js/app/directives/branchBookmarkPanel.js",
+                                         "/js/app/services/bookmarkService.js",
                                          {type: 'css', path: '/css/vendor/five.css'}]);
             }],
             controller: "overviewController"
@@ -94,7 +95,9 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                 return $ocLazyLoad.load(["/js/app/controllers/friendsController.js",
                                          "/js/app/services/friendsService.js",
                                          "/js/app/controllers/removeFriendController.js",
-                                         "/js/app/directives/branchBookmarkPanel.js"]);
+                                         "/js/app/directives/branchBookmarkPanel.js",
+                                         "/js/app/services/bookmarkService.js",
+                                         "/js/app/services/branchService.js"]);
                 }],
                 friends: ["friendsService", function(friendsService){
                     return friendsService.all();

@@ -17,6 +17,7 @@ router.get("/bookmark/:id", bookmark.get);
 router.post("/bookmark", bookmark.post);
 router.post("/bookmark/share", bookmark.share);
 router.post("/bookmark/unshare", bookmark.unshare);
+router.post("/bookmark/remove", bookmark.remove);
 
 //branches routes
 router.get("/branch/:id", branch.get);

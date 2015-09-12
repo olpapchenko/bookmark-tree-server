@@ -29,6 +29,16 @@ module.exports.post = function (req, resp) {
     });
 }
 
+module.exports.remove = function (req, resp) {
+    if(!req.body.id) {
+        resp.status(400).send("id is not provided");
+        return;
+    }
+    bookmark.forge({id : req.body.id}).destroy().then(function() {
+        resp.send("successfully removed");
+    })
+}
+
 module.exports.share = function(req, resp) {
     if(req.body.bookmark_id && req.body.user_id) {
         bookmark.forge({id: req.body.bookmark_id}).shareSecure(req.session.userId, req.body.user_id).then(function(m){

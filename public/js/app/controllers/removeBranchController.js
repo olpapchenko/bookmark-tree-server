@@ -1,11 +1,13 @@
-angular.module("app").controller("removeBranchController", ["$scope", "branchService", function($scope, branchService){
-    $scope.entity = "branch";
+angular.module("app").controller("removeBranchController", ["$scope", "branchService", "bookmarkService", function($scope, branchService, bookmarkService){
+    $scope.header = $scope.isBranch ? "branch": "bookmark";
+
+    var persistService = $scope.isBranch ? branchService : bookmarkService;
 
     $scope.remove = function(){
-        branchService.remove($scope.id).then(function(){
+        persistService.remove($scope.id).then(function () {
             $scope.closeThisDialog();
-            $scope.$state .reload();
-        }, function(message){
+            $scope.$state.reload();
+        }, function (message) {
             //todo add toaster message
         });
     }
