@@ -6,7 +6,8 @@
                 remove: "=",
                 edit: "=",
                 share: "=",
-                entity: "="
+                entity: "=",
+                branch: "="
             },
             templateUrl: "/html/templates/branchBookmark.html",
             link: function(scope, iElement, attrs) {
