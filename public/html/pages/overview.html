@@ -1,20 +1,8 @@
 <h3 class="page-header"><i class="glyphicon glyphicon-book"></i> Branches</h3>
 <div class="row" id="portfolio">
 
-    <div ng-repeat="branch in branches" class="col-lg-3 col-md-3 col-sm-12 col-xs-12 portfolio-item"> <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
-        <div class="portfolio-hover">
-            <div class="portfolio-hover-content">
-                <div>
-                    <h1 ng-click="remove(branch.id)" ng-show="!branch.default" title="Remove" style="display: inline-block;"><i class="glyphicon glyphicon-remove-sign"></i></h1>
-                    <h1 ng-click="edit(branch)" title="Edit" style="display: inline-block; margin-left: 10%;"><i class="glyphicon glyphicon-edit"></i></h1>
-                    <h1 ng-click="share(branch.id)" title="Share" style="display: inline-block; margin-left: 10%;"><i class="glyphicon glyphicon-share"></i></h1>
-                 </div>
-            </div>
-        </div>
-        <img src="images/default_branch.jpg" class="img-responsive" alt="" style="width: 100%;"> </a>
-        <div class="portfolio-caption">
-            <h4>{{branch.name | limitTo:30}}</h4>
-        </div>
+    <div ng-repeat="branch in branches">
+       <bookmark-panel entity="branch"></bookmark-panel>
     </div>
 
     <div  class="col-lg-3 col-md-3 col-sm-12 col-xs-12 portfolio-item" title="add new branch" ng-click="addBranch()">

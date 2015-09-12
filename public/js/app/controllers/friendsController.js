@@ -34,5 +34,5 @@ angular.module("app").controller("friendsController", ["friends","$scope","userS
         friendsService.getSharedEntities(friends[index].id).then(function(sharedEntitiesData){
             friends[index].sharedEntitiesData = sharedEntitiesData;
          });
-     }
+    }
 }]);
