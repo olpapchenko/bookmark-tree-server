@@ -26,20 +26,12 @@ module.exports = {
         var sharedResults = {};
         Promise.all([
             Bookmark.getShared(req.session.userId, req.params.id),
-            Branches.getShared(req.session.userId, req.params.id)
-         ]).then(function(data){
-            sharedResults.bookmarks = data[0];
-            sharedResults.branches = [] || data[1];
-            resp.json(sharedResults);
-        });
-    },
-
-    sharedBranches: function(req, resp){
-        var sharedResults = {};
-        Branches.getShared(req.session.userId, req.params.id).then(function(bookmark){
-            sharedResults.branches = bookmark;
+            Branches.getShared(req.session.userId, req.params.id)]
+         ).then(function(data){
+            console.log("shared data " + JSON.stringify(data));
+            sharedResults.bookmarks =  data[0] || [];
+            sharedResults.branches =  data[1] || [];
             resp.json(sharedResults);
         });
     }
-
 }

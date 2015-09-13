@@ -36,8 +36,7 @@
                         });
                     }
                 };
-                $rootScope.$on('$stateNotFound',
-                    function(event, toState, toParams, fromState, fromParams){ console.log("to" + JSON.stringify(toState))})
+
                 function getRemoveHandler(isBranch) {
                     return function (id) {
                         var scope = $rootScope.$new();
