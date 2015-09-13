@@ -27,7 +27,7 @@ module.exports={
         var promises =[];
         if(req.body.id){
             req.body.users.forEach(function(user_id){
-                promises.push(Branch.forge({id: req.body.id}).shareSecure(req.session.userId, user_id));
+                promises.push(Branch.forge({id: req.body.id}).shareSecure(req.session.userId, user_id, req.body.ownership));
                 promises.push(notificationService.branchShareNotification([req.body.id ,req.session.userId] ,user_id));
             });
             Promise.all(promises).then(function(){

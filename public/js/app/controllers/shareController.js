@@ -8,7 +8,7 @@ angular.module("app").controller("shareController",["$scope","userService","bran
     });
 
     $scope.share = function(){
-        branchService.share($scope.id, $scope.shareWith.map(function(item){ return item.id;})).then(function(){
+        branchService.share($scope.id, $scope.shareWith.map(function(item){ return item.id;}), $scope.ownership).then(function(){
             $scope.closeThisDialog();
         });
     }

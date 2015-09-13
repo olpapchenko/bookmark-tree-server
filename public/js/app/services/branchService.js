@@ -13,8 +13,8 @@ angular.module("app").service("branchService", ["$http",function($http){
         })
     }
 
-    this.share = function(id, users) {
-        return $http.post("/branch/share", {id: id, users: users});
+    this.share = function(id, users, ownership) {
+        return $http.post("/branch/share", {id: id, users: users, ownership: ownership});
     }
 
     this.persist = function(branch){

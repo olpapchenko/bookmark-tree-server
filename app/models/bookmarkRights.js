@@ -4,7 +4,7 @@ var User = require('./user');
 var Bookmark = require('./bookmark');
 
 var right  = bookshelf.Model.extend({
-    tableName: "rights",
+    tableName: "bookmark_rights",
 
     user: function  () {
         return this.belongsTo("User");
@@ -15,4 +15,4 @@ var right  = bookshelf.Model.extend({
     }
 });
 
-module.exports = bookshelf.model("Right", right);
+module.exports = bookshelf.model("bookmark_rights", right);

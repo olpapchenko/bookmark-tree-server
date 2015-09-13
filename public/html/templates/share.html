@@ -10,7 +10,12 @@
                 <a class="list-group-item" ng-click="addToShare(user)"  ng-repeat="user in userList">{{user.name}}</a>
             </div>
         </div>
-
+        <div class="checkbox">
+            <label >
+                <input type="checkbox" ng-model="ownership"/>
+                Grand ownership
+            </label>
+        </div>
         <div ng-show="shareWith.length != 0" id="tagsinput_tagsinput" class="tagsinput " style="height: 100%;">
             <span class="tag" ng-repeat="user in shareWith" ng-click="removeFromShare(user)">
                 <span>{{user.name}}</span>

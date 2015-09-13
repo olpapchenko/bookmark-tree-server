@@ -1,7 +1,7 @@
 var bookshelf = require ('../../config/db/bookshelf');
 var encodeSHA = require("../helpers/encodeSHA");
 var Bookmark = require('./bookmark');
-var Rights = require('./rights');
+var Rights = require('./bookmarkRights');
 var Branch = require('./branch');
 
 
@@ -14,22 +14,22 @@ var user = bookshelf.Model.extend({
     tableName: 'users',
 
     bookmarks: function () {
-        return this.belongsToMany("Bookmark").through("Right");
+        return this.belongsToMany("Bookmark").through("Bookmark_rights");
     },
     bookmark: function(id) {
-        return this.belongsToMany("Bookmark").through("Right").query({where: {id: id}});
+        return this.belongsToMany("Bookmark").through("Bookmark_rights").query({where: {id: id}});
     },
     rights: function () {
-        return this.hasMany("Right");
+        return this.hasMany("Bookmark_rights");
     },
     branches: function() {
-        return this.belongsToMany("Branch");
+        return this.belongsToMany("Branch").through("Branch_rights");
     },
     branch: function(id){
-        return this.belongsToMany("Branch").query({where: {id: id}});
+        return this.branches().query({where: {id: id}});
     },
     defaultBranch: function() {
-        return this.belongsToMany("Branch").query({where: {default: true}});
+        return this.branches().query({where: {default: true}});
     },
     friends: function(){
         return this.belongsToMany("User", "friends", "user_id", "friend_id");

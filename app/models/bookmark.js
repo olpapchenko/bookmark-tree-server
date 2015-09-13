@@ -5,7 +5,7 @@ var Bookshelf = require("../../config/db/bookshelf");
 var Comment = require('./comment');
 var User = require('./user');
 var Marker = require('./marker');
-var Rights = require('./rights');
+var Rights = require('./bookmarkRights');
 var _ = require("underscore");
 
 bookmark = bookshelf.Model.extend({
@@ -20,13 +20,13 @@ bookmark = bookshelf.Model.extend({
     },
 
     users: function () {
-        return this.belongsToMany("User").through("Right");
+        return this.belongsToMany("User").through("Bookmark_rights");
     },
     user: function(user_id){
-        return this.belongsToMany("User").through("Right").query({where: {user_id: user_id}});
+        return this.belongsToMany("User").through("Bookmark_rights").query({where: {user_id: user_id}});
     },
     rights: function ( ) {
-        return this.hasMany("Right");
+        return this.hasMany("Bookmark_rights");
     },
 
     branch: function(){
@@ -71,7 +71,7 @@ bookmark = bookshelf.Model.extend({
 }, { //todo escape raw variables
         getShared: function(userId, coOwner) {
             var _this = this;
-            return  Bookshelf.knex.raw("select distinct(bookmark_id) from rights where user_id = " + coOwner + " and bookmark_id in (select bookmark_id from rights where owner = true and user_id =" + userId + ")").then(function(res) {
+            return  Bookshelf.knex.raw("select distinct(bookmark_id) from bookmark_rights where user_id = " + coOwner + " and bookmark_id in (select bookmark_id from bookmark_rights where owner = true and user_id =" + userId + ")").then(function(res) {
                 var bookmarkPromises = []
                  res.rows.forEach(function(id){
                     bookmarkPromises.push(_this.forge({id: id.bookmark_id}).fetch());
