@@ -10,6 +10,11 @@ var branchRights = Bookshelf.Model.extend({
 
     branches: function() {
         return this.belongsTo("Branch");
+    },
+    saveBasedOnParams : function (attrs) {
+        return this.fetch().then(function (model) {
+            return (model || this).set(attrs).save();
+        })
     }
 });
 

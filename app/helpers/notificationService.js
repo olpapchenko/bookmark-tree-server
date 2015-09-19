@@ -28,24 +28,19 @@ var MESSAGE_BODIES = [
 ];
 
 var getMessageDs = function(str){
-    console.log("start ds fetch");
-    return str.match(/\{\{\w+\}\}/g).map(function(item){
+     return str.match(/\{\{\w+\}\}/g).map(function(item){
         item = item.substring(2,item.indexOf("}"));
-        console.log("cur repo is " + repos[item] + "for item " + item);
-        return repos[item];
+         return repos[item];
     });
 }
 
 var renderMessage = function(data, str){
-    console.log("render message start");
-    return Promise.map(getMessageDs(str), function(item, index) {
-        console.log("current item is " + item);
-        return item.forge({id: data[index]}).fetch();
+     return Promise.map(getMessageDs(str), function(item, index) {
+         return item.forge({id: data[index]}).fetch();
     })
     .each(function(item) {
         str = str.replace(/\{\{\w+\}\}/, item.get("name"));
-            console.log(str);
-        return str;
+         return str;
     }).then(function(){
             return str;
     });
@@ -64,8 +59,7 @@ MESSAGE_BODIES.forEach(function (message) {
     Object.defineProperty(service, message.name, {
         value: function(data, user_id){
                    return renderMessage(data, message.str).then(function(message) {
-                       console.log("rendered messege " + message);
-                        return service.persist(message, user_id);
+                         return service.persist(message, user_id);
                });
         }
     });

@@ -34,7 +34,6 @@ module.exports={
                 promises.push(notificationService.branchShareNotification([req.body.id ,req.session.userId] ,user_id));
             });
             Promise.all(promises).then(function(){
-                console.log("shared ");
                 logger.info("branch %d was shared with user ", req.body.id);
                 resp.sendStatus(200);
             }, function(){

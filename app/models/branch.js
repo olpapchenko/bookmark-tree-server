@@ -3,6 +3,9 @@ var User = require('./user');
 var Bookmark = require('./bookmark');
 var BranchRights = require("./branchRights");
 var Promise = require("bluebird");
+var _ = require("underscore");
+var logger = require("../utils/log/modelLog");
+
 var branch = Bookshelf.Model.extend({
     tableName: "branches",
 
@@ -21,31 +24,37 @@ var branch = Bookshelf.Model.extend({
     rights: function(){
         return this.hasMany("Branch_rights");
     },
+    saveBasedOnParams : function (attrs) {
+        return this.fetch().then(function (model) {
+            return model.set(attrs).save();
+        })
+    },
     checkOwnerhip: function(user_id) {
         var _this = this;
-        BranchRights.forge({branch_id: _this.id, user_id: user_id}).fetch()
+        return BranchRights.forge({branch_id: _this.id, user_id: user_id}).fetch()
         .then(function(right){
-            return right.owner || Promise.reject();
+            return right.get("owner") || Promise.reject();
         });
     },
     addRight: function (user_id, ownership){
-        return BranchRights.forge({user_id: user_id, branch_id: this.id}).set({owner: ownership}).save();
+        return BranchRights.forge({user_id: user_id, branch_id: this.id}).saveBasedOnParams({owner: ownership});
     },
     shareSecure: function(owner, user_id, ownership){
-        var _this = this;
-        return
-        this.checkOwnerhip(owner)
+         var _this = this;
+         return _this.checkOwnerhip(owner)
         .then(function(){
                 return _this.addRight(user_id, ownership);
             }, function(){
                 Promise.reject("You are not eligible to share this branch!");
             })
         .then(function(){
+                logger.info("Branch %d was shared with %d, ownership %s", this.id, user_id, ownership);
                 return "Branch was successfully shared";
             }, function(m){
+                logger.error("Branch %d was not shared due to error %s", this.id, m.message);
                 var message = m.message || m;
                 if(message.indexOf("повторяющееся значение ключа") > -1){
-                    return "Branch is already shared";
+                    return Promise.reject("Branch is already shared");
                 } else {
                     return Promise.reject(message);
                 }
