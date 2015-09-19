@@ -23,7 +23,7 @@ module.exports={
             resp.json(m);
         });
     },
-    //todo: notification is puoshed even if branch share failed
+    //todo: notification is send even if branch share failed
     share: function(req,resp){
         var promises =[];
         if(req.body.id){

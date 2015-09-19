@@ -28,7 +28,6 @@ module.exports = {
             Bookmark.getShared(req.session.userId, req.params.id),
             Branches.getShared(req.session.userId, req.params.id)]
          ).then(function(data){
-            console.log("shared data " + JSON.stringify(data));
             sharedResults.bookmarks =  data[0] || [];
             sharedResults.branches =  data[1] || [];
             resp.json(sharedResults);
