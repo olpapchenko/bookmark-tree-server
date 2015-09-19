@@ -1,6 +1,6 @@
 var path = require('path');
 
-module.export.mode = "dev";
+module.exports.mode = "dev";
 
 module.exports.static = require("express").static(path.resolve(__dirname, "../", "./public"));
 
@@ -8,6 +8,6 @@ module.exports.views = require("express").static(path.resolve(__dirname, "../", 
 
 module.exports.salt="GameOfThrones";
 
-module.exports.logDir = "../../log/";
+module.exports.logDir = path.resolve("./logs");
 
 module.exports.sessionsPath = path.resolve(__dirname, "../sessions");

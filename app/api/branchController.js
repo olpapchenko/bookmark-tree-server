@@ -2,6 +2,8 @@ var Branch = require("../models/branch");
 var User = require("../models/user");
 var Promise = require("bluebird");
 var _  = require("underscore");
+var logger = require("../utils/log/cntrlLog");
+
 var notificationService = require("../helpers/NotificationService");
 
 module.exports={
@@ -32,6 +34,8 @@ module.exports={
                 promises.push(notificationService.branchShareNotification([req.body.id ,req.session.userId] ,user_id));
             });
             Promise.all(promises).then(function(){
+                console.log("shared ");
+                logger.info("branch %d was shared with user ", req.body.id);
                 resp.sendStatus(200);
             }, function(){
                 resp.sendStatus(500);

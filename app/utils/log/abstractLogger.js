@@ -1,5 +1,5 @@
 var path = require("path");
-var winston = require(winston);
+var winston = require("winston");
 var appConfig = require("../../../config/app_config");
 
 function getLogPath (fileName) {
@@ -12,18 +12,17 @@ function getTransport (options) {
         transport.push(new (winston.transports.Console)());
     }
     if(options.file) {
-        new (winston.transports.File)({ filename: getLogPath(options.file)});
+        transport.push(new (winston.transports.File)({ filename: getLogPath(options.file),
+            level: appConfig.mode === "dev" ? "debug" : "error"}));
     }
     return transport;
 }
 
-module.export.getLogPath = getLogPath;
+module.exports.getLogPath = getLogPath;
 
 module.exports.getLogger = function (options) {
     var logger = new (winston.Logger)({
-        transports: [
-            getTransport(options.transport)
-        ]
+        transports: getTransport(options.transport)
     });
     return logger;
 }
