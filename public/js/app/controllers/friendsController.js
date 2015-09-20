@@ -1,5 +1,5 @@
-angular.module("app").controller("friendsController", ["friends","$scope","userService", "friendsService","ngDialog",
-    function(friends, $scope, userService, friendsService, ngDialog){
+angular.module("app").controller("friendsController", ["friends","$scope","userService", "friendsService","ngDialog", "shareHandler", "shareDatasourceFriends",
+    function(friends, $scope, userService, friendsService, ngDialog, shareHandler, shareDatasourceFriends){
     $scope.friends = friends;
 
     $scope.$watch("userName", function(){
@@ -35,4 +35,8 @@ angular.module("app").controller("friendsController", ["friends","$scope","userS
             friends[index].sharedEntitiesData = sharedEntitiesData;
          });
     }
+
+    $scope.shareHandlerBookmark = shareHandler(false, shareDatasourceFriends);
+    $scope.shareHandlerBranch = shareHandler(true, shareDatasourceFriends);
+
 }]);

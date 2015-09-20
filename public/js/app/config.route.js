@@ -100,7 +100,9 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                                          "/js/app/controllers/removeFriendController.js",
                                          "/js/app/directives/branchBookmarkPanel.js",
                                          "/js/app/services/bookmarkService.js",
-                                         "/js/app/services/branchService.js"]);
+                                         "/js/app/services/branchService.js",
+                                         "/js/app/services/shareDatasourceFriends",
+                                         "/js/app/services/shareHandler"]);
                 }],
                 friends: ["friendsService", function(friendsService){
                     return friendsService.all();
