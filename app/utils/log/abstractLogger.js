@@ -1,7 +1,7 @@
 var path = require("path");
 var winston = require("winston");
 var appConfig = require("../../../config/app_config");
-
+//todo: pass name of source
 function getLogPath (fileName) {
     return path.join(appConfig.logDir, fileName);
 }

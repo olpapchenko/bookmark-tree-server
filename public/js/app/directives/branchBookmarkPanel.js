@@ -1,5 +1,5 @@
  angular.module("app")
-.directive("bookmarkPanel",["$rootScope", "ngDialog", "$state", function ($rootScope, ngDialog, $state) {
+.directive("bookmarkPanel",["$rootScope", "ngDialog", "$state", "shareHandler", "shareDatasourceAll", function ($rootScope, ngDialog, $state, shareHandler, shareDatasourceAll) {
         return {
             restrict: "E",
             scope: {
@@ -11,18 +11,6 @@
             },
             templateUrl: "/html/templates/branchBookmark.html",
             link: function(scope, iElement, attrs) {
-                function getShareHandler(isBranch) {
-                    return function(id) {
-                        var scope = $rootScope.$new();
-                        scope.id = id;
-                        scope.isBranch = isBranch;
-                        var dialog = ngDialog.open({
-                            template: '/html/templates/share.html',
-                            controller: "shareController",
-                            scope: scope
-                        });
-                    }
-                };
 
                 function getEditHandler(isBranch) {
                     return function  (branch) {
@@ -56,7 +44,7 @@
 
                 scope.removeHandler = scope.remove || getRemoveHandler(scope.branch);
                 scope.editHandler = scope.edit || getEditHandler(scope.branch);
-                scope.shareHandler = scope.share || getShareHandler(scope.branch);
+                scope.shareHandler = scope.share || shareHandler(scope.branch, shareDatasourceAll);
             }
         }
     }]);

@@ -25,4 +25,7 @@ angular.module("app").service("branchService", ["$http",function($http){
         return $http.post("/branch/remove", {id: id});
     }
 
+    this.getFriends = function (id) {
+        return $http.get("/branch/friends", {id: id});
+    }
 }]);

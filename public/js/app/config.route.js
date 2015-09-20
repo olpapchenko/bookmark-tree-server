@@ -58,16 +58,19 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             url: "/overview",
             templateUrl: PAGES_URL + "/overview.html",
             resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["/js/app/controllers/overviewController.js",
+                return $ocLazyLoad.load([
+                                         "/js/app/controllers/overviewController.js",
                                          "/js/vendor/jquery.backstretch.min.js",
                                          "/js/app/services/branchService.js",
                                          "/js/app/controllers/shareController.js",
                                          "/js/app/services/friendsService.js",
                                          "/js/app/controllers/editBranchController.js",
                                          "/js/app/controllers/removeBranchController.js",
-                                         "/js/app/directives/branchBookmarkPanel.js",
                                          "/js/app/services/bookmarkService.js",
-                                         {type: 'css', path: '/css/vendor/five.css'}]);
+                                         "/js/app/services/shareDatasourceAll.js",
+                                         "/js/app/services/shareHandler.js",
+                                         "/js/app/directives/branchBookmarkPanel.js",
+                    {type: 'css', path: '/css/vendor/five.css'}]);
             }],
             controller: "overviewController"
         })

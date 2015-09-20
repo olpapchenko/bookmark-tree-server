@@ -11,4 +11,8 @@ angular.module("app")
     this.remove = function(id){
         return $http.post("/bookmark/remove", {id: id});
     }
+
+    this.getFriends = function(id) {
+        return $http.get("/bookmark/friends", {id: id});
+    }
 }]);

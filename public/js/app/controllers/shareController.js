@@ -1,14 +1,32 @@
-angular.module("app").controller("shareController",["$scope","userService","branchService" , "friendsService",function($scope, userService, branchService, friendsService){
+angular.module("app").controller("shareController",["$scope", "userService", "branchService", "bookmarkService",
+    function($scope, userService, branchService, bookmarkService){
     var friendsList;
     $scope.shareWith = [];
 
-    friendsService.all().then(function(data){
+    var persistenceService,
+        initializeService;
+
+    if($scope.isBranch) {
+        persistenceService = branchService;
+        initializeService = $scope.datasource.getSharedWithFriendsBranch;
+    } else {
+        persistenceService = bookmarkService;
+        initializeService = $scope.datasource.getSharedWithFriendsBookmark;
+    }
+
+    $scope.datasource.all().then(function(data){
         $scope.userList = data;
         friendsList = data;
     });
 
+    initializeService($scope.id).then(function(res){
+        res.forEach(function(item){
+            $scope.addToShare(item);
+        });
+    });
+
     $scope.share = function(){
-        branchService.share($scope.id, $scope.shareWith.map(function(item){ return item.id;}), $scope.ownership).then(function(){
+        persistenceService.share($scope.id, $scope.shareWith.map(function(item){ return item.id;}), $scope.ownership).then(function(){
             $scope.closeThisDialog();
         });
     }
