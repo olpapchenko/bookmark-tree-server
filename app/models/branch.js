@@ -21,6 +21,9 @@ var branch = Bookshelf.Model.extend({
     user: function(user_id){
         return this.users().query({where: {user_id: user_id}});
     },
+    owners: function(){
+        return this.users().query({where: {owner: true}});
+    },
     rights: function(){
         return this.hasMany("Branch_rights");
     },

@@ -3,6 +3,8 @@ var User = require("../models/user");
 var Promise = require("bluebird");
 var _  = require("underscore");
 var logger = require("../utils/log/cntrlLog");
+var mandatoryParamFilter = require("../filters/mandatoryParamFilter");
+var actionComposer = require("./actionComposer");
 
 var notificationService = require("../helpers/NotificationService");
 
@@ -25,6 +27,19 @@ module.exports={
             resp.json(m);
         });
     },
+
+    getShareInformation: actionComposer({
+        beforeFilters: [mandatoryParamFilter("id")],
+        action: function(req, resp) {
+            Promise.all([Branch.owners,Branch.users]).then(function(shareInfo) {
+                resp.json({
+                    owners: shareInfo[0].splice(_.findIndex(shareInfo[0], function(owner){return owner.id === req.session.userId})),
+                    observers: shareInfo.users[1]
+                });
+            });
+        }
+    }),
+
     //todo: notification is send even if branch share failed
     share: function(req,resp){
         var promises =[];

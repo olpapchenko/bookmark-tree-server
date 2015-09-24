@@ -13,6 +13,10 @@ angular.module("app").service("branchService", ["$http",function($http){
         })
     }
 
+    this.getShareInfo = function (id) {
+        return $http.get("/branch/share", {params: {id: id}});
+    }
+
     this.share = function(id, users, ownership) {
         return $http.post("/branch/share", {id: id, users: users, ownership: ownership});
     }
