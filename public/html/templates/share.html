@@ -20,21 +20,25 @@
                 <span class="pull-left" style="margin-left: 10px;">Shared with</span>
             </header>
             <div class="panel-body">
-                <div id="tagsinput_tagsinput" class="tagsinput " style="height: 100%; margin-bottom: 10px">
+                <div id="tagsinput_tagsinput" class="tagsinput " style="height: 100%; margin-bottom: 10px" >
                     <span>With ownership</span>
                     <hr style="margin: 10px"/>
-                    <span class="tag" ng-repeat="user in owners" ng-click="removeFromOwnerShip(user)">
-                        <span>{{user.name}}</span>
-                        <a class="tagsinput-remove-link"><i class="glyphicon glyphicon-remove remove"></i></a>
-                    </span>
+                    <div style="min-height: 30px" dnd-list="owners" class="user-list">
+                        <span class="tag" ng-repeat="user in owners" ng-click="removeFromOwnerShip(user)" dnd-draggable="user" dnd-effect-allowed="move" dnd-moved="owners.splice($index, 1)">
+                            <span>{{user.name}}</span>
+                            <a class="tagsinput-remove-link"><i class="glyphicon glyphicon-remove remove"></i></a>
+                        </span>
+                    </div>
                 </div>
-                <div id="tagsinput_tagsinput" class="tagsinput " style="height: 100%;">
+                <div id="tagsinput_tagsinput" class="tagsinput " style="height: 100%;" >
                     <span>Without ownership</span>
                     <hr style="margin: 10px"/>
-                    <span class="tag" ng-repeat="user in observers" ng-click="removeFromObservers(user)">
-                        <span>{{user.name}}</span>
-                        <a class="tagsinput-remove-link"><i class="glyphicon glyphicon-remove remove"></i></a>
-                    </span>
+                    <div style="min-height: 30px"  dnd-list="observers" class="user-list">
+                        <span class="tag" ng-repeat="user in observers" ng-click="removeFromObservers(user)" dnd-draggable="user" dnd-effect-allowed="move" dnd-moved="observers.splice($index, 1)">
+                            <span>{{user.name}}</span>
+                            <a class="tagsinput-remove-link"><i class="glyphicon glyphicon-remove remove"></i></a>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>

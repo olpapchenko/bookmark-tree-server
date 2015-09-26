@@ -2,3 +2,7 @@
   background-color: #427282 !important;
   color: #ffffff !important;
 }
+
+.user-list .dndPlaceholder {
+  display: none;
+}
