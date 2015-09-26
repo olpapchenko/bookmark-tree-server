@@ -1,12 +1,13 @@
 module.exports = function(options){
     return function(req, resp) {
-        for(var beforeFilter in options.beforeFilters) {
+        var error
+        options.beforeFilters.forEach(function(filter){
             try {
-                beforeFilter(req, resp);
+                filter(req, resp);
             } catch(e) {
                 resp.status(400).send(e.message);
-            }
-        }
-        options.action(req, resp);
+                error = true;
+            }});
+        if (!error){options.action(req, resp)};
     }
 }

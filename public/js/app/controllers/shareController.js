@@ -5,7 +5,7 @@ angular.module("app").controller("shareController",["$scope",
 
     $scope.shareWith = [];
 
-    persistanceService.getShareInformation().then(function(data){
+    persistanceService.getShareInformation($scope.id).then(function(data){
         $scope.addToShare(data);
     });
 

@@ -21,6 +21,11 @@ var branch = Bookshelf.Model.extend({
     user: function(user_id){
         return this.users().query({where: {user_id: user_id}});
     },
+    obserwers: function() {
+        return this.users().query(function(qb){
+            qb.whereRaw("(owner is null or owner = false)");
+        })
+    },
     owners: function(){
         return this.users().query({where: {owner: true}});
     },
@@ -41,6 +46,13 @@ var branch = Bookshelf.Model.extend({
     },
     addRight: function (user_id, ownership){
         return BranchRights.forge({user_id: user_id, branch_id: this.id}).saveBasedOnParams({owner: ownership});
+    },
+    getShareInformation: function() {
+        return Promise.all([this.owners().fetch({columns: ["users.id", "users.name"]}), this.obserwers().fetch({columns: ["users.id", "users.name"]})])
+            .then(function(res){
+            logger.debug("share results for branch: " + this.id + " res " + res);
+            return {owners: res[0].models, observers: res[1].models}
+        });
     },
     shareSecure: function(owner, user_id, ownership){
          var _this = this;

@@ -29,19 +29,20 @@ module.exports={
     },
 
     getShareInformation: actionComposer({
-        beforeFilters: [mandatoryParamFilter("id")],
+        beforeFilters: [mandatoryParamFilter(["id"])],
         action: function(req, resp) {
-            Promise.all([Branch.owners,Branch.users]).then(function(shareInfo) {
-                resp.json({
-                    owners: shareInfo[0].splice(_.findIndex(shareInfo[0], function(owner){return owner.id === req.session.userId})),
-                    observers: shareInfo.users[1]
-                });
+            logger.debug("get share info started " + req.params);
+            Branch.forge({id: req.query.id}).getShareInformation().then(function(data) {
+                logger.info("share data for branch: " + req.query.id + " data:" + JSON.stringify(data));
+                data.owners.splice(_.findIndex(data.owners, function(owner){return owner.id === req.session.userId}));
+                resp.json(data);
             });
         }
     }),
 
     //todo: notification is send even if branch share failed
     share: function(req,resp){
+        logger.info("save share info for branch started " + res.body);
         var promises =[];
         if(req.body.id){
             req.body.users.forEach(function(user_id){

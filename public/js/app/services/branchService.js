@@ -14,7 +14,7 @@ angular.module("app").service("branchService", ["$http",function($http){
     }
 
     this.getShareInformation = function (id) {
-        return $http.get("/branch/share", {params: {id: id}});
+        return $http.get("/branch/share", {params:{id: id}}).then(function(data) {return data.data});
     }
 
     this.share = function(id, users, ownership) {

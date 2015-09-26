@@ -26,7 +26,9 @@ var user = bookshelf.Model.extend({
         return this.belongsToMany("Branch").through("Branch_rights");
     },
     branch: function(id){
-        return this.branches().query({where: {id: id}});
+        return this.branches().query(function(qb){
+            qb.where("branches.id", id);
+        })
     },
     defaultBranch: function() {
         return this.branches().query({where: {default: true}});
