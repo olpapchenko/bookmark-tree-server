@@ -67,7 +67,9 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                                          "/js/app/controllers/editBranchController.js",
                                          "/js/app/controllers/removeBranchController.js",
                                          "/js/app/services/bookmarkService.js",
-                                         "/js/app/services/shareDatasourceAll.js",
+                                         "/js/app/datasources/shareDatasourceAbstract.js",
+                                         "/js/app/datasources/shareDataSourceAllBookmark.js",
+                                         "/js/app/datasources/shareDataSourceAllBranch.js",
                                          "/js/app/services/shareHandler.js",
                                          "/js/app/directives/branchBookmarkPanel.js",
                     {type: 'css', path: '/css/vendor/five.css'}]);

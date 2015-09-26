@@ -7,6 +7,7 @@ angular.module("app").controller("loginController",["$scope", "userService","$st
             $state.go("app.overview");
         },function(){
            $scope.error = "Username/Password incorrect";
+
         });
     }
     $scope.vk_login="https://oauth.vk.com/authorize?client_id=" + APP_ID + "&display=page&redirect_uri=" + SITE_URL + "&response_type=token&v=5.37";

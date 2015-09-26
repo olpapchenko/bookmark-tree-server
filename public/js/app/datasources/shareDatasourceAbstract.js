@@ -1,5 +1,6 @@
-angular.module("app").service("shareDatasourceAbsarct", ["friendsService", function (friendsService){
+angular.module("app").service("shareDatasourceAbstract", ["friendsService", "userService",  function (friendsService, userService){
 
-    this.all = friendsService.all;
+    this.friends = friendsService;
+    this.usersService = userService;
 
 }]);

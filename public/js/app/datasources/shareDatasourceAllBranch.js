@@ -1,10 +1,8 @@
-angular.module("app").factory("shareDatasourceAll", ["shareDatasourceAbstract", "bookmarkService",
-    function (shareDatasourceAbstract, bookmarkService){
+angular.module("app").factory("shareDatasourceAllBranch", ["shareDatasourceAbstract", "branchService",
+    function (shareDatasourceAbstract, branchService){
         var factory = Object.create(shareDatasourceAbstract);
 
-        factory.getSharedWith = function () {
-            return bookmarkService.getShareInfo();
-        }
+        factory.persistanceService = branchService;
 
         return factory;
 }]);

@@ -1,5 +1,6 @@
  angular.module("app")
-.directive("bookmarkPanel",["$rootScope", "ngDialog", "$state", "shareHandler", "shareDatasourceAll", function ($rootScope, ngDialog, $state, shareHandler, shareDatasourceAll) {
+.directive("bookmarkPanel",["$rootScope", "ngDialog", "$state", "shareHandler", "shareDatasourceAllBranch", "shareDatasourceAllBookmark",
+         function ($rootScope, ngDialog, $state, shareHandler, shareDatasourceAllBranch, shareDatasourceAllBookmark) {
         return {
             restrict: "E",
             scope: {
@@ -44,7 +45,7 @@
 
                 scope.removeHandler = scope.remove || getRemoveHandler(scope.branch);
                 scope.editHandler = scope.edit || getEditHandler(scope.branch);
-                scope.shareHandler = scope.share || shareHandler(scope.branch, shareDatasourceAll);
+                scope.shareHandler = scope.share || shareHandler(scope.branch ? shareDatasourceAllBranch : shareDatasourceAllBookmark);
             }
         }
     }]);
