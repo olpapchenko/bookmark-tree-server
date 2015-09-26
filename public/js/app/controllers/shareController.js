@@ -15,6 +15,14 @@ angular.module("app").controller("shareController",["$scope",
         friendsList = data;
     });
 
+    $scope.addToShare = function (user) {
+        var ownersObservers = $scope.owners.concat($scope.observers);
+        if(!(ownersObservers.some(function(item){return item.id === user.id;}))) {
+            console.log("push");
+            $scope.observers.push(user);
+        }
+    }
+
     $scope.share = function(){
         persistenceService.share($scope.id, $scope.shareWith.map(function(item){ return item.id;}), $scope.ownership).then(function(){
             $scope.closeThisDialog();
