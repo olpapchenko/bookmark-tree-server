@@ -1,7 +1,7 @@
 var _ = require("underscore");
 
 module.exports = function(args) {
-     return function(req, resp) {
+     return function(req) {
          var queryStorages = [req.body, req.params, req.query];
          var keys = [];
          queryStorages.forEach(function(storage){
@@ -9,7 +9,7 @@ module.exports = function(args) {
          });
          args.forEach(function(arg) {
              if (!(_.flatten(keys).indexOf(arg) > -1)) {
-                throw new Error("request dost not containss " + arg);
+                throw new Error("request dost not contains " + arg);
              }
          })
     }

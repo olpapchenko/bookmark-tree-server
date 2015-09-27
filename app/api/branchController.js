@@ -1,11 +1,14 @@
-var Branch = require("../models/branch");
-var User = require("../models/user");
 var Promise = require("bluebird");
 var _  = require("underscore");
-var logger = require("../utils/log/cntrlLog");
-var mandatoryParamFilter = require("../filters/mandatoryParamFilter");
-var actionComposer = require("./actionComposer");
 
+var logger = require("../utils/log/cntrlLog");
+
+var Branch = require("../models/branch");
+var User = require("../models/user");
+
+var mandatoryParamFilter = require("../filters/mandatoryParamFilter");
+var ensureBranchExist = require("../filters/ensureBranchExist");
+var actionComposer = require("./actionComposer");
 var notificationService = require("../helpers/NotificationService");
 
 module.exports={
@@ -21,7 +24,7 @@ module.exports={
     get: actionComposer({
        beforeFilters: [mandatoryParamFilter(["id"])],
         action: function(req, resp) {
-            User.forge({id: req.session.userId}).branch(req.params.id).fetch().then(function (m) {
+            User.forge({id: req.session.userId}).branch(req.query.id).fetch().then(function (m) {
                 resp.json(m);
             });
         }
@@ -41,10 +44,14 @@ module.exports={
 
     //todo: notification is send even if branch share failed
     share: actionComposer({
-        beforeFilters: [mandatoryParamFilter(["id"])],
+        beforeFilters: [mandatoryParamFilter(["id"]),
+                        ensureBranchExist("id")],
         action: function(req,resp){
-            logger.info("save share info for branch started " + res.body);
+            logger.info("save share branch action started " + res.body);
             var promises =[];
+
+            var Branch = Branch.forge({id: req.body.id});
+
             req.body.users.forEach(function(user_id){
                 promises.push(Branch.forge({id: req.body.id}).shareSecure(req.session.userId, user_id, req.body.ownership));
                 promises.push(notificationService.branchShareNotification([req.body.id ,req.session.userId] ,user_id));
