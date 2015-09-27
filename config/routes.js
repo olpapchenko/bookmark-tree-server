@@ -26,7 +26,6 @@ router.get("/branch/share", branch.getShareInformation);
 router.post("/branch", branch.post);
 router.post("/branch/remove", branch.remove);
 router.post("/branch/share", branch.share);
-router.post("/branch/unshare", branch.unshare);
 
 //notifications routes
 router.get("/notifications", notifications.get);

@@ -1,6 +1,7 @@
 module.exports = function(options){
     return function(req, resp) {
         var error
+        options.beforeFilters = options.beforeFilters ||[];
         options.beforeFilters.forEach(function(filter){
             try {
                 filter(req, resp);
