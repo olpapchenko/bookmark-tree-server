@@ -3,7 +3,7 @@ angular.module("app").controller("shareController",["$scope",
     var friendsList,
         persistanceService = $scope.datasource.persistanceService;
 
-    $scope.shareWith = [];
+    var removedUsers = [];
 
     persistanceService.getShareInformation($scope.id).then(function(data){
         $scope.owners = data.owners;
@@ -18,23 +18,30 @@ angular.module("app").controller("shareController",["$scope",
     $scope.addToShare = function (user) {
         var ownersObservers = $scope.owners.concat($scope.observers);
         if(!(ownersObservers.some(function(item){return item.id === user.id;}))) {
-            console.log("push");
             $scope.observers.push(user);
+        }
+        var idx  = _.findIndex(removedUsers, function (curUser) { return user.id == curUser.id});
+        if(idx !== -1) {
+            removedUsers.splice(idx,1);
         }
     }
 
     $scope.share = function(){
-        persistenceService.share($scope.id, $scope.shareWith.map(function(item){ return item.id;}), $scope.ownership).then(function(){
+        var ownerIds = $scope.owners.map(function(user) {return user.id}),
+            observerIds = $scope.observers.map(function(user){return user.id});
+        persistenceService.share($scope.id, {owners: ownerIds, observers: observerIds, isPublic: $scope.isPublic}).then(function(){
             $scope.closeThisDialog();
         });
     }
 
     $scope.removeFromOwnerShip = function (friend) {
         $scope.owners.splice($scope.owners.indexOf(friend), 1);
+        removedUsers.push(friend);
     }
 
     $scope.removeFromObservers = function (friend) {
         $scope.observers.splice($scope.observers.indexOf(friend), 1);
+        removedUsers.push(friend);
     }
 
     $scope.$watch("name", function(){
