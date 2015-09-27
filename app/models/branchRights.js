@@ -1,6 +1,8 @@
 var Bookshelf = require ('../../config/db/bookshelf');
 
-var branchRights = Bookshelf.Model.extend({
+var AbstractModel = require("./abstractModel");
+
+var branchRights = Bookshelf.model('AbstractModel').extend({
 
     tableName: "branch_rights",
 
@@ -10,11 +12,6 @@ var branchRights = Bookshelf.Model.extend({
 
     branches: function() {
         return this.belongsTo("Branch");
-    },
-    saveBasedOnParams : function (attrs) {
-        return this.fetch().then(function (model) {
-            return (model || this).set(attrs).save();
-        })
     }
 });
 

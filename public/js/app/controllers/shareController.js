@@ -29,7 +29,7 @@ angular.module("app").controller("shareController",["$scope",
     $scope.share = function(){
         var ownerIds = $scope.owners.map(function(user) {return user.id}),
             observerIds = $scope.observers.map(function(user){return user.id});
-        persistenceService.share($scope.id, {owners: ownerIds, observers: observerIds, isPublic: $scope.isPublic}).then(function(){
+        persistanceService.share({id: $scope.id, owners: ownerIds, observers: observerIds, isPublic: $scope.isPublic}).then(function(){
             $scope.closeThisDialog();
         });
     }

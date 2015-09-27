@@ -1,12 +1,15 @@
+var _ = require("underscore");
+var Promise = require("bluebird");
+
 var Bookshelf = require ('../../config/db/bookshelf');
 var User = require('./user');
 var Bookmark = require('./bookmark');
+var AbstractModel = require("./abstractModel");
 var BranchRights = require("./branchRights");
-var Promise = require("bluebird");
-var _ = require("underscore");
+
 var logger = require("../utils/log/modelLog");
 
-var branch = Bookshelf.Model.extend({
+var branch = AbstractModel.extend({
     tableName: "branches",
 
     parent: function(){
@@ -31,11 +34,6 @@ var branch = Bookshelf.Model.extend({
     },
     rights: function(){
         return this.hasMany("Branch_rights");
-    },
-    saveBasedOnParams : function (attrs) {
-        return this.fetch().then(function (model) {
-            return model.set(attrs).save();
-        })
     },
     checkOwnerhip: function(user_id) {
         var _this = this;

@@ -19,10 +19,9 @@ module.exports = function(options){
 
         Promise.all(promises)
             .then(function () {
-                options.action(req, resp)
-            })
-            .catch(function(e) {
+                options.action(req, resp);
+            }, function(e) {
                 resp.status(400).send(e.message);
-            });
+            })
     }
 }

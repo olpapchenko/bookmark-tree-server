@@ -5,6 +5,7 @@ var logger = require("../utils/log/cntrlLog");
 
 var Branch = require("../models/branch");
 var User = require("../models/user");
+var BranchRight = require("../models/branchRights");
 
 var mandatoryParamFilter = require("../filters/mandatoryParamFilter");
 var ensureBranchExist = require("../filters/ensureBranchExist");
@@ -36,7 +37,7 @@ module.exports={
             logger.debug("get share info started " + req.params);
             Branch.forge({id: req.query.id}).getShareInformation().then(function(data) {
                 logger.info("share data for branch: " + req.query.id + " data:" + JSON.stringify(data));
-                data.owners.splice(_.findIndex(data.owners, function(owner){return owner.id === req.session.userId}));
+                data.owners.splice(_.findIndex(data.owners, function(owner){return owner.id === req.session.userId}),1);
                 resp.json(data);
             });
         }
@@ -47,22 +48,38 @@ module.exports={
         beforeFilters: [mandatoryParamFilter(["id"]),
                         ensureBranchExist("id")],
         action: function(req,resp){
-            logger.info("save share branch action started " + res.body);
+            logger.info("save share branch action started " + req.body);
             var promises =[];
 
-            var Branch = Branch.forge({id: req.body.id});
+            var branch = Branch.forge({id: req.body.id});
+            branch.set({is_public: req.body.isPublic});
 
-            req.body.users.forEach(function(user_id){
-                promises.push(Branch.forge({id: req.body.id}).shareSecure(req.session.userId, user_id, req.body.ownership));
-                promises.push(notificationService.branchShareNotification([req.body.id ,req.session.userId] ,user_id));
+            req.body.owners.forEach(function (userId) {
+                promises.push(BranchRight.forge({branch_id: req.body.id, user_id: userId}).saveBasedOnParams({owner: true}).then(function (isSaved) {
+                    if(isSaved) {
+                        promises.push(notificationService.branchShareNotification([req.body.id, req.session.userId], userId));
+                    }
+                    return isSaved;
+                }));
             });
+
+            req.body.observers.forEach(function (userId) {
+                promises.push(BranchRight.forge({branch_id: req.body.id, user_id: userId}).saveBasedOnParams({owner: false}).then(function (isSaved) {
+                    if(isSaved){
+                        promises.push(notificationService.branchShareNotification([req.body.id, req.session.userId], userId));
+                    }
+                    return isSaved;
+                }));
+            });
+
+            //promises.push(branch.save());
+
             Promise.all(promises).then(function(){
-                logger.info("branch %d was shared with user ", req.body.id);
-                resp.sendStatus(200);
-            }, function(){
-                resp.sendStatus(500);
+                resp.status(200).send("Information about sharing was saved");
+            }, function (e) {
+                logger.error(e)
+                resp.status(500).send("Information about sharing was not saved")
             });
-
         }
     }),
 
