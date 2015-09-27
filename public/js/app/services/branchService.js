@@ -17,8 +17,8 @@ angular.module("app").service("branchService", ["$http",function($http){
         return $http.get("/branch/share", {params:{id: id}}).then(function(data) {return data.data});
     }
 
-    this.share = function(id, users, ownership) {
-        return $http.post("/branch/share", {id: id, users: users, ownership: ownership});
+    this.share = function(id, shareData) {
+        return $http.post("/branch/share", {id: id, shareData: shareData});
     }
 
     this.persist = function(branch){
