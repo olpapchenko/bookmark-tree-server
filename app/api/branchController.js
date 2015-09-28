@@ -9,6 +9,8 @@ var BranchRight = require("../models/branchRights");
 
 var mandatoryParamFilter = require("../filters/mandatoryParamFilter");
 var ensureBranchExist = require("../filters/ensureBranchExist");
+var validateBranchOwnership = require("../filters/validateBranchOwnership");
+
 var actionComposer = require("./actionComposer");
 var notificationService = require("../helpers/NotificationService");
 
@@ -46,7 +48,8 @@ module.exports={
     //todo: notification is send even if branch share failed
     share: actionComposer({
         beforeFilters: [mandatoryParamFilter(["id"]),
-                        ensureBranchExist("id")],
+                        ensureBranchExist("id"),
+                        validateBranchOwnership],
         action: function(req,resp){
             logger.info("save share branch action started " + req.body);
             var promises =[];
@@ -72,13 +75,10 @@ module.exports={
                 }));
             });
 
-            //promises.push(branch.save());
+            promises.push(branch.save());
 
             Promise.all(promises).then(function(){
                 resp.status(200).send("Information about sharing was saved");
-            }, function (e) {
-                logger.error(e)
-                resp.status(500).send("Information about sharing was not saved")
             });
         }
     }),

@@ -1,7 +1,7 @@
+var Promise = require("bluebird");
+
 var Bookshelf = require ('../../config/db/bookshelf');
-
 var AbstractModel = require("./abstractModel");
-
 var branchRights = Bookshelf.model('AbstractModel').extend({
 
     tableName: "branch_rights",
