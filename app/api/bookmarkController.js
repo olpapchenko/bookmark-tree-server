@@ -1,6 +1,13 @@
 var bookmark = require("../models/bookmark");
 var user = require("../models/user");
 
+var mandatoryParamFilter = require("../filters/mandatoryParamFilter");
+var ensureBranchExist = require("../filters/ensureBookmarkExist");
+var validateBranchOwnership = require("../filters/validateBookmarkOwnership");
+
+
+var actionComposer = require("./actionComposer");
+
 module.all = function (req, resp) {
     bookmark.getByUserId(req.session.userId).then(function(bookmarks){
         resp.json(bookmarks);
@@ -39,17 +46,13 @@ module.exports.remove = function (req, resp) {
     })
 }
 
-module.exports.share = function(req, resp) {
-    if(req.body.bookmark_id && req.body.user_id) {
-        bookmark.forge({id: req.body.bookmark_id}).shareSecure(req.session.userId, req.body.user_id).then(function(m){
-            resp.send(m);
-        },function(m){
-            resp.status(400).send(m);
-        })
-    } else {
-        resp.status(400).send("bookmark or user were not specified");
+module.exports.share = actionComposer({
+    beforeFiltes: [mandatoryParamFilter(["id"])],
+    action: function (req, resp) {
+
+
     }
-}
+});
 
 module.exports.unshare = function(req, resp){
     if(req.body.bookmark_id && req.body.user_id) {

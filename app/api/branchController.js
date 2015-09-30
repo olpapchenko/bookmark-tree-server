@@ -48,38 +48,41 @@ module.exports={
     //todo: notification is send even if branch share failed
     share: actionComposer({
         beforeFilters: [mandatoryParamFilter(["id"]),
-                        ensureBranchExist("id"),
+                        ensureBranchExist,
                         validateBranchOwnership],
         action: function(req,resp){
             logger.info("save share branch action started " + req.body);
-            var promises =[];
 
-            var branch = Branch.forge({id: req.body.id});
-            branch.set({is_public: req.body.isPublic});
-
-            req.body.owners.forEach(function (userId) {
-                promises.push(BranchRight.forge({branch_id: req.body.id, user_id: userId}).saveBasedOnParams({owner: true}).then(function (isSaved) {
-                    if(isSaved) {
-                        promises.push(notificationService.branchShareNotification([req.body.id, req.session.userId], userId));
-                    }
-                    return isSaved;
-                }));
+            BranchRight.updateBranchRights(req.body).then(function () {
+                resp.status(200).send("Branch rights are changed");
             });
 
-            req.body.observers.forEach(function (userId) {
-                promises.push(BranchRight.forge({branch_id: req.body.id, user_id: userId}).saveBasedOnParams({owner: false}).then(function (isSaved) {
-                    if(isSaved){
-                        promises.push(notificationService.branchShareNotification([req.body.id, req.session.userId], userId));
-                    }
-                    return isSaved;
-                }));
-            });
-
-            promises.push(branch.save());
-
-            Promise.all(promises).then(function(){
-                resp.status(200).send("Information about sharing was saved");
-            });
+            //var branch = Branch.forge({id: req.body.id});
+            //branch.set({is_public: req.body.isPublic});
+            //
+            //req.body.owners.forEach(function (userId) {
+            //    promises.push(BranchRight.forge({branch_id: req.body.id, user_id: userId}).saveBasedOnParams({owner: true}).then(function (isSaved) {
+            //        if(isSaved) {
+            //            promises.push(notificationService.branchShareNotification([req.body.id, req.session.userId], userId));
+            //        }
+            //        return isSaved;
+            //    }));
+            //});
+            //
+            //req.body.observers.forEach(function (userId) {
+            //    promises.push(BranchRight.forge({branch_id: req.body.id, user_id: userId}).saveBasedOnParams({owner: false}).then(function (isSaved) {
+            //        if(isSaved){
+            //            promises.push(notificationService.branchShareNotification([req.body.id, req.session.userId], userId));
+            //        }
+            //        return isSaved;
+            //    }));
+            //});
+            //
+            //promises.push(branch.save());
+            //
+            //Promise.all(promises).then(function(){
+            //    resp.status(200).send("Information about sharing was saved");
+            //});
         }
     }),
 
