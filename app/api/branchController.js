@@ -19,7 +19,15 @@ module.exports={
     all: actionComposer({
         action: function(req, resp){
             User.forge({id: req.session.userId}).load(["branches"]).then(function(user){
-                resp.json(user.related("branches").toJSON({omitPivot: true}));
+                Promise.map(user.related("branches").models, function (branch) {
+                    return BranchRight.forge({branch_id: branch.id, user_id: req.session.userId}).fetch().then(function (right) {
+                        console.log(right.get("owner"));
+                        branch.set({isOwner: right.get("owner")})  ;
+                        return branch;
+                    })
+                }).then(function (branches) {
+                    resp.json(branches);
+                });
             });
         }
     }),
@@ -45,7 +53,6 @@ module.exports={
         }
     }),
 
-    //todo: notification is send even if branch share failed
     share: actionComposer({
         beforeFilters: [mandatoryParamFilter(["id"]),
                         ensureBranchExist,
@@ -56,33 +63,6 @@ module.exports={
             BranchRight.updateBranchRights(req.body).then(function () {
                 resp.status(200).send("Branch rights are changed");
             });
-
-            //var branch = Branch.forge({id: req.body.id});
-            //branch.set({is_public: req.body.isPublic});
-            //
-            //req.body.owners.forEach(function (userId) {
-            //    promises.push(BranchRight.forge({branch_id: req.body.id, user_id: userId}).saveBasedOnParams({owner: true}).then(function (isSaved) {
-            //        if(isSaved) {
-            //            promises.push(notificationService.branchShareNotification([req.body.id, req.session.userId], userId));
-            //        }
-            //        return isSaved;
-            //    }));
-            //});
-            //
-            //req.body.observers.forEach(function (userId) {
-            //    promises.push(BranchRight.forge({branch_id: req.body.id, user_id: userId}).saveBasedOnParams({owner: false}).then(function (isSaved) {
-            //        if(isSaved){
-            //            promises.push(notificationService.branchShareNotification([req.body.id, req.session.userId], userId));
-            //        }
-            //        return isSaved;
-            //    }));
-            //});
-            //
-            //promises.push(branch.save());
-            //
-            //Promise.all(promises).then(function(){
-            //    resp.status(200).send("Information about sharing was saved");
-            //});
         }
     }),
 
