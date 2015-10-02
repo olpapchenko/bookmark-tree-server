@@ -5,6 +5,7 @@ angular.module("app").controller("overviewController", ["$scope", "branchService
 
     $scope.addBranch = function () {
         $scope.header = "Add branch";
+        $scope.isBranch = true;
         var dialog = ngDialog.open({
             template: '/html/templates/editBranch.html',
             controller: "editBranchController",
