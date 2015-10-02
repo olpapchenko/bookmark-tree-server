@@ -3,7 +3,7 @@ var FilterError = require("./FilterError");
 
 module.exports = function (req) {
     return Branch.forge({id: req.body.id}).fetch().then(function (model) {
-        if(model.default) {
+        if(model && model.get("default")) {
             throw new FilterError("You can not perform action for default branch");
         }
     });

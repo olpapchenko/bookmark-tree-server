@@ -63,15 +63,16 @@ module.exports={
     }),
 
     post: actionComposer({
-        beforeFilters: [mandatoryParamFilter(["branch"]),
+        beforeFilters: [mandatoryParamFilter(["name"]),
                         validateBranchOwnership,
                         validateBranchNotDefault],
         action: function(req,resp){
+            var branch = _.pick(req.body, "name", "id");
             (function(){
-                if(req.body.branch.id){
-                return Branch.forge(req.body.branch).save()
+                if(branch.id){
+                return Branch.forge(branch).save()
             } else {
-                return User.forge({id : req.session.userId}).related("branches").create(Branch.forge(req.body.branch));
+                return Branch.createBranch(branch, req.session.userId);
             }})().then(function(){
                 resp.sendStatus(200);
             })

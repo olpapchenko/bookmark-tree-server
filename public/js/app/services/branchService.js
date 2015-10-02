@@ -28,7 +28,7 @@ angular.module("app").service("branchService", ["$http",function($http){
     }
 
     this.persist = function(branch){
-        return $http.post("/branch", {branch: branch});
+        return $http.post("/branch",  branch);
     }
 
     this.remove = function(id){

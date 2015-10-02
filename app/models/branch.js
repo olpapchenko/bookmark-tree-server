@@ -112,6 +112,14 @@ var branch = AbstractModel.extend({
             });
             return Promise.all(branchPromises);
         });
+    },
+    createBranch: function (attrs, owner) {
+        var _this = this;
+        return Bookshelf.transaction(function (t) {
+            return _this.forge(attrs).save(null,{transacting: t}).then(function (branch) {
+                return BranchRights.forge({user_id: owner, branch_id: branch.id}).save({owner: true}, {transacting: t});
+            });
+        })
     }
 });
 
