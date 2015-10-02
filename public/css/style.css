@@ -6,3 +6,92 @@
 .user-list .dndPlaceholder {
   display: none;
 }
+
+.checkbox {
+  min-height: 27px;
+  padding-top: 7px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.radio, .checkbox {
+  position: relative;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.radio label, .checkbox label {
+  min-height: 20px;
+  padding-left: 20px;
+  margin-bottom: 0;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.i-checks {
+  padding-left: 20px;
+  cursor: pointer;
+}
+
+label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+  position: absolute;
+  margin-top: 4px \9;
+  margin-left: -20px;
+}
+
+.i-checks input {
+  position: absolute;
+  margin-left: -20px;
+  opacity: 0;
+}
+
+input[type="checkbox"] {
+  margin: 4px 0 0;
+  margin-top: 1px \9;
+  line-height: normal;
+}
+
+.i-checks input:checked+i {
+  border-color: #23b7e5;
+}
+
+.i-checks>i {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-top: -2px;
+  margin-right: 4px;
+  margin-left: -20px;
+  line-height: 1;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid #cfdadd;
+}
+
+.i-checks input:checked+i:before {
+  top: 5px;
+  left: 4px;
+  width: 10px;
+  height: 10px;
+  background-color: #23b7e5;
+}
+
+.i-checks>i:before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background-color: transparent;
+  content: "";
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
