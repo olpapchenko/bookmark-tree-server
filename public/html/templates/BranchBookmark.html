@@ -6,7 +6,7 @@
                 <div>
                     <h1 ng-click="removeHandler(entity.id)" ng-show="!entity.default" title="Remove" style="cursor: pointer; display: inline-block;" class="ng-hide"><i class="glyphicon glyphicon-remove-sign"></i></h1>
                     <h1 ng-click="editHandler(entity)" title="Edit" style="cursor: pointer; display: inline-block; margin-left: 10%;"><i class="glyphicon glyphicon-edit"></i></h1>
-                    <h1 ng-click="shareHandler(entity.id)" title="UnShare" style="cursor: pointer; display: inline-block; margin-left: 10%;"><i class="glyphicon glyphicon-share"></i></h1>
+                    <h1 ng-show="!entity.default" ng-click="shareHandler(entity.id)" title="UnShare" style="cursor: pointer; display: inline-block; margin-left: 10%;"><i class="glyphicon glyphicon-share"></i></h1>
                 </div>
             </div>
         </div>

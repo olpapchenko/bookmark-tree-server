@@ -10,6 +10,7 @@ var BranchRight = require("../models/branchRights");
 var mandatoryParamFilter = require("../filters/mandatoryParamFilter");
 var ensureBranchExist = require("../filters/ensureBranchExist");
 var validateBranchOwnership = require("../filters/validateBranchOwnership");
+var validateBranchNotDefault = require("../filters/validateBranchNotDefault");
 
 var actionComposer = require("./actionComposer");
 var notificationService = require("../helpers/NotificationService");
@@ -50,7 +51,8 @@ module.exports={
     share: actionComposer({
         beforeFilters: [mandatoryParamFilter(["id"]),
                         ensureBranchExist,
-                        validateBranchOwnership],
+                        validateBranchOwnership,
+                        validateBranchNotDefault],
         action: function(req,resp){
             logger.info("save share branch action started " + req.body);
 
