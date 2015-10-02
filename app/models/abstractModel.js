@@ -13,6 +13,6 @@ var abstractModel = Bookshelf.Model.extend({
         })
     }
 });
-console.log("loadedf");
+
 Bookshelf.model("AbstractModel", abstractModel)
 module.exports = abstractModel;
