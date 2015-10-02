@@ -1,9 +1,10 @@
 var BookmarkRights = require("../models/bookmarkRights");
+var FilterError = require("./FilterError");
 
 module.exports = function (req) {
     return BookmarkRights.forge({bookmark_id: req.body.id, user_id: req.session.userId}).fetch().then(function (right) {
         if(!right.get("owner")) {
-            throw new Error("Action denied user with id " + req.session.userId + " is not owner of the branch with id " + req.body.id);
+            throw new FilterError("Action denied user with id " + req.session.userId + " is not owner of the bookmark with id " + req.body.id);
         }
     })
 }

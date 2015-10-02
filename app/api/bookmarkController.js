@@ -3,10 +3,11 @@ var _ = require("underscore");
 var logger = require("../utils/log/cntrlLog");
 var Bookmark = require("../models/bookmark");
 var user = require("../models/user");
+var BookmarkRights = require("../models/bookmarkRights");
 
 var mandatoryParamFilter = require("../filters/mandatoryParamFilter");
-var ensureBranchExist = require("../filters/ensureBookmarkExist");
-var validateBranchOwnership = require("../filters/validateBookmarkOwnership");
+var ensureBookmarkExist = require("../filters/ensureBookmarkExist");
+var validateBookmarkOwnership = require("../filters/validateBookmarkOwnership");
 
 
 var actionComposer = require("./actionComposer");
@@ -61,13 +62,18 @@ module.exports.remove = function (req, resp) {
     })
 }
 
-module.exports.share = actionComposer({
-    beforeFiltes: [mandatoryParamFilter(["id"])],
-    action: function (req, resp) {
+module.exports.share =  actionComposer({
+    beforeFilters: [mandatoryParamFilter(["id"]),
+                    ensureBookmarkExist,
+                    validateBookmarkOwnership],
+    action: function(req,resp){
+        logger.info("save share branch action started " + req.body);
 
-
+        BookmarkRights.updateBookmarkRight(req.body).then(function () {
+            resp.status(200).send("Bookmark rights are changed");
+        });
     }
-});
+}),
 
 module.exports.unshare = function(req, resp){
     if(req.body.bookmark_id && req.body.user_id) {

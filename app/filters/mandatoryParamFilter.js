@@ -1,4 +1,5 @@
 var _ = require("underscore");
+var FilterError = require("./FilterError");
 
 module.exports = function(args) {
      return function(req) {
@@ -9,7 +10,7 @@ module.exports = function(args) {
          });
          args.forEach(function(arg) {
              if (!(_.flatten(keys).indexOf(arg) > -1)) {
-                throw new Error("request dost not contains " + arg);
+                throw new FilterError("request dost not contains " + arg);
              }
          })
     }

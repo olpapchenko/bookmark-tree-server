@@ -1,5 +1,6 @@
 var Promise = require('bluebird');
 var logger = require("../utils/log/cntrlLog");
+var FilterError = require("../filters/filterError");
 
 var executeFilter = function(req, filter) {
     try{
@@ -22,7 +23,11 @@ module.exports = function(options){
             .then(function () {
                 options.action(req, resp);
             }, function(e) {
-                resp.status(400).send(e.message);
+                if(e.type && e.type == "FilterError"){
+                    resp.status(400).send(e.message);
+                } else {
+                    return Promise.reject(e.message);
+                }
             }).catch(function (e) {
                 logger.error(e);
                 resp.status(500).send("Something went wrong, please report the problem");

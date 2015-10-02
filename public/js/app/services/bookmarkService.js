@@ -1,7 +1,8 @@
 angular.module("app")
 .service("bookmarkService",["$http", function ($http) {
-    this.share = function(id, shareData) {
-        return $http.post("/bookmark/share", {id: id, shareData: shareData});
+    this.share = function(shareData) {
+        console.log(shareData);
+        return $http.post("/bookmark/share", shareData);
     }
 
     this.persist = function(bookmark){
