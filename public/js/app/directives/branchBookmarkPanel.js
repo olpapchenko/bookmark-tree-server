@@ -8,11 +8,11 @@
                 edit: "=",
                 share: "=",
                 entity: "=",
-                branch: "="
+                branch: "=",
+                enableEditing: "="
             },
             templateUrl: "/html/templates/branchBookmark.html",
             link: function(scope, iElement, attrs) {
-
                 function getEditHandler(isBranch) {
                     return function  (branch) {
                         var scope = $rootScope.$new();

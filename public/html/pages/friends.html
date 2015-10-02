@@ -38,7 +38,7 @@
                         <hr/>
                         <div id="portfolio">
                             <div ng-repeat="branch in friend.sharedEntitiesData.branches">
-                                <bookmark-panel branch="true" entity="branch"></bookmark-panel>
+                                <bookmark-panel branch="true" entity="branch" enable-editing="true"></bookmark-panel>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                         <h5 ><i class="glyphicon glyphicon-book"></i> You share this bookmarks with {{friend.name}}</h5>
                         <hr/>
                          <div ng-repeat="bookmark in friend.sharedEntitiesData.bookmarks">
-                             <bookmark-panel branch="false" entity="bookmark"></bookmark-panel>
+                             <bookmark-panel branch="false" entity="bookmark" enable-editing="true"></bookmark-panel>
                          </div>
                     </div>
                 </div>
