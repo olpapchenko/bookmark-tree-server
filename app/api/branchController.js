@@ -19,15 +19,9 @@ module.exports={
     all: actionComposer({
         action: function(req, resp){
             User.forge({id: req.session.userId}).load(["branches"]).then(function(user){
-                Promise.map(user.related("branches").models, function (branch) {
-                    return BranchRight.forge({branch_id: branch.id, user_id: req.session.userId}).fetch().then(function (right) {
-                        console.log(right.get("owner"));
-                        branch.set({isOwner: right.get("owner")})  ;
-                        return branch;
-                    })
-                }).then(function (branches) {
-                    resp.json(branches);
-                });
+                return BranchRight.attachBranchesRights(user.related("branches").models, req.session.userId);
+            }).then(function (branches) {
+                resp.json(branches);
             });
         }
     }),

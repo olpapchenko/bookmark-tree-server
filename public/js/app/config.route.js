@@ -103,8 +103,10 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                                          "/js/app/directives/branchBookmarkPanel.js",
                                          "/js/app/services/bookmarkService.js",
                                          "/js/app/services/branchService.js",
-                                         "/js/app/services/shareDatasourceFriends",
-                                         "/js/app/services/shareHandler"]);
+                                         "/js/app/datasources/shareDatasourceAbstract.js",
+                                         "/js/app/datasources/shareDataSourceAllBookmark.js",
+                                         "/js/app/datasources/shareDataSourceAllBranch.js",
+                                         "/js/app/services/shareHandler.js"]);
                 }],
                 friends: ["friendsService", function(friendsService){
                     return friendsService.all();

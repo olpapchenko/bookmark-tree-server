@@ -52,6 +52,15 @@ var model = Bookshelf.Model.extend({
             });
         });
 
+    },
+    attachOwnershipInfo: function (model, entity_key, userId) {
+        var right = {};
+        right[entity_key] = model.id;
+        right.user_id = userId;
+        return this.forge(right).fetch().then(function (right) {
+            model.set({isOwner: right ? right.get("owner") : false});
+            return model;
+        });
     }
 });
 

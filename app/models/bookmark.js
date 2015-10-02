@@ -3,7 +3,7 @@ var Promise = require("bluebird");
 var Bookshelf = require("../../config/db/bookshelf");
 
 var Comment = require('./comment');
-var User = require('./user');
+var User =   require('./user');
 var Marker = require('./marker');
 var Rights = require('./bookmarkRights');
 var _ = require("underscore");

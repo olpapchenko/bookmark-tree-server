@@ -1,9 +1,14 @@
-var bookshelf = require ('../../config/db/bookshelf');
+var Bookshelf = require ('../../config/db/bookshelf');
+var Promise = require("bluebird");
 
+var AbstractModel = require("./AbstractModel");
+var AbstractRight = require("./AbstractRight");
 var User = require('./user');
 var Bookmark = require('./bookmark');
 
-var right  = bookshelf.Model.extend({
+var JOIN_COLUMN = "bookmark_id";
+
+var right  = AbstractModel.extend(null, AbstractRight).extend({
     tableName: "bookmark_rights",
 
     user: function  () {
@@ -13,6 +18,19 @@ var right  = bookshelf.Model.extend({
     bookmark: function () {
         return this.belongsTo("Bookmark");
     }
+}, {
+    updateBookmarkRight: function (rights, saveCallback) {
+        return this.updateRights(rights, Bookshelf.model("Branch"), JOIN_COLUMN, saveCallBack);
+    },
+    attachBookmarkRight: function (model,userId) {
+        return this.attachOwnershipInfo(model, JOIN_COLUMN, userId);
+    },
+    attachBookmarkRights: function (models, userId) {
+        var _this = this;
+        return Promise.map(models, function (model) {
+            return _this.attachBookmarkRight(model, userId);
+        });
+    }
 });
 
-module.exports = bookshelf.model("bookmark_rights", right);
+module.exports = Bookshelf.model("bookmark_rights", right);

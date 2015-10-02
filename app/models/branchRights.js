@@ -8,7 +8,7 @@ var Branch = require("./branch");
 
 var JOIN_COLUMN = "branch_id";
 
-var branchRights = Bookshelf.model('AbstractModel').extend(null, AbstractRight).extend({
+var branchRights = AbstractModel.extend(null, AbstractRight).extend({
 
     tableName: "branch_rights",
 
@@ -21,8 +21,16 @@ var branchRights = Bookshelf.model('AbstractModel').extend(null, AbstractRight).
     }
 }, {
     updateBranchRights: function(rights, saveCallBack) {
-        console.log(Branch.forge);
         return this.updateRights(rights, Bookshelf.model("Branch"), JOIN_COLUMN, saveCallBack);
+    },
+    attachBranchRight: function (model,userId) {
+        return this.attachOwnershipInfo(model, JOIN_COLUMN, userId);
+    },
+    attachBranchesRights: function (models, userId) {
+        var _this = this;
+        return Promise.map(models, function (model) {
+            return _this.attachBranchRight(model, userId);
+        });
     }
 });
 
