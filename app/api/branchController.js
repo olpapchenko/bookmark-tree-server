@@ -64,7 +64,8 @@ module.exports={
 
     post: actionComposer({
         beforeFilters: [mandatoryParamFilter(["branch"]),
-                        validateBranchOwnership],
+                        validateBranchOwnership,
+                        validateBranchNotDefault],
         action: function(req,resp){
             (function(){
                 if(req.body.branch.id){
