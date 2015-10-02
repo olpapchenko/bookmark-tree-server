@@ -13,6 +13,7 @@ var bookmark = require("../app/api/bookmarkController"),
 
 ///=====api section=====
 ///bookmarks routes
+router.get("/bookmark/share", bookmark.getShareInformation);
 router.get("/bookmark/:id", bookmark.get);
 router.post("/bookmark", bookmark.post);
 router.post("/bookmark/share", bookmark.share);

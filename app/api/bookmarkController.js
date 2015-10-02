@@ -1,4 +1,7 @@
-var bookmark = require("../models/bookmark");
+var _ = require("underscore");
+
+var logger = require("../utils/log/cntrlLog");
+var Bookmark = require("../models/bookmark");
 var user = require("../models/user");
 
 var mandatoryParamFilter = require("../filters/mandatoryParamFilter");
@@ -9,13 +12,13 @@ var validateBranchOwnership = require("../filters/validateBookmarkOwnership");
 var actionComposer = require("./actionComposer");
 
 module.all = function (req, resp) {
-    bookmark.getByUserId(req.session.userId).then(function(bookmarks){
+    Bookmark.getByUserId(req.session.userId).then(function(bookmarks){
         resp.json(bookmarks);
     });
 }
 
 module.exports.get = function (req, resp) {
-    bookmark.getById(req.session.userId, req.params.id).then(function(bookmark){
+    Bookmark.getById(req.session.userId, req.params.id).then(function(bookmark){
         if(!bookmark){
             resp.status(404).send("bookmark not found");
             return;
@@ -24,8 +27,20 @@ module.exports.get = function (req, resp) {
     });
 }
 
+module.exports.getShareInformation = actionComposer({
+    beforeFilters: [mandatoryParamFilter(["id"])],
+    action: function(req, resp) {
+        logger.debug("get share info started " + req.params);
+        Bookmark.forge({id: req.query.id}).getShareInformation().then(function(data) {
+            logger.info("share data for branch: " + req.query.id + " data:" + JSON.stringify(data));
+            data.owners.splice(_.findIndex(data.owners, function(owner){return owner.id === req.session.userId}),1);
+            resp.json(data);
+        });
+    }
+})
+
 module.exports.post = function (req, resp) {
-    bookmark.persist(req.body.bookmark, req.session.userId).then(function(res){
+    Bookmark.persist(req.body.bookmark, req.session.userId).then(function(res){
         if(res) {
             resp.sendStatus(200);
         }else {
@@ -41,7 +56,7 @@ module.exports.remove = function (req, resp) {
         resp.status(400).send("id is not provided");
         return;
     }
-    bookmark.forge({id : req.body.id}).destroy().then(function() {
+    Bookmark.forge({id : req.body.id}).destroy().then(function() {
         resp.send("successfully removed");
     })
 }
@@ -56,7 +71,7 @@ module.exports.share = actionComposer({
 
 module.exports.unshare = function(req, resp){
     if(req.body.bookmark_id && req.body.user_id) {
-        bookmark.forge({id: req.body.bookmark_id}).unshareSecure(req.session.userId, req.body.user_id).then(function(m){
+        Bookmark.forge({id: req.body.bookmark_id}).unshareSecure(req.session.userId, req.body.user_id).then(function(m){
             resp.send(m);
         },function(m){
             resp.status(400).send(m);

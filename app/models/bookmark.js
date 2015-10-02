@@ -6,6 +6,9 @@ var Comment = require('./comment');
 var User =   require('./user');
 var Marker = require('./marker');
 var Rights = require('./bookmarkRights');
+
+var logger = require("../utils/log/modelLog");
+
 var _ = require("underscore");
 
 bookmark = bookshelf.Model.extend({
@@ -25,6 +28,14 @@ bookmark = bookshelf.Model.extend({
     user: function(user_id){
         return this.belongsToMany("User").through("Bookmark_rights").query({where: {user_id: user_id}});
     },
+    obserwers: function() {
+        return this.users().query(function(qb){
+            qb.whereRaw("(owner is null or owner = false)");
+        })
+    },
+    owners: function(){
+        return this.users().query({where: {owner: true}});
+    },
     rights: function ( ) {
         return this.hasMany("Bookmark_rights");
     },
@@ -32,43 +43,14 @@ bookmark = bookshelf.Model.extend({
     branch: function(){
         return this.belongsTo("Branch");
     },
-    shareSecure: function(owner, userId){
-        return this.user(owner).fetch().then(function(m){
-                if(!m.isEmpty()){
-                   return this.attach(User.forge({id: userId}));
-                } else {
-                    return Promise.reject("You are not eligible to unshare this bookmark!");
-                }
-            }).then(function(){
-                return "Bookmark was shared successfully";
-            },
-            function(m){
-                var message = m.message || m;
-                if(message.indexOf("повторяющееся значение") > -1){
-                    return "bookmark is already shared";
-                }
-                return message;
+    getShareInformation: function() {
+        return Promise.all([this.owners().fetch({columns: ["users.id", "users.name"]}), this.obserwers().fetch({columns: ["users.id", "users.name"]})])
+            .then(function(res){
+                logger.debug("share results for branch: " + this.id + " res " + res);
+                return {owners: res[0].models, observers: res[1].models}
             });
-    },
-
-    unshareSecure: function(owner, userId) {
-        return this.user(owner).fetch().then(function(m){
-                if(!m.isEmpty()) {
-                    return this.detach(User.forge({id: userId}));
-                } else {
-                    return Promise.reject("You are not eligible to unshare this bookmark!");
-                }
-        }).then(function(){
-            return "Bookmark was successfully unshared";
-        }, function(m){
-            var message = m.message || m;
-            if(message == "EmptyResponse"){
-                return "You you can not unshare not shared bookmark";
-            }
-            return message;
-        });
     }
-}, { //todo escape raw variables
+    }, { //todo escape raw variables
         getShared: function(userId, coOwner) {
             var _this = this;
             return  Bookshelf.knex.raw("select distinct(bookmark_id) from bookmark_rights where user_id = " + coOwner + " and bookmark_id in (select bookmark_id from bookmark_rights where owner = true and user_id =" + userId + ")").then(function(res) {

@@ -15,4 +15,8 @@ angular.module("app")
     this.getFriends = function(id) {
         return $http.get("/bookmark/friends", {id: id});
     }
+
+    this.getShareInformation = function (id) {
+        return $http.get("/bookmark/share", {params:{id: id}}).then(function(data) {return data.data;});
+    }
 }]);

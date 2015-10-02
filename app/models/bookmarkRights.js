@@ -33,4 +33,4 @@ var right  = AbstractModel.extend(null, AbstractRight).extend({
     }
 });
 
-module.exports = Bookshelf.model("bookmark_rights", right);
+module.exports = Bookshelf.model("Bookmark_rights", right);
