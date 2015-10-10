@@ -8,7 +8,7 @@ var Branch = require("./branch");
 
 var JOIN_COLUMN = "branch_id";
 
-var branchRights = AbstractModel.extend(null, AbstractRight).extend({
+var branchRights = AbstractRight.extend({
 
     tableName: "branch_rights",
 

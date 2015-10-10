@@ -1,9 +1,11 @@
 var Promise = require("bluebird");
 
 var Bookshelf = require ('../../config/db/bookshelf');
+
+var AbstractModel = require("./AbstractModel");
 var logger = require("../utils/log/modelLog");
 
-var model = Bookshelf.Model.extend({
+var model = AbstractModel.extend({
 
 }, {
     updateRights: function (rights, entity, entity_key, changeCallback) {

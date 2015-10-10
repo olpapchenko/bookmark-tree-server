@@ -8,7 +8,7 @@ var Bookmark = require('./bookmark');
 
 var JOIN_COLUMN = "bookmark_id";
 
-var right  = AbstractModel.extend(null, AbstractRight).extend({
+var right  = AbstractRight.extend({
     tableName: "bookmark_rights",
 
     user: function  () {
