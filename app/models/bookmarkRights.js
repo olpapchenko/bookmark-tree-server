@@ -20,9 +20,9 @@ var right  = AbstractRight.extend({
     }
 }, {
     updateBookmarkRight: function (rights, saveCallback) {
-        return this.updateRights(rights, Bookshelf.model("Branch"), JOIN_COLUMN, saveCallback);
+        return this.updateRights(rights, Bookshelf.model("Bookmark"), JOIN_COLUMN, saveCallback);
     },
-    attachBookmarkRight: function (model,userId) {
+    attachBookmarkRight: function (model, userId) {
         return this.attachOwnershipInfo(model, JOIN_COLUMN, userId);
     },
     attachBookmarkRights: function (models, userId) {

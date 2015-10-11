@@ -51,6 +51,18 @@ var user = bookshelf.Model.extend({
                 return friend;
             });
         });
+    },
+
+    addBookmarkToDefaultBranch: function (bookmarkId) {
+        return this.defaultBranch().fetchOne().then(function (defaultBranch) {
+            return defaultBranch.bookmarks().attach(bookmarkId);
+        })
+    },
+
+    removeBookmarkFromDefaultBranch: function (bookmarkId) {
+        return this.defaultBranch().fetchOne().then(function (defaultBranch) {
+            return defaultBranch.bookmarks().detach(bookmarkId);
+        });
     }
 }, {
     login: function (mail, password) {

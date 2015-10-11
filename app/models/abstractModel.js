@@ -7,7 +7,7 @@ var abstractModel = Bookshelf.Model.extend({
         return this.fetch().then(function (model) {
             var isSaved = model == null;
             model = model || this;
-            model.save(attrs, _.extend({method: isSaved? 'insert' : 'update'}, options)).then(function () {
+            return model.save(attrs, _.extend({method: isSaved? 'insert' : 'update'}, options)).then(function () {
                 return isSaved;
             });
         })
