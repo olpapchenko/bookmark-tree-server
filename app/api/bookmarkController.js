@@ -2,7 +2,7 @@ var _ = require("underscore");
 
 var logger = require("../utils/log/cntrlLog");
 var Bookmark = require("../models/bookmark");
-var user = require("../models/user");
+var User = require("../models/user");
 var BookmarkRights = require("../models/bookmarkRights");
 
 var mandatoryParamFilter = require("../filters/mandatoryParamFilter");
@@ -69,8 +69,9 @@ module.exports.share =  actionComposer({
     action: function(req,resp){
         logger.info("save share branch action started " + req.body);
 
-        BookmarkRights.updateBookmarkRight(req.body).then(function () {
-            resp.status(200).send("Bookmark rights are changed");
+        Promise.all([ BookmarkRights.updateBookmarkRight(req.body)
+        ]).then(function () {
+                resp.status(200).send("Bookmark rights are changed");
         });
     }
 }),

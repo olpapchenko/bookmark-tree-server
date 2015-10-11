@@ -16,7 +16,7 @@ var branch = AbstractModel.extend({
         return this.belongsTo("Branch");
     },
     bookmarks: function() {
-        return this.hasMany("Bookmark");
+        return this.belongsToMany("Bookmark");
     },
     users: function(){
         return this.belongsToMany("User").through("Branch_rights");

@@ -41,7 +41,7 @@ bookmark = bookshelf.Model.extend({
     },
 
     branch: function(){
-        return this.belongsTo("Branch");
+        return this.belongsToMany("Branch");
     },
     getShareInformation: function() {
         return Promise.all([this.owners().fetch({columns: ["users.id", "users.name"]}), this.obserwers().fetch({columns: ["users.id", "users.name"]})])
