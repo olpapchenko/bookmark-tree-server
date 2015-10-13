@@ -58,7 +58,9 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             url: "/overview",
             templateUrl: PAGES_URL + "/overview.html",
             resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load([
+            return $ocLazyLoad.load([
+                                         "/js/app/datasources/editBranchDatasource.js",
+                                         "/js/app/datasources/addBranchDatasource.js",
                                          "/js/app/controllers/overviewController.js",
                                          "/js/vendor/jquery.backstretch.min.js",
                                          "/js/app/services/branchService.js",
@@ -68,7 +70,6 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                                          "/js/app/controllers/removeBranchController.js",
                                          "/js/app/services/bookmarkService.js",
                                          "/js/app/datasources/editBookmarkDatasource.js",
-                                         "/js/app/datasources/editBranchDatasource.js",
                                          "/js/app/services/editHandler.js",
                                          "/js/app/datasources/shareDatasourceAbstract.js",
                                          "/js/app/datasources/shareDataSourceAllBookmark.js",

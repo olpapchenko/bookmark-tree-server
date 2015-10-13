@@ -1,4 +1,4 @@
-angular.module("app").controller("editBranchController", ["$scope","branchService", "bookmarkService", function ($scope) {
+angular.module("app").controller("editBranchController", ["$scope", "$state", function ($scope, $state) {
     $scope.entity = $scope.entity || {};
     $scope.header = $scope.datasource.header;
 
@@ -8,6 +8,7 @@ angular.module("app").controller("editBranchController", ["$scope","branchServic
     $scope.save = function(){
         persistService.persist($scope.entity).then(function(){
             $scope.closeThisDialog();
+            $state.reload();
         });
     }
 }]);
