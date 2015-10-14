@@ -65,6 +65,7 @@ var model = AbstractModel.extend({
         });
 
     },
+
     attachOwnershipInfo: function (model, entity_key, userId) {
         var right = {};
         right[entity_key] = model.id;

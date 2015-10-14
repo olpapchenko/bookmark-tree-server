@@ -36,13 +36,18 @@ bookmark = bookshelf.Model.extend({
     owners: function(){
         return this.users().query({where: {owner: true}});
     },
-    rights: function ( ) {
+    rights: function () {
         return this.hasMany("Bookmark_rights");
     },
 
-    branch: function(){
+    branches: function(){
         return this.belongsToMany("Branch");
     },
+
+    branchOfUser: function(userId) {
+      return this.branches().query({where: {user_id: userId}});
+    },
+
     getShareInformation: function() {
         return Promise.all([this.owners().fetch({columns: ["users.id", "users.name"]}), this.obserwers().fetch({columns: ["users.id", "users.name"]})])
             .then(function(res){
@@ -56,7 +61,12 @@ bookmark = bookshelf.Model.extend({
             return  Bookshelf.knex.raw("select distinct(bookmark_id) from bookmark_rights where user_id = " + coOwner + " and bookmark_id in (select bookmark_id from bookmark_rights where owner = true and user_id =" + userId + ")").then(function(res) {
                 var bookmarkPromises = []
                  res.rows.forEach(function(id){
-                    bookmarkPromises.push(_this.forge({id: id.bookmark_id}).fetch());
+                    bookmarkPromises.push(_this.forge({id: id.bookmark_id}).fetch().then(function (m) {
+                        return m.branchOfUser(userId).fetchOne().then(function (branch) {
+                            m.set({branch: branch});
+                            return m;
+                        })
+                    }));
                 });
                 return Promise.all(bookmarkPromises);
             });
