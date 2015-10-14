@@ -21,7 +21,7 @@ module.exports = function(options){
 
         Promise.all(promises)
             .then(function () {
-                options.action(req, resp);
+                return options.action(req, resp);
             }, function(e) {
                 if(e.type && e.type == "FilterError"){
                     resp.status(400).send(e.message);

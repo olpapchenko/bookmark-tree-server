@@ -40,17 +40,14 @@ module.exports.getShareInformation = actionComposer({
     }
 });
 
-module.exports.post = function (req, resp) {
-    Bookmark.persist(_.pick(req.body.bookmark, "id", "name", "comments", "markers", "branch_id"), req.session.userId).then(function(res){
-        if(res) {
+module.exports.post = actionComposer({
+    beforeFilters: [validateBookmarkOwnership],
+    action: function (req, resp) {
+        return Bookmark.persist(_.pick(req.body, "id", "name", "comments", "markers", "branch_id"), req.session.userId).then(function(res){
             resp.sendStatus(200);
-        }else {
-            resp.status(403).send("You have no right to edit this bookmark");
-        }
-    }, function (t) {
-        console.log(t);
-    });
-}
+        });
+    }
+});
 
 module.exports.remove = function (req, resp) {
     if(!req.body.id) {

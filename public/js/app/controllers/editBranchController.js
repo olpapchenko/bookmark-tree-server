@@ -1,4 +1,4 @@
-angular.module("app").controller("editBranchController", ["$scope", "$state", function ($scope, $state) {
+angular.module("app").controller("editBranchController", ["$scope", "$state", "toaster", function ($scope, $state, toaster) {
     var datasource = $scope.datasource;
     var initialEntity = _.clone($scope.entity);
 
@@ -16,7 +16,7 @@ angular.module("app").controller("editBranchController", ["$scope", "$state", fu
     }
 
     $scope.save = function(){
-        if(initialEntity.name == $scope.entity.name && (datasource.initializePickerValue == null || datasource.initializePickerValue($scope.entity).id === $scope.selected)) {
+        if(initialEntity && initialEntity.name == $scope.entity.name && (datasource.initializePickerValue == null || datasource.initializePickerValue($scope.entity).id === $scope.selected)) {
             $scope.closeThisDialog();
             return;
         }
@@ -28,6 +28,9 @@ angular.module("app").controller("editBranchController", ["$scope", "$state", fu
         persistService.persist($scope.entity).then(function(){
             $scope.closeThisDialog();
             $state.reload();
+        }, function() {
+            toaster.pop('error', "Save error", "You are not the owner!");
+            $scope.closeThisDialog();
         });
     }
 }]);

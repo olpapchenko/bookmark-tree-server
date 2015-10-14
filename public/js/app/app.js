@@ -1,4 +1,4 @@
-angular.module('app', ['oc.lazyLoad','ui.router', 'ngDialog', 'dndLists']).config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
+angular.module('app', ['oc.lazyLoad','ui.router', 'ngDialog', 'dndLists', 'toaster']).config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
     $ocLazyLoadProvider.config({
         debug: true
     });

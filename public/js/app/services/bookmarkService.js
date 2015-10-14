@@ -11,7 +11,7 @@ angular.module("app")
     }
 
     this.persist = function(bookmark){
-        return $http.post("/bookmark", {bookmark: bookmark});
+        return $http.post("/bookmark", bookmark);
     }
 
     this.remove = function(id){
