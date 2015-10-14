@@ -1,5 +1,5 @@
 <h3 class="page-header ng-scope"><i class="glyphicon glyphicon-user"></i> Friends</h3>
-<div class="form-group">
+<div class="row">
     <div class="col-sm-12">
         <input ng-model="userName" type="text" class="form-control round-input">
         <div style="max-height: 300px; overflow: auto;">
@@ -9,51 +9,50 @@
                 </a>
             </div>
         </div>
+            <div ng-repeat="friend in friends" class="collapseble panel panel-primary" >
+                 <div class="panel-heading custom-panel-header" style = "overflow: hidden; cursor: pointer;"   ng-click="loadDetails($index)" ng-class="{open: friend.showDetails}">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <strong>{{friend.name}} </strong>{{friend.mail}}
+                        </div>
+                        <div class="col-lg-2 col-md-offset-1">
 
-        <div ng-repeat="friend in friends" class="collapseble panel panel-primary" >
-             <div class="panel-heading custom-panel-header" style = "overflow: hidden; cursor: pointer;"   ng-click="loadDetails($index)" ng-class="{open: friend.showDetails}">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <strong>{{friend.name}} </strong>{{friend.mail}}
-                    </div>
-                    <div class="col-lg-2 col-md-offset-1">
-
-                    </div>
-                    <div class="col-lg-6">
-                        <span ng-class="{'glyphicon-chevron-down': !friend.showDetails, 'glyphicon-chevron-up': friend.showDetails}" style="margin-left: 10px;" class="pull-right glyphicon" title="expand/hide"></span>
-                        <span ng-click="removeFriend(friend.id)" class="pull-right glyphicon glyphicon-remove-sign" title="remove"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div ng-show="friends[$index].showDetails" class="panel-body" ng-class="{openWell: friend.showDetails}" style="overflow: hidden;">
-                <div class="col-md-3 col-md-offset-5">
-                    <img ng-show="!friend.sharedEntitiesData" style="height: 30px"  src="/images/loader.gif"/>
-                    <h6 ng-show="friend.sharedEntitiesData && friend.sharedEntitiesData.branches.length == 0 && friend.sharedEntitiesData.bookmarks == 0">There are no shared bookmarks</h6>
-                </div>
-
-                <div ng-if="friend.sharedEntitiesData.branches && friend.sharedEntitiesData.branches.length != 0" class="row">
-                    <div class="col-lg-12">
-                        <h5 ><i class="glyphicon glyphicon-book"></i> You share this branches with {{friend.name}}</h5>
-                        <hr/>
-                        <div id="portfolio">
-                            <div ng-repeat="branch in friend.sharedEntitiesData.branches">
-                                <bookmark-panel branch="true" entity="branch" enable-editing="true"></bookmark-panel>
-                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <span ng-class="{'glyphicon-chevron-down': !friend.showDetails, 'glyphicon-chevron-up': friend.showDetails}" style="margin-left: 10px;" class="pull-right glyphicon" title="expand/hide"></span>
+                            <span ng-click="removeFriend(friend.id)" class="pull-right glyphicon glyphicon-remove-sign" title="remove"></span>
                         </div>
                     </div>
                 </div>
-                <!--todo inject branches and bookmarks widgets into directives-->
-                <div ng-if="friend.sharedEntitiesData.branches && friend.sharedEntitiesData.bookmarks.length !=0" class="row">
-                    <div class="col-lg-12">
-                        <h5 ><i class="glyphicon glyphicon-book"></i> You share this bookmarks with {{friend.name}}</h5>
-                        <hr/>
-                         <div ng-repeat="bookmark in friend.sharedEntitiesData.bookmarks">
-                             <bookmark-panel branch="false" entity="bookmark" enable-editing="true"></bookmark-panel>
-                         </div>
+
+                <div ng-show="friends[$index].showDetails" class="panel-body" ng-class="{openWell: friend.showDetails}" style="overflow: hidden;">
+                    <div class="col-md-3 col-md-offset-5">
+                        <img ng-show="!friend.sharedEntitiesData" style="height: 30px"  src="/images/loader.gif"/>
+                        <h6 ng-show="friend.sharedEntitiesData && friend.sharedEntitiesData.branches.length == 0 && friend.sharedEntitiesData.bookmarks == 0">There are no shared bookmarks</h6>
+                    </div>
+
+                    <div ng-if="friend.sharedEntitiesData.branches && friend.sharedEntitiesData.branches.length != 0" class="row">
+                        <div class="col-lg-12">
+                            <h5 ><i class="glyphicon glyphicon-book"></i> You share this branches with {{friend.name}}</h5>
+                            <hr/>
+                            <div id="portfolio">
+                                <div ng-repeat="branch in friend.sharedEntitiesData.branches">
+                                    <bookmark-panel branch="true" entity="branch" enable-editing="true"></bookmark-panel>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--todo inject branches and bookmarks widgets into directives-->
+                    <div ng-if="friend.sharedEntitiesData.branches && friend.sharedEntitiesData.bookmarks.length !=0" class="row">
+                        <div class="col-lg-12">
+                            <h5 ><i class="glyphicon glyphicon-book"></i> You share this bookmarks with {{friend.name}}</h5>
+                            <hr/>
+                             <div ng-repeat="bookmark in friend.sharedEntitiesData.bookmarks">
+                                 <bookmark-panel branch="false" entity="bookmark" enable-editing="true"></bookmark-panel>
+                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </div>

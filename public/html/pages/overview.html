@@ -1,13 +1,22 @@
 <h3 class="page-header"><i class="glyphicon glyphicon-book"></i> Branches</h3>
 <div class="row" id="portfolio">
+    <div class="col-sm-12">
+        <input ng-model="branchName" type="text" class="form-control round-input">
+        <div style="max-height: 300px; overflow: auto;">
+            <div class="list-group">
+            </div>
+        </div>
+        <div class="row">
+            <div ng-repeat="branch in branches">
+                <bookmark-panel branch="true" entity="branch"></bookmark-panel>
+            </div>
 
-    <div ng-repeat="branch in branches">
-       <bookmark-panel branch="true" entity="branch"></bookmark-panel>
-    </div>
 
-    <div  class="col-lg-3 col-md-3 col-sm-12 col-xs-12 portfolio-item" title="add new branch" ng-click="addBranch()">
-        <div class="portfolio-caption" style="height: 230px;">
-             <span class="glyphicon glyphicon-plus" style="font-size:100px; line-height: 165px;"></span>
+            <div  class="col-lg-3 col-md-3 col-sm-12 col-xs-12 portfolio-item" title="add new branch" ng-click="addBranch()">
+                <div class="portfolio-caption" style="height: 230px;">
+                    <span class="glyphicon glyphicon-plus" style="font-size:100px; line-height: 165px;"></span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
