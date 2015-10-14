@@ -5,5 +5,9 @@ angular.module("app").factory("editBookmarkDatasource", ["bookmarkService", "bra
     datasource.persistService = bookmarkService;
     datasource.fetchPickerOptions = branchService.all;
 
+    datasource.initializePickerValue = function (entity) {
+        return entity.branch;
+    }
+
     return datasource;
 }]);

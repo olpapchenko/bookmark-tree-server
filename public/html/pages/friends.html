@@ -27,7 +27,7 @@
             </div>
 
             <div ng-show="friends[$index].showDetails" class="panel-body" ng-class="{openWell: friend.showDetails}" style="overflow: hidden;">
-                <div class="col-md-3 col-md-offset-4">
+                <div class="col-md-3 col-md-offset-5">
                     <img ng-show="!friend.sharedEntitiesData" style="height: 30px"  src="/images/loader.gif"/>
                     <h6 ng-show="friend.sharedEntitiesData && friend.sharedEntitiesData.branches.length == 0 && friend.sharedEntitiesData.bookmarks == 0">There are no shared bookmarks</h6>
                 </div>
