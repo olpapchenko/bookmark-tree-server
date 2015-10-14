@@ -55,7 +55,9 @@ var model = AbstractModel.extend({
                             return t.destroy({transaction: t});
                         })
                         .then(function () {
-                            return changeCallback(null, userId);
+                            if(changeCallback) {
+                                return changeCallback(null, userId);
+                            }
                         })
                     }, {concurrency: 1});
             })
