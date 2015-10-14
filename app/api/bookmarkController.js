@@ -49,15 +49,14 @@ module.exports.post = actionComposer({
     }
 });
 
-module.exports.remove = function (req, resp) {
-    if(!req.body.id) {
-        resp.status(400).send("id is not provided");
-        return;
+module.exports.remove = actionComposer({
+    beforeFilters: [validateBookmarkOwnership],
+    action: function (req, resp) {
+        Bookmark.forge({id : req.body.id}).destroy().then(function() {
+            resp.send("Successfully removed");
+        });
     }
-    Bookmark.forge({id : req.body.id}).destroy().then(function() {
-        resp.send("successfully removed");
-    })
-}
+});
 
 module.exports.share =  actionComposer({
     beforeFilters: [mandatoryParamFilter(["id"]),
