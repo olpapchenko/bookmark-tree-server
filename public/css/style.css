@@ -95,3 +95,10 @@ input[type="checkbox"] {
   -webkit-transition: all .2s;
   transition: all .2s;
 }
+
+.search-bar {
+  background: url('../images/search-icon.jpg') no-repeat 3px !important;
+  background-color: #ffffff !important;
+  color: black !important;
+  padding-left: 35px !important;
+}
