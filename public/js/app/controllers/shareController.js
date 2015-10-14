@@ -5,6 +5,10 @@ angular.module("app").controller("shareController",["$scope",
 
     var removedUsers = [];
 
+    persistanceService.get($scope.id).then(function (entity) {
+        $scope.isPublic = entity.is_public;
+    });
+
     persistanceService.getShareInformation($scope.id).then(function(data){
         $scope.owners = data.owners;
         $scope.observers = data.observers;

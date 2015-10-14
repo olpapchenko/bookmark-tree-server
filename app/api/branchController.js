@@ -30,7 +30,7 @@ module.exports={
     get: actionComposer({
        beforeFilters: [mandatoryParamFilter(["id"])],
         action: function(req, resp) {
-            User.forge({id: req.session.userId}).branch(req.query.id).fetch().then(function (m) {
+            User.forge({id: req.session.userId}).branch(req.query.id).fetchOne().then(function (m) {
                 resp.json(m);
             });
         }

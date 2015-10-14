@@ -77,10 +77,10 @@ input[type="checkbox"] {
 }
 
 .i-checks input:checked+i:before {
-  top: 4px;
+  top: 3px;
   left: 4px;
-  width: 10px;
-  height: 10px;
+  width: 11px;
+  height: 11px;
   background-color: #23b7e5;
 }
 

@@ -16,29 +16,39 @@ var user = bookshelf.Model.extend({
     bookmarks: function () {
         return this.belongsToMany("Bookmark").through("Bookmark_rights");
     },
+
     bookmark: function(id) {
-        return this.belongsToMany("Bookmark").through("Bookmark_rights").query({where: {id: id}});
+        return this.bookmarks().query(function(qb){
+            qb.where("bookmarks.id", id);
+        })
     },
+
     rights: function () {
         return this.hasMany("Bookmark_rights");
     },
+
     branches: function() {
         return this.belongsToMany("Branch").through("Branch_rights");
     },
+
     branch: function(id){
         return this.branches().query(function(qb){
             qb.where("branches.id", id);
         })
     },
+
     defaultBranch: function() {
         return this.branches().query({where: {default: true}});
     },
+
     friends: function(){
         return this.belongsToMany("User", "friends", "user_id", "friend_id");
     },
+
     notifications: function(){
         return this.hasMany("Notification");
     },
+
     isFrineds: function(users) {
         _this = this;
        return this.load("friends").then(function() {

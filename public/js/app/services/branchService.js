@@ -14,7 +14,7 @@ angular.module("app").service("branchService", ["$http",function($http){
     }
 
     this.get = function (id) {
-        return $http.get("/branch", {params: {id:id}}).then(function (data) {
+        return $http.get("/branch", {params: {id: id}}).then(function (data) {
             return data.data
         });
     }

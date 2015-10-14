@@ -19,15 +19,14 @@ module.all = function (req, resp) {
     });
 }
 
-module.exports.get = function (req, resp) {
-    Bookmark.getById(req.session.userId, req.params.id).then(function(bookmark){
-        if(!bookmark){
-            resp.status(404).send("bookmark not found");
-            return;
-        }
-        resp.json(bookmark);
-    });
-}
+module.exports.get = actionComposer({
+    beforeFilters: [mandatoryParamFilter(["id"])],
+    action: function (req, resp) {
+        User.forge({id: req.session.userId}).bookmark(req.query.id).fetchOne().then(function (m) {
+            resp.json(m);
+        });
+    }
+});
 
 module.exports.getShareInformation = actionComposer({
     beforeFilters: [mandatoryParamFilter(["id"])],
@@ -39,7 +38,7 @@ module.exports.getShareInformation = actionComposer({
             resp.json(data);
         });
     }
-})
+});
 
 module.exports.post = function (req, resp) {
     Bookmark.persist(_.pick(req.body.bookmark, "id", "name", "comments", "markers", "branch_id"), req.session.userId).then(function(res){

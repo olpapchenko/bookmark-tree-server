@@ -1,7 +1,12 @@
 angular.module("app")
 .service("bookmarkService",["$http", function ($http) {
+    this.get = function (id) {
+        return $http.get("/bookmark", {params: {id: id}}).then(function (bookmark) {
+            return bookmark.data;
+        })
+    }
+
     this.share = function(shareData) {
-        console.log(shareData);
         return $http.post("/bookmark/share", shareData);
     }
 
