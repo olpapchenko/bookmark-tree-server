@@ -4,6 +4,9 @@ angular.module("app").factory("editBookmarkDatasource", ["bookmarkService", "bra
     datasource.displayBranchPicker = true;
     datasource.persistService = bookmarkService;
     datasource.fetchPickerOptions = branchService.all;
+    datasource.setPickedValue = function (entity, picked) {
+        entity.branch_id = picked;
+    }
 
     datasource.initializePickerValue = function (entity) {
         return entity.branch;

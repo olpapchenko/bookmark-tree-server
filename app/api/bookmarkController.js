@@ -42,14 +42,14 @@ module.exports.getShareInformation = actionComposer({
 })
 
 module.exports.post = function (req, resp) {
-    Bookmark.persist(req.body.bookmark, req.session.userId).then(function(res){
+    Bookmark.persist(_.pick(req.body.bookmark, "id", "name", "comments", "markers", "branch_id"), req.session.userId).then(function(res){
         if(res) {
             resp.sendStatus(200);
         }else {
             resp.status(403).send("You have no right to edit this bookmark");
         }
-    }, function(){
-        resp.status(500).send("can not update bookmark, please contact your administrator");
+    }, function (t) {
+        console.log(t);
     });
 }
 
@@ -83,16 +83,4 @@ module.exports.share =  actionComposer({
                 resp.status(200).send("Bookmark rights are changed");
         });
     }
-}),
-
-module.exports.unshare = function(req, resp){
-    if(req.body.bookmark_id && req.body.user_id) {
-        Bookmark.forge({id: req.body.bookmark_id}).unshareSecure(req.session.userId, req.body.user_id).then(function(m){
-            resp.send(m);
-        },function(m){
-            resp.status(400).send(m);
-        })
-    } else {
-        resp.status(400).send("bookmark or user were not specified");
-    }
-}
+})

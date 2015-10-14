@@ -16,9 +16,13 @@ angular.module("app").controller("editBranchController", ["$scope", "$state", fu
     }
 
     $scope.save = function(){
-        if(datasource.initializePickerValue($scope.entity).id === $scope.selected && initialEntity.name == $scope.entity.name) {
+        if(initialEntity.name == $scope.entity.name && (datasource.initializePickerValue == null || datasource.initializePickerValue($scope.entity).id === $scope.selected)) {
             $scope.closeThisDialog();
             return;
+        }
+
+        if(datasource.displayBranchPicker){
+            datasource.setPickedValue($scope.entity, $scope.selected);
         }
 
         persistService.persist($scope.entity).then(function(){

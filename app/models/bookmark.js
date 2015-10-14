@@ -2,16 +2,19 @@ var bookshelf = require ('../../config/db/bookshelf');
 var Promise = require("bluebird");
 var Bookshelf = require("../../config/db/bookshelf");
 
+var AbstractModel = require('./AbstractModel');
 var Comment = require('./comment');
 var User =   require('./user');
 var Marker = require('./marker');
 var Rights = require('./bookmarkRights');
+var BookmarksBranches = require('./BookmarksBranches');
+var BookmarkRights = require('./BookmarkRights');
 
 var logger = require("../utils/log/modelLog");
 
 var _ = require("underscore");
 
-bookmark = bookshelf.Model.extend({
+bookmark = AbstractModel.extend({
     tableName: "bookmarks",
 
     comments: function () {
@@ -25,27 +28,36 @@ bookmark = bookshelf.Model.extend({
     users: function () {
         return this.belongsToMany("User").through("Bookmark_rights");
     },
+
     user: function(user_id){
         return this.belongsToMany("User").through("Bookmark_rights").query({where: {user_id: user_id}});
     },
+
     obserwers: function() {
         return this.users().query(function(qb){
             qb.whereRaw("(owner is null or owner = false)");
         })
     },
+
     owners: function(){
         return this.users().query({where: {owner: true}});
     },
+
     rights: function () {
         return this.hasMany("Bookmark_rights");
     },
 
     branches: function(){
-        return this.belongsToMany("Branch");
+        return this.belongsToMany("Branch").through("BookmarksBranches");
     },
 
     branchOfUser: function(userId) {
       return this.branches().query({where: {user_id: userId}});
+    },
+
+    setBranch: function(userId, newBranchId, options) {
+        var _this = this;
+       return BookmarksBranches.forge({user_id: userId, bookmark_id: _this.id}).saveBasedOnParams({branch_id: newBranchId}, options);
     },
 
     getShareInformation: function() {
@@ -103,12 +115,13 @@ bookmark = bookshelf.Model.extend({
                                 bookmark.branch_id = bookmark.branch_id || user.related("defaultBranch").models[0];
                                 return bookmark;})
                      .then(function(bookmark) {
-                         return  _this.forge(_.omit(bookmark, "comments", "markers"))
-                             .save(null,{transacting: t})
+                         return  _this.forge(_.omit(bookmark, "comments", "markers", "branch_id"))
+                             .save(null, {transacting: t})
                              .tap(function(model){
-                                 return User.forge({id: userId}).fetch({require: true}).then(function(user){
-                                     user.bookmarks().attach(model,{transacting: t});
-                                 });
+                                 if(!bookmark.id) {
+                                     return BookmarkRights.forge({user_id: userId, bookmark_id: model.id, owner: true}).save(null, {transacting: t});
+                                 }
+                                 return ;
                              })
                          .tap(function(model) {
                              if(!bookmark.comments){
@@ -125,6 +138,9 @@ bookmark = bookshelf.Model.extend({
                              return Promise.map(bookmark.markers, function (marker){
                                  return Marker.forge(marker).save({bookmark_id: model.id}, {transacting: t});
                              });
+                         })
+                         .tap(function (model) {
+                             return model.setBranch(userId, bookmark.branch_id, {transacting: t});
                          });
                      });
                });
