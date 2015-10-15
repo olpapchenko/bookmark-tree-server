@@ -122,14 +122,14 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             controller: "friendsController"
         })
         .state("app.bookmarks", {
-            url: "/bookmarks",
+            url: "/branch/:id",
             templateUrl: PAGES_URL + "bookmarks.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
                     return $ocLazyLoad.load(["/js/app/controllers/bookmarksController.js"]);
                 }],
-                bookmarks: ["friendsService", function(friendsService){
-                    return friendsService.all();
+                bookmarks: ["bookmarkService", "$stateParams", function(bookmarkService, $stateParams){
+                     return bookmarkService.allByBranch($stateParams.id);
                 }]
             },
             controller: "bookmarksController"

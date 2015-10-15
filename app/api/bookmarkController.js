@@ -2,6 +2,7 @@ var _ = require("underscore");
 var Promise = require("bluebird");
 
 var logger = require("../utils/log/cntrlLog");
+var Branch = require("../models/branch");
 var Bookmark = require("../models/bookmark");
 var User = require("../models/user");
 var BookmarkRights = require("../models/bookmarkRights");
@@ -9,15 +10,26 @@ var BookmarkRights = require("../models/bookmarkRights");
 var mandatoryParamFilter = require("../filters/mandatoryParamFilter");
 var ensureBookmarkExist = require("../filters/ensureBookmarkExist");
 var validateBookmarkOwnership = require("../filters/validateBookmarkOwnership");
-
+var validateBranchOwnership = require("../filters/validateBranchOwnership")
 
 var actionComposer = require("./actionComposer");
 
-module.all = function (req, resp) {
+module.exports.all = function (req, resp) {
     Bookmark.getByUserId(req.session.userId).then(function(bookmarks){
         resp.json(bookmarks);
     });
 }
+
+module.exports.allByBranch = actionComposer({
+    beforeFilters: [mandatoryParamFilter(["id"]),
+                    validateBranchOwnership],
+    action: function (req, resp) {
+        Branch.forge({id: req.query.id}).bookmarks().fetch().then(function (bookmarks) {
+            resp.json(bookmarks.toJSON({omitPivot: true}));
+        });
+    }
+
+});
 
 module.exports.get = actionComposer({
     beforeFilters: [mandatoryParamFilter(["id"])],

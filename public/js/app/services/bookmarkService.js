@@ -6,6 +6,10 @@ angular.module("app")
         })
     }
 
+    this.allByBranch = function (id) {
+        $http.get("/bookmark/branch", {params: {id: id}});
+    }
+
     this.share = function(shareData) {
         return $http.post("/bookmark/share", shareData);
     }
