@@ -29,7 +29,7 @@ module.exports = function(options){
                     return Promise.reject(e.message);
                 }
             }).catch(function (e) {
-                logger.error(e);
+                logger.error(e.message);
                 resp.status(500).send("Something went wrong, please report the problem");
             })
     }

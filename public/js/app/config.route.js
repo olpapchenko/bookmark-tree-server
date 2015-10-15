@@ -120,6 +120,19 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                 }]
             },
             controller: "friendsController"
+        })
+        .state("app.bookmarks", {
+            url: "/bookmarks",
+            templateUrl: PAGES_URL + "bookmarks.html",
+            resolve: {
+                files: ["$ocLazyLoad", function($ocLazyLoad){
+                    return $ocLazyLoad.load(["/js/app/controllers/bookmarksController.js"]);
+                }],
+                bookmarks: ["friendsService", function(friendsService){
+                    return friendsService.all();
+                }]
+            },
+            controller: "bookmarksController"
         });
 }]);
 
