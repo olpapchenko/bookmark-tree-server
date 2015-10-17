@@ -24,9 +24,14 @@ module.exports.allByBranch = actionComposer({
     beforeFilters: [mandatoryParamFilter(["id"]),
                     validateBranchOwnership],
     action: function (req, resp) {
-        Branch.forge({id: req.query.id}).bookmarks().fetch().then(function (bookmarks) {
-            resp.json(bookmarks.toJSON({omitPivot: true}));
-        });
+        Branch.forge({id: req.query.id}).bookmarks().fetch()
+
+            .then(function (bookmarks) {
+                return BookmarkRights.attachBookmarkRights(bookmarks, req.session.userId);
+            })
+            .then(function (bookmarks) {
+                resp.json(bookmarks);
+            });
     }
 
 });

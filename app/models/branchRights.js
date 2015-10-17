@@ -23,14 +23,13 @@ var branchRights = AbstractRight.extend({
     updateBranchRights: function(rights, saveCallBack) {
         return this.updateRights(rights, Bookshelf.model("Branch"), JOIN_COLUMN, saveCallBack);
     },
-    attachBranchRight: function (model,userId) {
+
+    attachBranchRight: function (model, userId) {
         return this.attachOwnershipInfo(model, JOIN_COLUMN, userId);
     },
+
     attachBranchesRights: function (models, userId) {
-        var _this = this;
-        return Promise.map(models, function (model) {
-            return _this.attachBranchRight(model, userId);
-        });
+        return this.attachOwnershipInfos(models, JOIN_COLUMN, userId);
     }
 });
 

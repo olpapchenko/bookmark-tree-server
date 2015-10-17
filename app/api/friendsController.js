@@ -32,7 +32,7 @@ module.exports = {
             Bookmark.getShared(req.session.userId, req.params.id),
             Branches.getShared(req.session.userId, req.params.id)]
          ).then(function(data){
-            return Promise.all([ BookmarkRights.attachBookmarkRights(data[0], req.params.id), BranchRights.attachBranchesRights(data[1], req.params.id)])
+            return Promise.all([data[0], BranchRights.attachBranchesRights(data[1], req.params.id)])
         }).then(function (data) {
             sharedResults.bookmarks =  data[0] || [];
             sharedResults.branches =  data[1] || [];

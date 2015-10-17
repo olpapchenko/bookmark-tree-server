@@ -76,6 +76,16 @@ var model = AbstractModel.extend({
             model.set({isOwner: right ? right.get("owner") : false});
             return model;
         });
+    },
+
+    attachOwnershipInfos: function (models, entity_key, userId) {
+        var _this = this;
+
+        var models = models.map(function (entity) {
+            return _this.attachOwnershipInfo(entity, entity_key, userId);
+        });
+
+        return Promise.all(models);
     }
 });
 

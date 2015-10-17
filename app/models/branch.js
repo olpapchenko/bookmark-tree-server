@@ -103,15 +103,22 @@ var branch = AbstractModel.extend({
         });
     }
 },{
+    fetchById: function (id, userId){
+        return this.forge({id: id}).fetch()
+            .then(function (branch) {
+                return BranchRights.attachBranchRight(branch, userId);
+            })
+    },
+
     getShared: function(userId, coOwner) {
         var _this = this;
-        return  Bookshelf.knex.raw("select distinct(branch_id) from branch_rights where user_id = " + coOwner + " and branch_id in (select branch_id from branch_rights where owner = true and user_id =" + userId + ")").then(function(res) {
-            var branchPromises = []
-            res.rows.forEach(function(id){
-                branchPromises.push(_this.forge({id: id.branch_id}).fetch());
+        return  Bookshelf.knex.raw("select distinct(branch_id) from branch_rights where user_id = " + coOwner + " and branch_id in (select branch_id from branch_rights where owner = true and user_id =" + userId + ")")
+            .then(function(res) {
+                return res.rows;
+            })
+            .map(function (row) {
+                return _this.fetchById(row.branch_id);
             });
-            return Promise.all(branchPromises);
-        });
     },
     createBranch: function (attrs, owner) {
         var _this = this;

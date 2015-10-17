@@ -22,14 +22,13 @@ var right  = AbstractRight.extend({
     updateBookmarkRight: function (rights, saveCallback) {
         return this.updateRights(rights, Bookshelf.model("Bookmark"), JOIN_COLUMN, saveCallback);
     },
+
     attachBookmarkRight: function (model, userId) {
         return this.attachOwnershipInfo(model, JOIN_COLUMN, userId);
     },
+
     attachBookmarkRights: function (models, userId) {
-        var _this = this;
-        return Promise.map(models, function (model) {
-            return _this.attachBookmarkRight(model, userId);
-        });
+        return this.attachOwnershipInfos(models, JOIN_COLUMN, userId);
     }
 });
 

@@ -70,18 +70,13 @@ bookmark = AbstractModel.extend({
     }, { //todo escape raw variables
         getShared: function(userId, coOwner) {
             var _this = this;
-            return  Bookshelf.knex.raw("select distinct(bookmark_id) from bookmark_rights where user_id = " + coOwner + " and bookmark_id in (select bookmark_id from bookmark_rights where owner = true and user_id =" + userId + ")").then(function(res) {
-                var bookmarkPromises = []
-                 res.rows.forEach(function(id){
-                    bookmarkPromises.push(_this.forge({id: id.bookmark_id}).fetch().then(function (m) {
-                        return m.branchOfUser(userId).fetchOne().then(function (branch) {
-                            m.set({branch: branch});
-                            return m;
-                        })
-                    }));
+            return  Bookshelf.knex.raw("select distinct(bookmark_id) from bookmark_rights where user_id = " + coOwner + " and bookmark_id in (select bookmark_id from bookmark_rights where owner = true and user_id =" + userId + ")")
+                .then(function (res) {
+                    return res.rows;
+                })
+                .map(function (row) {
+                    return _this.fetchById(row.bookmark_id, {withRelated: 'branch'});
                 });
-                return Promise.all(bookmarkPromises);
-            });
         },
 
         getByUserId: function (userId, rights) {
@@ -94,13 +89,11 @@ bookmark = AbstractModel.extend({
                });
         },
 
-        getById: function (id, userId, rights) {
-           rights = rights || {read: true};
-           return  Rights.forge(_.extend(rights, {user_id: userId, bookmark_id: id}))
-               .fetch({withRelated:  ["bookmark"]})
-               .then(function (right) {
-                   return right != null ? right.related("bookmark").load(['comments', 'markers']): null;
-               });
+        fetchById: function (id, userId, optioins){
+            return this.forge({id: id}).fetch(options)
+                .then(function (bookmark) {
+                    return BookmarkRights.attachBookmarkRight(bookmark, userId);
+                });
         },
 
         persist: function(bookmark, userId, rights) {
