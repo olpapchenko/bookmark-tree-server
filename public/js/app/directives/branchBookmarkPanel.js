@@ -1,6 +1,27 @@
  angular.module("app")
-.directive("bookmarkPanel",["$rootScope", "ngDialog", "$state", "shareHandler", "shareDatasourceAllBranch", "shareDatasourceAllBookmark", "editHandler", "editBookmarkDatasource", "editBranchDatasource",
-         function ($rootScope, ngDialog, $state, shareHandler, shareDatasourceAllBranch, shareDatasourceAllBookmark, editHandler, editBookmarkDatasource, editBranchDatasource) {
+.directive("bookmarkPanel",[
+         "$rootScope",
+         "ngDialog",
+         "$state",
+         "shareHandler",
+         "branchDatasource",
+         "bookmarkDatasource",
+         "shareDatasourceAllBranch",
+         "shareDatasourceAllBookmark",
+         "editHandler",
+         "editBookmarkDatasource",
+         "editBranchDatasource",
+         function ($rootScope,
+                   ngDialog,
+                   $state,
+                   shareHandler,
+                   branchDatasource,
+                   bookmarkDatasource,
+                   shareDatasourceAllBranch,
+                   shareDatasourceAllBookmark,
+                   editHandler,
+                   editBookmarkDatasource,
+                   editBranchDatasource) {
         return {
             restrict: "E",
             scope: {
@@ -30,6 +51,8 @@
                     }
                 };
 
+                scope.navigatePath = scope.branch ? branchDatasource.path : bookmarkDatasource.path;
+                console.log("path  in directive " + branchDatasource.path(1));
                 scope.removeHandler = scope.remove || getRemoveHandler(scope.branch);
                 scope.editHandler = scope.edit || editHandler(scope.branch ? editBranchDatasource : editBookmarkDatasource);
                 scope.shareHandler = scope.share || shareHandler(scope.branch ? shareDatasourceAllBranch : shareDatasourceAllBookmark);

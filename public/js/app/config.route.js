@@ -59,6 +59,9 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/overview.html",
             resolve: ["$ocLazyLoad", function($ocLazyLoad){
             return $ocLazyLoad.load([
+                                         "/js/app/datasources/abstractEntityDatasource.js",
+                                         "/js/app/datasources/bookmarkDatasource.js",
+                                         "/js/app/datasources/branchDatasource.js",
                                          "/js/app/datasources/editBranchDatasource.js",
                                          "/js/app/datasources/addBranchDatasource.js",
                                          "/js/app/controllers/overviewController.js",
@@ -121,7 +124,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             },
             controller: "friendsController"
         })
-        .state("app.bookmarks", {
+        .state("app.branch", {
             url: "/branch/:id",
             templateUrl: PAGES_URL + "bookmarks.html",
             resolve: {

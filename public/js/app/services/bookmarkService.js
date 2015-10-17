@@ -7,7 +7,9 @@ angular.module("app")
     }
 
     this.allByBranch = function (id) {
-        $http.get("/bookmark/branch", {params: {id: id}});
+        return $http.get("/bookmark/branch", {params: {id: id}}).then(function (m) {
+            return m.data;
+        });
     }
 
     this.share = function(shareData) {

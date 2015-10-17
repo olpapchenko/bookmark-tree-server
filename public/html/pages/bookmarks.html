@@ -1,5 +1,5 @@
 <h3 class="page-header"><i class="glyphicon glyphicon-book"></i> Bookmarks</h3>
-<div class="row"  >
+<div class="row" id="portfolio" >
     <div class="col-sm-12">
         <input placeholder="Search" ng-model="bookmarkName" type="text" class="form-control round-input search-bar">
 
@@ -7,17 +7,10 @@
             <div class="list-group">
             </div>
         </div>
-        <div class="row">
-            <!--<div ng-repeat="branch in branches|filter:branchName">-->
-                <!--<bookmark-panel branch="true" entity="branch"></bookmark-panel>-->
-            <!--</div>-->
-
-
-            <!--<div  class="col-lg-3 col-md-3 col-sm-12 col-xs-12 portfolio-item" title="add new branch" ng-click="addBranch()">-->
-                <!--<div class="portfolio-caption" style="height: 230px;">-->
-                    <!--<span class="glyphicon glyphicon-plus" style="font-size:100px; line-height: 165px;"></span>-->
-                <!--</div>-->
-            <!--</div>-->
+         <div class="row">
+            <div ng-repeat="bookmark in bookmarks|filter:bookmarkName">
+                <bookmark-panel enable-editing = "true" branch="false" entity="bookmark"></bookmark-panel>
+            </div>
         </div>
     </div>
 </div>
