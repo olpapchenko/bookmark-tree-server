@@ -102,7 +102,7 @@ bookmark = AbstractModel.extend({
            _this = this;
            return  Bookshelf.transaction(function(t) {
                  return Promise.map(bookmarks, function (bookmark) {
-                     return User.forge(userId)
+                     return bookshelf.model("User").forge({id: userId})
                         .load(["defaultBranch"])
                         .then(function(user) {
                                 bookmark.branch_id = bookmark.branch_id || user.related("defaultBranch").models[0];
@@ -137,7 +137,7 @@ bookmark = AbstractModel.extend({
                          });
                      });
                });
-            }).then(function(p){return p.length > 1 ? p : p[0]});
+            }).then(function(p){return p.length > 1 ? p : p[0]}, function(d){ console.log(d);});
         }
     }
 );
