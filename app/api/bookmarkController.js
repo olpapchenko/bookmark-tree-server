@@ -25,9 +25,11 @@ module.exports.allByBranch = actionComposer({
                     validateBranchOwnership],
     action: function (req, resp) {
         Branch.forge({id: req.query.id}).bookmarks().fetch()
-
             .then(function (bookmarks) {
                 return BookmarkRights.attachBookmarkRights(bookmarks, req.session.userId);
+            })
+            .map(function(bookmark){
+                return bookmark.set({branch: {id: Number(req.query.id)}});
             })
             .then(function (bookmarks) {
                 resp.json(bookmarks);
