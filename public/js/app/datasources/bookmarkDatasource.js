@@ -2,7 +2,9 @@ angular.module("app").factory("bookmarkDatasource", ["$state", "abstractEntityDa
     var STATE = "app.bookmark";
 
     var ds = {
-        path: abstractDatasource.path(STATE)
+        path: function (id, name) {
+            return abstractDatasource.path(STATE)(id) + "/" + name;
+        }
     };
 
     return ds;

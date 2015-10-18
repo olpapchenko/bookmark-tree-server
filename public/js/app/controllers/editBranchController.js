@@ -29,7 +29,8 @@ angular.module("app").controller("editBranchController", ["$scope", "$state", "t
             $scope.closeThisDialog();
             $state.reload();
         }, function() {
-            toaster.pop('error', "Save error", "You are not the owner!");
+            //todo: write http interceptor
+            toaster.pop('error', "Save error", "Something went wrong!");
             $scope.closeThisDialog();
         });
     }

@@ -125,7 +125,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             controller: "friendsController"
         })
         .state("app.branch", {
-            url: "/branch/:id",
+            url: "/branch/:id/:name",
             templateUrl: PAGES_URL + "bookmarks.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){

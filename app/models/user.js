@@ -3,7 +3,9 @@ var encodeSHA = require("../helpers/encodeSHA");
 var Bookmark = require('./bookmark');
 var Rights = require('./bookmarkRights');
 var Branch = require('./branch');
+var BookmarksBranches = require('./BookmarksBranches');
 
+var BookmarksBranches = bookshelf.model("BookmarksBranches");
 
 var omitPassword = function (item) {
     return item.omit("password");
@@ -64,8 +66,9 @@ var user = bookshelf.Model.extend({
     },
 
     addBookmarkToDefaultBranch: function (bookmarkId) {
+        var _this = this;
         return this.defaultBranch().fetchOne().then(function (defaultBranch) {
-            return defaultBranch.bookmarks().attach(bookmarkId);
+            return BookmarksBranches.forge({bookmark_id: bookmarkId, branch_id: defaultBranch.id, user_id: _this.id}).save();
         })
     },
 

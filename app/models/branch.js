@@ -73,23 +73,7 @@ var branch = AbstractModel.extend({
                 }
             });
     },
-    unshareSecure: function(owner,user_id){
-        return this.user(owner).fetch().then(function(m){
-            if(!m.isEmpty()){
-                return this.detach(Bookshelf.model("User").forge({id: user_id}));
-            } else {
-                return Promise.reject("You are not eligible to unshare this branch!");
-            }
-        }).then(function(){
-            return "Branch was successfully unshared";
-        }, function(m){
-            var message = m.message || m;
-            if(message.indexOf("EmptyResponse") > -1){
-                return "You can not unshare not shared branch";
-            } else
-            return message;
-        })
-    },
+
     remove: function () {
         return this.fetch().then(function(model){
             if(model.default){
@@ -117,7 +101,7 @@ var branch = AbstractModel.extend({
                 return res.rows;
             })
             .map(function (row) {
-                return _this.fetchById(row.branch_id);
+                return _this.fetchById(row.branch_id, coOwner);
             });
     },
     createBranch: function (attrs, owner) {

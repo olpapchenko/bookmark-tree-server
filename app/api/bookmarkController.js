@@ -86,10 +86,11 @@ module.exports.share =  actionComposer({
 
         Promise.all([ BookmarkRights.updateBookmarkRight(req.body, function(isSaved, userId) {
             if(isSaved) {
-                console.log("is save " + isSaved);
+                logger.info("is save " + isSaved);
+                logger.info("attach branch  to default branch, userID " + userId);
                 return User.forge({id: userId}).addBookmarkToDefaultBranch(req.body.id);
             } else if (isSaved == null){
-                console.log("is save " + isSaved);
+                logger.info("is save " + isSaved);
                 return User.forge({id: userId}).removeBookmarkFromDefaultBranch(req.body.id);
             }
         })

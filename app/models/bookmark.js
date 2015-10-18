@@ -75,7 +75,13 @@ bookmark = AbstractModel.extend({
                     return res.rows;
                 })
                 .map(function (row) {
-                    return _this.fetchById(row.bookmark_id, {withRelated: 'branch'});
+                    return _this.fetchById(row.bookmark_id, coOwner);
+                })
+                .map(function (bookmark) {
+                    return  bookmark.branchOfUser(userId).fetchOne()
+                        .then(function (branch) {
+                            return bookmark.set({branch: branch});
+                        });
                 });
         },
 
@@ -89,7 +95,7 @@ bookmark = AbstractModel.extend({
                });
         },
 
-        fetchById: function (id, userId, optioins){
+        fetchById: function (id, userId, options){
             return this.forge({id: id}).fetch(options)
                 .then(function (bookmark) {
                     return BookmarkRights.attachBookmarkRight(bookmark, userId);
@@ -137,7 +143,7 @@ bookmark = AbstractModel.extend({
                          });
                      });
                });
-            }).then(function(p){return p.length > 1 ? p : p[0]}, function(d){ console.log(d);});
+            }).then(function(p){return p.length > 1 ? p : p[0]});
         }
     }
 );

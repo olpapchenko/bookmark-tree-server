@@ -28,12 +28,11 @@ module.exports = {
 
     shared: function(req, resp){
         var sharedResults = {};
-        Promise.all([
+        return Promise.all([
             Bookmark.getShared(req.session.userId, req.params.id),
             Branches.getShared(req.session.userId, req.params.id)]
-         ).then(function(data){
-            return Promise.all([data[0], BranchRights.attachBranchesRights(data[1], req.params.id)])
-        }).then(function (data) {
+        )
+        .then(function (data) {
             sharedResults.bookmarks =  data[0] || [];
             sharedResults.branches =  data[1] || [];
             resp.json(sharedResults);
