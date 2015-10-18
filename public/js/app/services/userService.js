@@ -14,4 +14,8 @@ angular.module("app").service("userService", ["$http",function($http){
             return data.data;
         });
     }
+
+    this.save = function (user) {
+        return $http.post("/user", user);
+    }
 }]);
