@@ -1,3 +1,3 @@
-angular.module("app").controller("profileController", ["$scope", function($scope){
+angular.module("app").controller("profileController", ["$scope", "userService", function($scope, userService){
 
 }]);

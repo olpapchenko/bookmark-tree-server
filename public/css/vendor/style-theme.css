@@ -21,7 +21,7 @@ h1,h2,h3,h4,h5{
     font-weight: 300;
 }
 label{
-    font-weight: 300;   
+    font-weight: 600;
 }
 ul li {
     list-style: none;
@@ -35,14 +35,6 @@ a, a:hover, a:focus {
 input:focus, textarea:focus { outline: none; }
 table tr th { color: #688a7e;}
 *:focus {outline: none;}
-::selection {
-    background: #688a7e;
-    color: #fff;
-}
-::-moz-selection {
-    background: #688a7e;
-    color: #fff;
-}
 
 #container {
     width: 100%;
@@ -517,7 +509,7 @@ ul.sidebar-menu li.active a i {
 }
 .wrapper {
     padding: 15px;
-    padding-top: 45px;
+    padding-top: 65px;
 }
 
 a.logo {
@@ -620,7 +612,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     /* Safari and Chrome */
     .dropdown-menu.extended  {
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176) !important;
-    };
+    }
 }
 /* bootstrape editor*/
  #editor {
