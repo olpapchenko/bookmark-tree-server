@@ -17,6 +17,7 @@
     "jade": "~1.9.2",
     "knex": "*",
     "morgan": "~1.5.3",
+    "multer": "^1.0.6",
     "pg": "^4.3.0",
     "serve-favicon": "~2.2.1",
     "session-file-store": "0.0.14",

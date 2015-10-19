@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require("../config/routes");
+var log = require("./utils/log/cntrlLog");
 //
 var session = require("express-session");
 var FileStore = require("session-file-store")(session);
@@ -47,22 +48,10 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    console.log("errr " + err.message);
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
+ // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  console.log("errrp " + err.message);
+  log.error(err.message);
+  res.status(500).send("Internal server error");
 });
-
-
 
 module.exports = app;
