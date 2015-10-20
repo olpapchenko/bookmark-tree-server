@@ -24,9 +24,8 @@ module.exports.current = function(req,resp){
     });
 }
 
-//todo implement avatar change
 module.exports.put = function (req, resp) {
-    new User({id: req.session.userId}).fetch().then(
+    User.forge({id: req.session.userId}).fetch().then(
         function (model) {
             model.set({ name :req.body.name, about: req.body.about});
             return model.save();

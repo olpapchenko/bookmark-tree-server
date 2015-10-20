@@ -3,10 +3,21 @@
     <div class="col-sm-12">
         <section class="panel">
             <div class="panel-body">
-                <form class="form-horizontal ">
+                <div class="form-horizontal ">
                     <div class="form-group">
-                        <div class="col-sm-4" style="padding-left: 80px; padding-top: 20px;">
-                            <img ng-src="{{avatar}}" alt=""/>
+                        <div class="col-sm-3 col-sm-offset-1"  >
+                            <div class="form-group">
+                                <img   ng-src="{{avatar}}" alt="" style="width:100%; height: auto;"/>
+                             </div>
+                            <div class="form-group">
+                                <form method="post" action="/files/avatar" class="avatar" name="avatars" enctype="multipart/form-data">
+                                    <label class="btn btn-success">upload
+                                        <span>
+                                           <input ngf-select type="file" ng-model="avatarFile" name="avatar"/>
+                                        </span>
+                                    </label>
+                                 </form>
+                            </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="form-group">
@@ -27,7 +38,7 @@
                     <div class="col-md-2 col-md-offset-5">
                         <button class="btn btn-success" ng-click="save()">Save</button>
                     </div>
-                </form>
+                </div>
             </div>
         </section>
     </div>

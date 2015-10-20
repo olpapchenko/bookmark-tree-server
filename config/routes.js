@@ -7,7 +7,8 @@ var bookmark = require("../app/api/bookmarkController"),
     user = require("../app/api/usersController"),
     branch = require("../app/api/branchController"),
     notifications = require("../app/api/notificationsController"),
-    friends = require("../app/api/friendsController");
+    friends = require("../app/api/friendsController"),
+    files = require("../app/api/filesController");
 
 ///routes
 
@@ -36,7 +37,7 @@ router.post("/notifications/read", notifications.read);
 router.get("/user/:id(\\d+)", user.get);
 router.get("/user", user.current);
 router.get("/user/:name", user.byName);
-router.put("/user", user.put);
+router.post("/user/update", user.put);
 router.post("/registration", user.post);
 router.post("/login", user.login);
 router.post("/logout", user.logout);
@@ -46,6 +47,9 @@ router.get("/friends", friends.get);
 router.post("/friends", friends.post);
 router.post("/friends/remove", friends.remove);
 router.get("/friends/shared/:id(\\d+)", friends.shared);
+
+// files routes
+router.post("/files/avatar", files.avatar);
 
 ///entry point
 router.get("/", function (req, res){

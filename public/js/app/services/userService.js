@@ -16,6 +16,6 @@ angular.module("app").service("userService", ["$http",function($http){
     }
 
     this.save = function (user) {
-        return $http.post("/user", user);
+        return $http.post("/user/update", user);
     }
 }]);
