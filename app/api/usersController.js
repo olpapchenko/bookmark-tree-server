@@ -1,4 +1,7 @@
-var User = require("../models/user");
+var User      = require("../models/user"),
+    appConfig = require("../../config/app_config"),
+    path = require("path"),
+    fs = require("fs");
 
 module.exports.get = function (req, resp) {
     new User({id: req.params.id}).fetch().then(function(model) {
@@ -25,12 +28,16 @@ module.exports.current = function(req,resp){
 }
 
 module.exports.put = function (req, resp) {
-    User.forge({id: req.session.userId}).fetch().then(
-        function (model) {
-            model.set({ name :req.body.name, about: req.body.about});
-            return model.save();
+    User.forge({id: req.body.id}).fetch().then(function (user) {
+        if(req.body.avatar) {
+            if(user.get('avatar') && path.extname(user.get('avatar')) != path.extname(req.body.avatar)){
+                fs.unlinkSync(path.join(appConfig.avatarDir, user.get('avatar')));
+            }
+            user.set({avatar: req.body.avatar});
         }
-    ).then(function () {
+        user.set({ name :req.body.name, about: req.body.about});
+        return user.save();
+    }).then(function () {
         resp.sendStatus(200);
     });
 }
@@ -45,7 +52,7 @@ module.exports.post = function (req,resp) {
             } else {
                 resp.status(500).send("Internal server error, please contact administrator");
             }
-        });
+        });r
     } else {
         resp.status(400).send("mail or username missing");
     }

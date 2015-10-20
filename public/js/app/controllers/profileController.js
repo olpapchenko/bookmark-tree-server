@@ -11,7 +11,7 @@ angular.module("app").controller("profileController", ["$scope", "userService", 
                 url: UPLOAD_PATH,
                 data: {id:$scope.user.id, avatar: $scope.avatarFile}
             }).then(function (avatar) {
-                $scope.user.avatar = avatar.name;
+                $scope.user.avatar = avatar.data.name;
             });
         } else {
             var deffer = $q.defer();

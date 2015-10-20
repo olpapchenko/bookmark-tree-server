@@ -11,6 +11,5 @@ module.exports.salt="GameOfThrones";
 module.exports.logDir = path.resolve("./logs");
 
 module.exports.avatarDir = path.resolve("./uploads/avatars");
-console.log(path.resolve("./files/avatars"));
 
 module.exports.sessionsPath = path.resolve(__dirname, "../sessions");
