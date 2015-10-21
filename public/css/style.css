@@ -125,3 +125,8 @@ input[type="checkbox"] {
   display:block;
   width: 100%;
 }
+
+.avatar-img img {
+  width: 100%;
+  height: auto;
+ }

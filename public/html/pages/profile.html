@@ -6,8 +6,9 @@
                 <div class="form-horizontal ">
                     <div class="form-group">
                         <div class="col-sm-3 col-sm-offset-1"  >
-                            <div class="form-group">
-                                <img   ng-src="{{avatar}}" alt="" style="width:100%; height: auto;"/>
+                            <div class="form-group avatar-img">
+                                <img   ng-src="{{avatar}}" alt="" ng-show= "!avatarFile" />
+                                <img   ngf-thumbnail="avatarFile" style="height: 200px; width: 300px;" ng-show="avatarFile"/>
                              </div>
                             <div class="form-group">
                                 <form method="post" action="/files/avatar" class="avatar" name="avatars" enctype="multipart/form-data">
