@@ -5,6 +5,7 @@ angular.module("app").controller("profileController", ["$scope", "userService", 
         UPLOAD_PATH = "/uploads/avatar";
 
     $scope.avatar = (AVATAR_PATH + $scope.user.avatar) || DEFAULT_AVATAR;
+    $scope.avatarPreview = { height: "200px", width:  document.getElementById("avatar-container").offsetWidth};
 
     $scope.save = function () {
 

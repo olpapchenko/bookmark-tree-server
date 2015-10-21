@@ -5,10 +5,10 @@
             <div class="panel-body">
                 <div class="form-horizontal ">
                     <div class="form-group">
-                        <div class="col-sm-3 col-sm-offset-1"  >
+                        <div class="col-sm-3 col-sm-offset-1 "  id = "avatar-container">
                             <div class="form-group avatar-img">
                                 <img   ng-src="{{avatar}}" alt="" ng-show= "!avatarFile" />
-                                <img   ngf-thumbnail="avatarFile" style="height: 200px; width: 300px;" ng-show="avatarFile"/>
+                                <img   ngf-thumbnail="avatarFile" ng-style="avatarPreview" ng-show="avatarFile"/>
                              </div>
                             <div class="form-group">
                                 <form method="post" action="/files/avatar" class="avatar" name="avatars" enctype="multipart/form-data">
