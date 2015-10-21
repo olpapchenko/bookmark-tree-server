@@ -1,9 +1,11 @@
-angular.module("app").controller("profileController", ["$scope", "userService", "toaster", "Upload", "$q", function($scope, userService, toaster, upload, $q){
+angular.module("app").controller("profileController", ["$scope", "userService", "toaster", "Upload", "$q", "$state", "$timeout",
+    function($scope, userService, toaster, upload, $q, $state, $timeout){
     var DEFAULT_AVATAR = "/images/user-moderate.png",
-        UPLOAD_PATH = "/files/avatar";
+        AVATAR_PATH = "/avatars/",
+        UPLOAD_PATH = "/uploads/avatar";
 
-    $scope.avatar = $scope.user.avatar || DEFAULT_AVATAR;
-    
+    $scope.avatar = (AVATAR_PATH + $scope.user.avatar) || DEFAULT_AVATAR;
+
     $scope.save = function () {
 
         if($scope.avatarFile) {
@@ -24,6 +26,7 @@ angular.module("app").controller("profileController", ["$scope", "userService", 
             return userService.save($scope.user);
         }).then(function () {
             toaster.pop('success', "User updated", "User successfully updated");
+                $state.reload();
         }, function () {
             toaster.pop('error', 'Error', 'Some error occurred');
         });

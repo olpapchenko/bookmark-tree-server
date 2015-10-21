@@ -49,7 +49,7 @@ router.post("/friends/remove", friends.remove);
 router.get("/friends/shared/:id(\\d+)", friends.shared);
 
 // files routes
-router.post("/files/avatar", files.avatar);
+router.post("/uploads/avatar", files.avatar);
 
 ///entry point
 router.get("/", function (req, res){

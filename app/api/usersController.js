@@ -1,7 +1,10 @@
-var User      = require("../models/user"),
+var path = require("path"),
+    fs = require("fs"),
+
+    User      = require("../models/user"),
     appConfig = require("../../config/app_config"),
-    path = require("path"),
-    fs = require("fs");
+    actionComposer = require("./actionComposer"),
+    mandatoryParamFilter = require("../filters/mandatoryParamFilter");
 
 module.exports.get = function (req, resp) {
     new User({id: req.params.id}).fetch().then(function(model) {
@@ -27,20 +30,25 @@ module.exports.current = function(req,resp){
     });
 }
 
-module.exports.put = function (req, resp) {
-    User.forge({id: req.body.id}).fetch().then(function (user) {
-        if(req.body.avatar) {
-            if(user.get('avatar') && path.extname(user.get('avatar')) != path.extname(req.body.avatar)){
-                fs.unlinkSync(path.join(appConfig.avatarDir, user.get('avatar')));
+module.exports.put = actionComposer({
+    beforeFilters: [mandatoryParamFilter(["name", "about"])],
+    action: function (req, resp) {
+        User.forge({id: req.session.userId}).fetch().then(function (user) {
+            if(req.body.avatar) {
+                if(user.get('avatar') && path.extname(user.get('avatar')) != path.extname(req.body.avatar)){
+                    fs.unlinkSync(path.join(appConfig.avatarDir, user.get('avatar')));
+                }
+                user.set({avatar: req.body.avatar});
             }
-            user.set({avatar: req.body.avatar});
-        }
-        user.set({ name :req.body.name, about: req.body.about});
-        return user.save();
-    }).then(function () {
-        resp.sendStatus(200);
-    });
-}
+            user.set({ name :req.body.name, about: req.body.about});
+            return user.save();
+        }).then(function () {
+            resp.sendStatus(200);
+        });
+    }
+});
+
+
 
 module.exports.post = function (req,resp) {
     if(req.body.mail && req.body.password){

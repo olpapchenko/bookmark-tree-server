@@ -18,6 +18,7 @@ var app = express();
 // static files
 app.use(app_config.views);
 app.use(app_config.static);
+app.use(app_config.avatars);
 
 //session store
 app.use(session({
