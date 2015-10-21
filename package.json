@@ -18,6 +18,7 @@
     "knex": "*",
     "morgan": "~1.5.3",
     "multer": "^1.0.6",
+    "node-cache": "^3.0.0",
     "pg": "^4.3.0",
     "serve-favicon": "~2.2.1",
     "session-file-store": "0.0.14",
