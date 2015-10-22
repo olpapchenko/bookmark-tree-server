@@ -130,3 +130,18 @@ input[type="checkbox"] {
   width: 100%;
   height: auto;
  }
+
+@keyframes fadeInUp {
+  from {margin-top: 30%;}
+  to {margin-top: 0px;}
+}
+
+@-webkit-keyframes fadeInUp{
+  from {padding-top: 30%;}
+  to {padding-top: 0px;}
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.7s;
+  -webkit-animation: fadeInUp 0.7s;
+}

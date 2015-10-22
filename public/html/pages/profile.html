@@ -1,46 +1,50 @@
-<h3 class="page-header"><i class="glyphicon glyphicon-book"></i> My profile</h3>
-<div class="row" >
-    <div class="col-sm-12">
-        <section class="panel">
-            <div class="panel-body">
-                <div class="form-horizontal ">
-                    <div class="form-group">
-                        <div class="col-sm-3 col-sm-offset-1 "  id = "avatar-container">
-                            <div class="form-group avatar-img">
-                                <img   ng-src="{{avatar}}" alt="" ng-show= "!avatarFile" />
-                                <img   ngf-thumbnail="avatarFile" ng-style="avatarPreview" ng-show="avatarFile"/>
-                             </div>
-                            <div class="form-group">
-                                <form method="post" action="/files/avatar" class="avatar" name="avatars" enctype="multipart/form-data">
-                                    <label class="btn btn-success">upload
+<div class="fade-in-up">
+    <h3 class="page-header"><i class="glyphicon glyphicon-book"></i> My profile</h3>
+    <div class="row" >
+        <div class="col-sm-12">
+            <section class="panel">
+                <div class="panel-body">
+                    <div class="form-horizontal ">
+                        <div class="form-group">
+                            <div class="col-sm-3 col-sm-offset-1 "  id = "avatar-container">
+                                <div class="form-group avatar-img">
+                                    <img   ng-src="{{avatar}}" alt="" ng-show= "!avatarFile" />
+                                    <img   ngf-thumbnail="avatarFile" ng-style="avatarPreview" ng-show="avatarFile"/>
+                                </div>
+                                <div class="form-group">
+                                    <form method="post" action="/files/avatar" class="avatar" name="avatars" enctype="multipart/form-data">
+                                        <label class="btn btn-success">upload
                                         <span>
                                            <input ngf-select type="file" ng-model="avatarFile" name="avatar"/>
                                         </span>
-                                    </label>
-                                 </form>
-                            </div>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Name</label>
-                                <div class="col-sm-10">
-                                    <input ng-model="user.name" type="text" class="form-control">
+                                        </label>
+                                    </form>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">About me</label>
-                                <div class="col-sm-10">
-                                    <textarea ng-model="user.about" style="width: 100%" rows="10"></textarea>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Name</label>
+                                    <div class="col-sm-10">
+                                        <input ng-model="user.name" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">About me</label>
+                                    <div class="col-sm-10">
+                                        <textarea ng-model="user.about" style="width: 100%" rows="10"></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-2 col-md-offset-5">
-                        <button class="btn btn-success" ng-click="save()">Save</button>
+                        <div class="col-md-2 col-md-offset-5">
+                            <button class="btn btn-success" ng-click="save()">Save</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
 </div>
+
+

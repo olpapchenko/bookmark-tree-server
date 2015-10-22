@@ -1,17 +1,18 @@
-<h3 class="page-header ng-scope"><i class="glyphicon glyphicon-user"></i> Friends</h3>
-<div class="row">
-    <div class="col-sm-12">
-        <input placeholder="Search" ng-model="userName" type="text" class="form-control round-input search-bar">
+<div class="fade-in-up">
+    <h3 class="page-header ng-scope"><i class="glyphicon glyphicon-user"></i> Friends</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <input placeholder="Search" ng-model="userName" type="text" class="form-control round-input search-bar">
 
-        <div style="max-height: 300px; overflow: auto;">
-            <div class="list-group">
-                <a class="list-group-item" href="#"  ng-repeat="user in userList">{{user.name}}
-                    <span ng-show = "!user.isFriend" ng-click="addToFriends(user.id)" class="glyphicon glyphicon-plus-sign pull-right" title="add to friends list"></span>
-                </a>
+            <div style="max-height: 300px; overflow: auto;">
+                <div class="list-group">
+                    <a class="list-group-item" href="#"  ng-repeat="user in userList">{{user.name}}
+                        <span ng-show = "!user.isFriend" ng-click="addToFriends(user.id)" class="glyphicon glyphicon-plus-sign pull-right" title="add to friends list"></span>
+                    </a>
+                </div>
             </div>
-        </div>
             <div ng-repeat="friend in friends" class="collapseble panel panel-primary" >
-                 <div class="panel-heading custom-panel-header" style = "overflow: hidden; cursor: pointer;"   ng-click="loadDetails($index)" ng-class="{open: friend.showDetails}">
+                <div class="panel-heading custom-panel-header" style = "overflow: hidden; cursor: pointer;"   ng-click="loadDetails($index)" ng-class="{open: friend.showDetails}">
                     <div class="row">
                         <div class="col-lg-3">
                             <strong>{{friend.name}} </strong>{{friend.mail}}
@@ -48,12 +49,14 @@
                         <div class="col-lg-12">
                             <h5 ><i class="glyphicon glyphicon-book"></i> You share this bookmarks with {{friend.name}}</h5>
                             <hr/>
-                             <div ng-repeat="bookmark in friend.sharedEntitiesData.bookmarks">
-                                 <bookmark-panel branch="false" entity="bookmark" enable-editing="true"></bookmark-panel>
-                             </div>
+                            <div ng-repeat="bookmark in friend.sharedEntitiesData.bookmarks">
+                                <bookmark-panel branch="false" entity="bookmark" enable-editing="true"></bookmark-panel>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </div>
+
