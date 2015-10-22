@@ -2,6 +2,16 @@
   background-color: #427282 !important;
   color: #ffffff !important;
 }
+.openWell {
+  max-height: 5000px;
+  transition: all 0.3s linear;
+}
+
+.closeWell {
+  padding: 0px !important;
+  max-height: 0px;
+  transition: all 0.3s linear;
+}
 
 .user-list .dndPlaceholder {
   display: none;
@@ -145,3 +155,14 @@ input[type="checkbox"] {
   animation: fadeInUp 0.7s;
   -webkit-animation: fadeInUp 0.7s;
 }
+
+@keyframes stretch {
+  from {height: 0px;}
+  to {max-height: 5000px;}
+}
+
+.height-animation {
+  animation: stretch 0.7s;
+  -webkit-animation: stretch 0.7s;
+}
+
