@@ -55,6 +55,7 @@ module.exports={
                         validateBranchNotDefault],
         action: function(req,resp){
             logger.info("save share branch action started " + req.body);
+            //notificationService.branchShareNotification({branch: req.body.id, user: 2}, req.session.userId, 1);
 
             BranchRight.updateBranchRights(req.body).then(function () {
                 resp.status(200).send("Branch rights are changed");

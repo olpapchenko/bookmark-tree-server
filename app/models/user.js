@@ -51,6 +51,10 @@ var user = bookshelf.Model.extend({
         return this.hasMany("Notification");
     },
 
+    unreadNotifications: function () {
+        return this.notifications().query({where: {is_read: false}});
+    },
+
     isFrineds: function(users) {
         _this = this;
        return this.load("friends").then(function() {

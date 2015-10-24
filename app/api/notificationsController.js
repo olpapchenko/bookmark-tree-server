@@ -1,20 +1,20 @@
-var notifications = require("../models/notification");
-var user = require("../models/user");
 var Promise = require("bluebird");
 
+var notifications = require("../models/notification");
+var user = require("../models/user");
+var notificationService = require("../helpers/notificationService");
+
 module.exports = {
+
     get: function(req, resp){
-         notifications.forge({user_id: req.session.userId}).fetchAll().then(function(model){
-             resp.json(req.params.count ? model.first(req.para.s.count) : model);
-         });
+        notificationService.getAllByUserId(req.session.userId).then(function (notifications) {
+            resp.send(notifications);
+        })
     },
+
     read : function(req, resp){
-        var promise = [];
-        user.forge({id: req.session.userId}).load(["notifications"]).then(function(user){
-            user.related("notifications").forEach(function(model){
-                promise.push(model.destroy());
-            });
+        notificationService.markAllRead(req.session.userId).then(function () {
+            resp.sendStatus(200);
         });
-        Promise.all(promise).then(function(){resp.sendStatus(200)});
     }
 }

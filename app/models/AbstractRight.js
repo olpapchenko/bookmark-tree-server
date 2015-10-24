@@ -9,7 +9,7 @@ var model = AbstractModel.extend({
 
 }, {
     updateRights: function (rights, entity, entity_key, changeCallback) {
-        _this = this;
+        var _this = this;
 
         rights.owners = rights.owners || [];
         rights.observers = rights.observers || [];
@@ -30,40 +30,40 @@ var model = AbstractModel.extend({
                         }
                     });
                 }, {concurrency: 1})
-            .then(function () {
-                    return Promise.map(rights.observers, function (userId) {
+                .then(function () {
+                        return Promise.map(rights.observers, function (userId) {
 
-                        logger.info("set user as observer userId: ", userId);
+                            logger.info("set user as observer userId: ", userId);
 
-                        var right = {};
-                        right[entity_key] = rights.id;
-                        right.user_id = userId;
-                        return _this.forge(right).saveBasedOnParams({owner: false}, {transacting: t}).then(function (isSaved) {
-                            if(changeCallback) {
-                                return changeCallback(isSaved, userId);
-                            }
-                        });
-                    }, {concurrency: 1});
-            })
-            .then(function () {
-                    return Promise.map(rights.removed, function (userId) {
-                        var right = {};
-                        right[entity_key] = rights.id;
-                        right.user_id = userId;
-                        return _this.forge(right).fetch()
-                        .then(function (t) {
-                            return t.destroy({transaction: t});
-                        })
-                        .then(function () {
-                            if(changeCallback) {
-                                return changeCallback(null, userId);
-                            }
-                        })
-                    }, {concurrency: 1});
-            })
-            .then(function () {
-                    return entity.forge({id: rights.id, is_public: rights.isPublic}).save(null, {transacting: t});
-            });
+                            var right = {};
+                            right[entity_key] = rights.id;
+                            right.user_id = userId;
+                            return _this.forge(right).saveBasedOnParams({owner: false}, {transacting: t}).then(function (isSaved) {
+                                if(changeCallback) {
+                                    return changeCallback(isSaved, userId);
+                                }
+                            });
+                        }, {concurrency: 1});
+                })
+                .then(function () {
+                        return Promise.map(rights.removed, function (userId) {
+                            var right = {};
+                            right[entity_key] = rights.id;
+                            right.user_id = userId;
+                            return _this.forge(right).fetch()
+                            .then(function (t) {
+                                return t.destroy({transaction: t});
+                            })
+                            .then(function () {
+                                if(changeCallback) {
+                                    return changeCallback(null, userId);
+                                }
+                            })
+                        }, {concurrency: 1});
+                })
+                .then(function () {
+                        return entity.forge({id: rights.id, is_public: rights.isPublic}).save(null, {transacting: t});
+                });
         });
 
     },
