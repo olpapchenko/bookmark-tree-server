@@ -8,7 +8,11 @@ module.exports.views = require("express").static(path.resolve(__dirname, "../", 
 
 module.exports.avatars = require("express").static(path.resolve(__dirname, "../", "./uploads"));
 
-module.exports.salt="GameOfThrones";
+module.exports.salt = "GameOfThrones";
+
+module.exports.cacheTTL = 3500;
+
+module.exports.checkCachePeriod = 3600;
 
 module.exports.logDir = path.resolve("./logs");
 

@@ -1,3 +1,5 @@
 var cache  = require("node-cache");
 
-module.exports  = new cache({stdTTL: 5 * 24 * 3600, checkperiod: 3600});
+var appConfig = require("./app_config");
+
+module.exports  = new cache({stdTTL: appConfig.cacheTTL, checkperiod: appConfig.checkCachePeriod});
