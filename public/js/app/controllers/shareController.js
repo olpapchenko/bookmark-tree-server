@@ -1,9 +1,11 @@
-angular.module("app").controller("shareController",["$scope",
-    function($scope){
+angular.module("app").controller("shareController",["$scope", "avatarService",
+    function($scope, avatarService){
     var friendsList,
         persistanceService = $scope.datasource.persistanceService;
 
     var removedUsers = [];
+
+    $scope.avatarService = avatarService;
 
     persistanceService.get($scope.id).then(function (entity) {
         $scope.isPublic = entity.is_public;

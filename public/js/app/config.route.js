@@ -13,7 +13,9 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             resolve:{
                 files: ["$ocLazyLoad", "$injector",
                     function($ocLazyLoad){
-                        return $ocLazyLoad.load(["/js/app/controllers/appController.js"])
+                        return $ocLazyLoad.load([
+                                                "/js/app/services/avatarService.js",
+                                                "/js/app/controllers/appController.js"])
                     }],
                 user: ["$ocLazyLoad", "$injector", "$rootScope", "$state", function ($ocLazyLoad, $injector, $rootScope, $state) {
                     return $ocLazyLoad.load(["/js/app/services/userService.js", "/js/app/services/notificationService.js"]).then(function(){
@@ -94,7 +96,9 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             url: "/profile",
             templateUrl: PAGES_URL + "/profile.html",
             resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["/js/app/controllers/profileController.js"]);
+                return $ocLazyLoad.load([
+                                        "js/app/services/avatarService.js",
+                                        "/js/app/controllers/profileController.js"]);
             }],
             controller: "profileController"
         })
@@ -103,7 +107,8 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/friends.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["/js/app/controllers/friendsController.js",
+                return $ocLazyLoad.load(["/js/app/services/avatarService.js",
+                                         "/js/app/controllers/friendsController.js",
                                          "/js/app/services/friendsService.js",
                                          "/js/app/controllers/removeFriendController.js",
                                          "/js/app/directives/branchBookmarkPanel.js",

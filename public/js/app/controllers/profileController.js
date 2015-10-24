@@ -1,10 +1,10 @@
-angular.module("app").controller("profileController", ["$scope", "userService", "toaster", "Upload", "$q", "$state", "$timeout",
-    function($scope, userService, toaster, upload, $q, $state, $timeout){
+angular.module("app").controller("profileController", ["$scope", "userService", "toaster", "Upload", "$q", "$state", "avatarService",
+    function($scope, userService, toaster, upload, $q, $state, avatarService){
     var DEFAULT_AVATAR = "/images/user-moderate.png",
         AVATAR_PATH = "/avatars/",
         UPLOAD_PATH = "/uploads/avatar";
 
-    $scope.avatar = (AVATAR_PATH + $scope.user.avatar) || DEFAULT_AVATAR;
+    $scope.avatar = avatarService.getPath($scope.user.avatar);
     $scope.avatarPreview = { height: "200px", width:  document.getElementById("avatar-container").offsetWidth};
 
     $scope.save = function () {

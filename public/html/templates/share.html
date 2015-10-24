@@ -6,7 +6,12 @@
         <input ng-model = "name" type="text" class="form-control">
         <div style="max-height: 300px; overflow: auto; width: 100%">
             <div class="list-group">
-                <a class="list-group-item" ng-click="addToShare(user)"  ng-repeat="user in userList">{{user.name}}</a>
+                <span class="profile-ava">
+                    <a class="list-group-item" ng-click="addToShare(user)"  ng-repeat="user in userList">
+                        <img ng-src="{{avatarService.getPath(user.avatar)}}" style="height: 35px; width: 35px;"/>
+                        {{user.name}}
+                    </a>
+                </span>
             </div>
         </div>
 

@@ -52,7 +52,6 @@
                 };
 
                 scope.navigatePath = scope.branch ? branchDatasource.path : bookmarkDatasource.path;
-                console.log("path  in directive " + branchDatasource.path(1));
                 scope.removeHandler = scope.remove || getRemoveHandler(scope.branch);
                 scope.editHandler = scope.edit || editHandler(scope.branch ? editBranchDatasource : editBookmarkDatasource);
                 scope.shareHandler = scope.share || shareHandler(scope.branch ? shareDatasourceAllBranch : shareDatasourceAllBookmark);

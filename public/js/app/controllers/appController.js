@@ -1,8 +1,7 @@
-angular.module("app").controller("appController", ["$scope", "notificationService", "ngProgressFactory", "$rootScope", function($scope, notificationService, ngProgressFactory, $rootScope){
-    var DEFAULT_AVATAR = "/images/user-small.png",
-        UPLOAD_PATH = "/avatars/";
+angular.module("app").controller("appController", ["$scope", "notificationService", "ngProgressFactory", "$rootScope", "avatarService",
+    function($scope, notificationService, ngProgressFactory, $rootScope, avatarService){
 
-    $scope.avatar = (UPLOAD_PATH + $scope.user.avatar) || DEFAULT_AVATAR;
+    $scope.avatar = avatarService.getPath($scope.user.avatar);
 
      var progress = ngProgressFactory.createInstance();
 

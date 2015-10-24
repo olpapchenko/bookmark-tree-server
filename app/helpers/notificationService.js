@@ -34,14 +34,15 @@ var getMessageDs = function(str){
     });
 }
 
-var renderMessage = function(data, str){
+var renderMessage = function(data, str) {
      return Promise.map(getMessageDs(str), function(item, index) {
          return item.forge({id: data[index]}).fetch();
     })
     .each(function(item) {
         str = str.replace(/\{\{\w+\}\}/, item.get("name"));
          return str;
-    }).then(function(){
+    })
+    .then(function(){
             return str;
     });
 }
@@ -57,10 +58,10 @@ var service = {
 
 MESSAGE_BODIES.forEach(function (message) {
     Object.defineProperty(service, message.name, {
-        value: function(data, user_id){
-                   return renderMessage(data, message.str).then(function(message) {
-                         return service.persist(message, user_id);
-               });
+        value: function(data, user_id) {
+            return renderMessage(data, message.str).then(function(message) {
+                 return service.persist(message, user_id);
+            });
         }
     });
 });

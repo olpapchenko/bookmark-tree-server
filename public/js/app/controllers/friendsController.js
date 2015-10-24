@@ -1,6 +1,7 @@
-angular.module("app").controller("friendsController", ["friends","$scope","userService", "friendsService","ngDialog", "shareHandler",
-    function(friends, $scope, userService, friendsService, ngDialog, shareHandler){
+angular.module("app").controller("friendsController", ["friends","$scope","userService", "friendsService","ngDialog", "avatarService",
+    function(friends, $scope, userService, friendsService, ngDialog, avatarService){
     $scope.friends = friends;
+    $scope.avatarService = avatarService;
 
     $scope.$watch("userName", function(){
         if(!$scope.userName || $scope.userName.length < 3){
@@ -17,7 +18,6 @@ angular.module("app").controller("friendsController", ["friends","$scope","userS
             $scope.$state.reload();
         });
     };
-
 
     $scope.removeFriend = function(id) {
         $scope.id = id;
