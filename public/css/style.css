@@ -166,3 +166,7 @@ input[type="checkbox"] {
   -webkit-animation: stretch 0.7s;
 }
 
+.unread-message {
+  text-weight: bold;
+}
+

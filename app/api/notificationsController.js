@@ -12,9 +12,18 @@ module.exports = {
         })
     },
 
-    read : function(req, resp){
+    read: function(req, resp){
         notificationService.markAllRead(req.session.userId).then(function () {
             resp.sendStatus(200);
+        });
+    },
+
+    all: function (req, resp) {
+        user.forge({id: req.session.userId}).notifications().fetch().then(function(notifications){
+            resp.send(notifications);
+        })
+        .then(function () {
+            notificationService.markAllRead(req.session.userId);
         });
     }
 }

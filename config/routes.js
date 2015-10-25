@@ -31,6 +31,7 @@ router.post("/branch/share", branch.share);
 
 //notifications routes
 router.get("/notifications", notifications.get);
+router.get("/notifications/all", notifications.all);
 router.post("/notifications/read", notifications.read);
 
 ///users routes

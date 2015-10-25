@@ -48,7 +48,9 @@ var user = bookshelf.Model.extend({
     },
 
     notifications: function(){
-        return this.hasMany("Notification");
+        return this.hasMany("Notification").query(function(qb){
+            qb.orderBy('created_at', 'desc');
+        });
     },
 
     unreadNotifications: function () {

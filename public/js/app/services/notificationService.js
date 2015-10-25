@@ -10,7 +10,14 @@ angular.module("app").service("notificationService", ["$http","$interval", funct
                 fn(not);
             });
         }, TRACK_PERIOD * 1000)
-    }
+    };
+
+    this.all = function () {
+        console.log("sdfasdfasdfasd");
+        return $http.get("/notifications/all").then(function (data) {
+            return data.data;
+        });
+    };
 
     this.markAllRead = function(id) {
         return $http.post("/notifications/read");

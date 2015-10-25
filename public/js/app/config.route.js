@@ -140,7 +140,21 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                 }]
             },
             controller: "bookmarksController"
-        });
+        })
+        .state("app.notifications", {
+            url: "/notifications",
+            templateUrl: PAGES_URL + "notifications.html",
+            resolve: {
+                files: ["$ocLazyLoad", function($ocLazyLoad){
+                    return $ocLazyLoad.load(["/js/app/controllers/notificationsController.js",
+                                             "/js/app/services/notificationService.js"]);
+                }],
+                notifications: ["notificationService", function (notificationsService) {
+                    return notificationsService.all();
+                }]
+            },
+            controller: "notificationsController"
+        })
 }]);
 
 

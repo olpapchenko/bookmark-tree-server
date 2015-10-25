@@ -1,7 +1,11 @@
-angular.module("app").controller("appController", ["$scope", "notificationService", "ngProgressFactory", "$rootScope", "avatarService",
-    function($scope, notificationService, ngProgressFactory, $rootScope, avatarService){
+angular.module("app").controller("appController", ["$scope", "$state", "notificationService", "ngProgressFactory", "$rootScope", "avatarService",
+    function($scope, $state, notificationService, ngProgressFactory, $rootScope, avatarService){
 
     $scope.avatar = avatarService.getPath($scope.user.avatar);
+
+    $scope.allNotifications = function () {
+        $state.go("app.notifications");
+    }
 
      var progress = ngProgressFactory.createInstance();
 

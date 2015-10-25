@@ -1,0 +1,26 @@
+<div class="fade-in-up">
+    <h3 class="page-header"><i class="glyphicon glyphicon-book"></i> All notifications</h3>
+    <div class="row" >
+        <div class="col-sm-12">
+            <div style="max-height: 300px; overflow: auto;">
+                <div class="list-group">
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Message</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="notification in notifications">
+                        <td ng-class="{'unread-message': notification.is_read}">{{notification.message}}</td>
+                        <td>{{notification.created_at}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
