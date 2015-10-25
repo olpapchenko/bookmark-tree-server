@@ -26,7 +26,7 @@ var model = AbstractModel.extend({
                     right.user_id = userId;
                     return _this.forge(right).saveBasedOnParams({owner: true}, {transacting: t}).then(function (isSaved) {
                         if(changeCallback) {
-                            return changeCallback(isSaved, userId);
+                            return changeCallback(isSaved, userId, rights.id, "addOwner");
                         }
                     });
                 }, {concurrency: 1})
@@ -40,7 +40,7 @@ var model = AbstractModel.extend({
                             right.user_id = userId;
                             return _this.forge(right).saveBasedOnParams({owner: false}, {transacting: t}).then(function (isSaved) {
                                 if(changeCallback) {
-                                    return changeCallback(isSaved, userId);
+                                    return changeCallback(isSaved, userId, rights.id, "addObserver");
                                 }
                             });
                         }, {concurrency: 1});
@@ -56,7 +56,7 @@ var model = AbstractModel.extend({
                             })
                             .then(function () {
                                 if(changeCallback) {
-                                    return changeCallback(null, userId);
+                                    return changeCallback(null, userId, rights.id, "unShare");
                                 }
                             })
                         }, {concurrency: 1});

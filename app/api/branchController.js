@@ -56,8 +56,17 @@ module.exports={
         action: function(req,resp){
             logger.info("save share branch action started " + req.body);
             //notificationService.branchShareNotification({branch: req.body.id, user: 2}, req.session.userId, 1);
+            var saveCallback = function (isSaved, userId, branchId, operation) {
+                if(operation == "addOwner" && isSaved) {
+                    notificationService.branchShareNotificationOwner({branch: branchId, user: req.session.userId}, userId, branchId);
+                } else if(operation == "addObserver" && isSaved) {
+                    notificationService.branchShareNotificationObserver({branch: branchId, user: req.session.userId}, userId, branchId);
+                } else if (operation == "unShare") {
+                    notificationService.branchUnShareNotification({branch: branchId, user: req.session.userId}, userId, branchId);
+                }
+            }
 
-            BranchRight.updateBranchRights(req.body).then(function () {
+            BranchRight.updateBranchRights(req.body, saveCallback).then(function () {
                 resp.status(200).send("Branch rights are changed");
             });
         }

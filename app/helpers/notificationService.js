@@ -27,10 +27,18 @@ var MESSAGE_BODIES = [
      str: "Branch  {{branch}}  was edited by {{user}}"
     },
     {type: 5,
-     name: "branchShareNotification",
-     str: "Branch  {{branch}}  was shared with you by {{user}}"
+     name: "branchShareNotificationOwner",
+     str: "Branch  {{branch}}  was shared with you by {{user}} with owner rights"
     },
     {type: 6,
+     name: "branchShareNotificationObserver",
+     str: "Branch  {{branch}}  was shared with you by {{user}} with observer rights"
+    },
+    {type: 7,
+     name: "branchUnShareNotification",
+     str: "Branch  {{branch}}  was un shared with you by {{user}}"
+    },
+    {type: 8,
      name: "branchRemoveNotification",
      str: "Branch  {{branch}}  was removed by {{user}}"
     }
