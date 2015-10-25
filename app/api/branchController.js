@@ -80,11 +80,19 @@ module.exports={
             var branch = _.pick(req.body, "name", "id");
             (function(){
                 if(branch.id){
-                return Branch.forge(branch).save()
-            } else {
-                return Branch.createBranch(branch, req.session.userId);
-            }})().then(function(){
-                resp.sendStatus(200);
+                    return Branch.forge(branch).save().then(function () {
+                        return Branch.users().fetch();
+                    })
+                    .then(function (users) {
+                        users.forEach(function (user) {
+                            notificationService.branchEditNotification({branch: branchId, user: req.session.userId}, user.id, branch.id);
+                        });
+                    });
+                } else {
+                    return Branch.createBranch(branch, req.session.userId);
+            }})()
+            .then(function(){
+                    resp.sendStatus(200);
             })
         }
     }),
@@ -93,15 +101,18 @@ module.exports={
         beforeFilters: [mandatoryParamFilter(["id"])],
         action: function(req, resp){
             Branch.forge({id: req.body.id})
-                .remove()
-                .then(function(model){
+                .fetch({withRelated: "users"})
+                .tap(function(model){
                     var promises = [];
                     model.related("users").forEach(function(user){
                         if(req.session.userId != user.id) {
-                            promises.push(notificationService.branchRemoveNotification([req.body.id, req.session.userId], user.id))
+                            promises.push(notificationService.branchRemoveNotification({branch: req.body.id, user: req.session.userId}, user.id, req.session.userId));
                         };
                     });
                     return Promise.all(promises);
+                })
+                .then(function (model) {
+                    return model.remove();
                 })
                 .catch(function(e){return e == "defaultBranch"}, function() {
                     resp.status(400).message("Can not remove default branch");
