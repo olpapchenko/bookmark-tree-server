@@ -62,7 +62,7 @@ module.exports={
                 } else if(operation == "addObserver" && isSaved) {
                     notificationService.branchShareNotificationObserver({branch: branchId, user: req.session.userId}, userId, branchId);
                 } else if (operation == "unShare") {
-                    notificationService.branchUnShareNotification({branch: branchId, user: req.session.userId}, userId, branchId);
+                    notificationService.branchUnShareNotification({branch: branchId, user: req.session.userId}, userId, req.session.userId);
                 }
             }
 

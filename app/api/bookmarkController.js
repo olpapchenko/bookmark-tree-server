@@ -6,6 +6,7 @@ var Branch = require("../models/branch");
 var Bookmark = require("../models/bookmark");
 var User = require("../models/user");
 var BookmarkRights = require("../models/bookmarkRights");
+var notificationService = require("../helpers/NotificationService");
 
 var mandatoryParamFilter = require("../filters/mandatoryParamFilter");
 var ensureBookmarkExist = require("../filters/ensureBookmarkExist");
@@ -62,8 +63,22 @@ module.exports.getShareInformation = actionComposer({
 module.exports.post = actionComposer({
     beforeFilters: [validateBookmarkOwnership],
     action: function (req, resp) {
-        return Bookmark.persist(_.pick(req.body, "id", "name", "comments", "markers", "branch_id"), req.session.userId).then(function(res){
-            resp.sendStatus(200);
+        return Bookmark.persist(_.pick(req.body, "id", "name", "comments", "markers", "branch_id"), req.session.userId)
+        .then(function(res){
+            return Bookmark.forge({id: req.body.id}).users().fetch()
+        })
+        .then(function (users) {
+            var promises = [];
+
+            users.forEach(function (user) {
+                if(req.session.userId != user.id) {
+                    promises.push(notificationService.bookmarkEditNotification({bookmark: req.body.id, user: req.session.userId}, user.id, req.body.id));
+                }
+            });
+            return Promise.all(promises);
+        })
+        .then(function () {
+            resp.send("Bookmark successfully updated");
         });
     }
 });
@@ -71,8 +86,22 @@ module.exports.post = actionComposer({
 module.exports.remove = actionComposer({
     beforeFilters: [validateBookmarkOwnership],
     action: function (req, resp) {
-        Bookmark.forge({id : req.body.id}).destroy().then(function() {
-            resp.send("Successfully removed");
+
+        Bookmark.forge({id : req.body.id}).fetch({withRelated: "users"})
+            .tap(function (bookmark) {
+                var promises = [];
+                bookmark.related("users").forEach(function (user) {
+                    if(req.session.userId != user.id) {
+                        promises.push(notificationService.bookmarkRemoveNotification({bookmark: bookmark.id, user: req.session.userId}, user.id, req.session.userId));
+                    }
+                });
+                return Promise.all(promises);
+            })
+            .then(function (model) {
+                return model.destroy();
+            })
+            .then(function() {
+                resp.send("Successfully removed");
         });
     }
 });
@@ -84,13 +113,17 @@ module.exports.share =  actionComposer({
     action: function(req,resp){
         logger.info("save share branch action started " + req.body);
 
-        Promise.all([ BookmarkRights.updateBookmarkRight(req.body, function(isSaved, userId) {
+        Promise.all([ BookmarkRights.updateBookmarkRight(req.body, function(isSaved, userId, bookmarkId, operation) {
             if(isSaved) {
-                logger.info("is save " + isSaved);
+                if(operation == "addOwner") {
+                    notificationService.bookmarkShareNotificationOwner({bookmark: bookmarkId, user: req.session.userId}, userId, bookmarkId)
+                } else if (operation == "addObserver") {
+                    notificationService.bookmarkShareNotificationObserver({bookmark: bookmarkId, user: req.session.userId}, userId, bookmarkId);
+                }
                 logger.info("attach branch  to default branch, userID " + userId);
                 return User.forge({id: userId}).addBookmarkToDefaultBranch(req.body.id);
             } else if (isSaved == null){
-                logger.info("is save " + isSaved);
+                notificationService.bookmarkUnShareNotification({bookmark: bookmarkId, user: req.session.userId}, userId, req.session.userId);
                 return User.forge({id: userId}).removeBookmarkFromDefaultBranch(req.body.id);
             }
         })

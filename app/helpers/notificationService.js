@@ -11,34 +11,42 @@ var Notification = require("../models/notification");
 
 var MESSAGE_BODIES = [
     {type: 1,
-     name: "bookmarkShareNotification",
-     str: "Bookmark  {{bookmark}}  was shared with you by {{user}}"
+     name: "bookmarkShareNotificationOwner",
+     str: "Bookmark  {{bookmark}}  was shared with you by {{user}} with owner rights"
     },
     {type: 2,
+     name: "bookmarkShareNotificationObserver",
+     str: "Bookmark  {{bookmark}}  was shared with you by {{user}} without observer rights"
+    },
+    {type: 3,
      name: "bookmarkEditNotification",
      str: "Bookmark  {{bookmark}}  was edited by {{user}}"
     },
-    {type: 3,
+    {type: 4,
      name: "bookmarkRemoveNotification",
      str: "Bookmark  {{bookmark}}  was removed by {{user}}"
     },
-    {type: 4,
+    {type: 5,
+     name: "bookmarkUnShareNotification",
+     str: "Bookmark  {{bookmark}}  was un shared with you by {{user}}"
+    },
+    {type: 6,
      name: "branchEditNotification",
      str: "Branch  {{branch}}  was edited by {{user}}"
     },
-    {type: 5,
+    {type: 7,
      name: "branchShareNotificationOwner",
      str: "Branch  {{branch}}  was shared with you by {{user}} with owner rights"
     },
-    {type: 6,
+    {type: 8,
      name: "branchShareNotificationObserver",
      str: "Branch  {{branch}}  was shared with you by {{user}} with observer rights"
     },
-    {type: 7,
+    {type: 9,
      name: "branchUnShareNotification",
      str: "Branch  {{branch}}  was un shared with you by {{user}}"
     },
-    {type: 8,
+    {type: 10,
      name: "branchRemoveNotification",
      str: "Branch  {{branch}}  was removed by {{user}}"
     }
