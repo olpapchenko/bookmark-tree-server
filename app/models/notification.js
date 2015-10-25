@@ -20,8 +20,10 @@ var notification = Bookshelf.Model.extend({
     },
 
     markAllRead: function (userId) {
-        return User.forge({id: userId}).unreadNotifications().map(function (notification) {
-            return notification.markRead();
+        return User.forge({id: userId}).unreadNotifications().fetch().then(function (notifications) {
+            notifications.map(function (notification) {
+                notification.markRead();
+            });
         });
     },
 

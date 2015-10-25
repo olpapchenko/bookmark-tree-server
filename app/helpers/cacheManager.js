@@ -30,10 +30,7 @@ module.exports = function(entity) {
     }
 
     this.delete = function (userId, stayKeyInCache) {
-        if(stayKeyInCache) {
-            Cache.set(this.entity.getCacheKey(userId), []);
-        } else {
-            Cache.delete(this.entity.getCacheKey(userId));
-        }
+        var promisiiedSet = Promise.promisify(Cache.set);
+        return stayKeyInCache ?  promisiiedSet(this.entity.getCacheKey(userId), []) : Cache.delete(this.entity.getCacheKey(userId));
     }
 }
