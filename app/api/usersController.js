@@ -35,8 +35,8 @@ module.exports.put = actionComposer({
     action: function (req, resp) {
         User.forge({id: req.session.userId}).fetch().then(function (user) {
             if(req.body.avatar) {
-                if(user.get('avatar') && path.extname(user.get('avatar')) != path.extname(req.body.avatar)){
-                    fs.unlinkSync(path.join(appConfig.avatarDir, user.get('avatar')));
+                if(user.get('avatar') && path.extname(user.get('avatar')).toLowerCase() != path.extname(req.body.avatar).toLowerCase()){
+                    fs.unlink(path.join(appConfig.avatarDir, user.get('avatar')));
                 }
                 user.set({avatar: req.body.avatar});
             }
