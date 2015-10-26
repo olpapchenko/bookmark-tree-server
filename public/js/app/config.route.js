@@ -15,7 +15,8 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                     function($ocLazyLoad){
                         return $ocLazyLoad.load([
                                                 "/js/app/services/avatarService.js",
-                                                "/js/app/controllers/appController.js"])
+                                                "/js/app/controllers/appController.js",
+                                                "/js/app/directives/notification.js"])
                     }],
                 user: ["$ocLazyLoad", "$injector", "$rootScope", "$state", function ($ocLazyLoad, $injector, $rootScope, $state) {
                     return $ocLazyLoad.load(["/js/app/services/userService.js", "/js/app/services/notificationService.js"]).then(function(){
@@ -91,6 +92,14 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                 return $ocLazyLoad.load(["/js/app/controllers/sharedController.js"]);
             }],
             controller: "sharedController"
+        })
+        .state("app.user", {
+            url: "/user:id",
+            remplateUrl: PAGES_URL + "/user.html",
+            resolve: ["$ocLazyLoad", function($ocLazyLoad){
+                return $ocLazyLoad.load(["/js/app/controllers/userController.js"]);
+            }],
+            controller: "userController"
         })
         .state("app.profile", {
             url: "/profile",
