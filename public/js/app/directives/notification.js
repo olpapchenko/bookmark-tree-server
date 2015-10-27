@@ -1,7 +1,8 @@
 angular.module("app").directive("notification", ["$state", function ($state) {
     return {
         scope: {
-            notif: "="
+            notif: "=",
+            showTime: "=?"
         },
 
         templateUrl: "/html/templates/notifications.html",
@@ -9,6 +10,8 @@ angular.module("app").directive("notification", ["$state", function ($state) {
         restrict: "E",
 
         link: function (scope) {
+            scope.showTime = scope.showTime || true;
+
             var TYPE2PATH =["app.bookmark",
                             "app.bookmark",
                             "app.bookmark",

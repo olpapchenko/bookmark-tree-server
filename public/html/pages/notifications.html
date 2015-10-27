@@ -15,7 +15,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="notification in notifications">
-                        <td ng-class="{'unread-message': notification.is_read}">{{notification.message}}</td>
+                        <td ng-class="{'unread-message': notification.is_read}"><notification notif = "notification" show-time="showTime"/></td>
                         <td>{{notification.created_at}}</td>
                     </tr>
                 </tbody>
