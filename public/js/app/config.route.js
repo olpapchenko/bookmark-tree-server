@@ -146,6 +146,9 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                 }],
                 bookmarks: ["bookmarkService", "$stateParams", function(bookmarkService, $stateParams){
                      return bookmarkService.allByBranch($stateParams.id);
+                }],
+                branch: ["branchService", "$stateParams", function (branchService, $stateParams) {
+                    return branchService.get($stateParams.id);
                 }]
             },
             controller: "bookmarksController"

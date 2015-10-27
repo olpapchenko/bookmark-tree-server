@@ -24,6 +24,7 @@ angular.module("app").directive("notification", ["$state", function ($state) {
                             "app.user"];
 
             scope.navigateToContext = function (type, context) {
+                console.log(type);
                 $state.go(TYPE2PATH[type], {id: context});
             }
         }
