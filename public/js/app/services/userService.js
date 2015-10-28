@@ -3,8 +3,14 @@ angular.module("app").service("userService", ["$http",function($http){
         return $http.post("/login", {mail: user, password: password});
     }
 
-    this.getUser = function(){
+    this.getCurrentUser = function(){
         return $http.get("/user").then(function(data){
+            return data.data;
+        });
+    }
+
+    this.get = function(id){
+        return $http.get("/user/" + id).then(function(data){
             return data.data;
         });
     }

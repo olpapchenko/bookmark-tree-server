@@ -18,12 +18,12 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                                                 "/js/app/controllers/appController.js",
                                                 "/js/app/directives/notification.js"])
                     }],
-                user: ["$ocLazyLoad", "$injector", "$rootScope", "$state", function ($ocLazyLoad, $injector, $rootScope, $state) {
+                currentUser: ["$ocLazyLoad", "$injector", "$rootScope", "$state", function ($ocLazyLoad, $injector, $rootScope, $state) {
                     return $ocLazyLoad.load(["/js/app/services/userService.js", "/js/app/services/notificationService.js"]).then(function(){
                         var userService = $injector.get("userService");
-                        return userService.getUser();
+                        return userService.getCurrentUser();
                     }).then(function(user){
-                        $rootScope.user = user;
+                        $rootScope.currentUser = user;
                     },  function( ){
                         $state.go("login");
                     });
@@ -94,11 +94,18 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             controller: "sharedController"
         })
         .state("app.user", {
-            url: "/user:id",
+            url: "/user/:id",
             templateUrl: PAGES_URL + "/user.html",
-            resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["/js/app/controllers/userController.js"]);
-            }],
+            resolve: {
+                files: ["$ocLazyLoad", function($ocLazyLoad){
+                    return $ocLazyLoad.load(["/js/app/controllers/userController.js",
+                                             "js/app/services/avatarService.js",
+                                             "js/app/services/userService.js"]);
+                }],
+                user: ["userService", "$stateParams", function (userService, $stateParams) {
+                    return userService.get($stateParams.id);
+                }]
+            },
             controller: "userController"
         })
         .state("app.profile", {
