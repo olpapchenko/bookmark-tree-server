@@ -1,8 +1,7 @@
 angular.module("app").controller("profileController", ["$scope", "userService", "toaster", "Upload", "$q", "$state", "avatarService",
     function($scope, userService, toaster, upload, $q, $state, avatarService){
-    var DEFAULT_AVATAR = "/images/user-moderate.png",
-        AVATAR_PATH = "/avatars/",
-        UPLOAD_PATH = "/uploads/avatar";
+
+    var UPLOAD_PATH = "/uploads/avatar";
 
     $scope.avatar = avatarService.getPath($scope.user.avatar);
     $scope.avatarPreview = { height: "200px", width:  document.getElementById("avatar-container").offsetWidth};

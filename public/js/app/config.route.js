@@ -95,7 +95,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
         })
         .state("app.user", {
             url: "/user:id",
-            remplateUrl: PAGES_URL + "/user.html",
+            templateUrl: PAGES_URL + "/user.html",
             resolve: ["$ocLazyLoad", function($ocLazyLoad){
                 return $ocLazyLoad.load(["/js/app/controllers/userController.js"]);
             }],

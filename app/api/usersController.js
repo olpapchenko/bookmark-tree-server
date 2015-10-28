@@ -7,14 +7,16 @@ var path = require("path"),
     mandatoryParamFilter = require("../filters/mandatoryParamFilter");
 
 module.exports.get = function (req, resp) {
-    new User({id: req.params.id}).fetch().then(function(model) {
-        resp.json(model.omit("password"));
+    new User({id: req.params.id}).fetch().then(function(user) {
+        return User.forge({id: req.session.userId}).isFriend(user);
+    }).then(function (user) {
+        resp.json(user.omit("password"));
     });
 }
 
 module.exports.byName = function(req, resp){
     User.byName(req.params.name).then(function(users){
-       return User.forge({id: req.session.userId}).isFrineds(users);
+       return User.forge({id: req.session.userId}).isFriend(users);
     }).then(function(users) {
          return resp.json(users);
     });

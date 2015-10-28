@@ -57,18 +57,24 @@ var user = bookshelf.Model.extend({
         return this.notifications().query({where: {is_read: false}});
     },
 
-    isFrineds: function(users) {
+    isFriend: function(users) {
         _this = this;
+       var usersArray = [];
+        usersArray.push(users);
        return this.load("friends").then(function() {
-            return users.map(function(friend){
+            return usersArray.map(function(friend){
                 if(_this.related("friends").any(function(user){
                     return user.id == friend.id;
                 })){
-                    friend.isFriend = true;
+                    friend.set({isFriend: true});
+                } else {
+                    friend.set({isFriend: false});
                 };
                 return friend;
             });
-        });
+        }).then(function (friends) {
+           return users instanceof Array ? friends : friends [0];
+       });
     },
 
     addBookmarkToDefaultBranch: function (bookmarkId) {
