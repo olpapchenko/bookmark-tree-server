@@ -1,5 +1,10 @@
 angular.module("app").controller("userController", ["$scope", "user", "avatarService", "friendsService", "$state", "toaster",
     function ($scope, user, avatarService, friendsService, $state, toaster) {
+
+        if(!user) {
+            return;
+        }
+
         $scope.avatar = avatarService.getPath(user.avatar);
         $scope.user = user;
         $scope.pageOfCurrentUser = user.id == $scope.currentUser.id;

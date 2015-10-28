@@ -8,9 +8,12 @@ var path = require("path"),
 
 module.exports.get = function (req, resp) {
     new User({id: req.params.id}).fetch().then(function(user) {
+        if(!user) {
+            return user;
+        }
         return User.forge({id: req.session.userId}).isFriend(user);
     }).then(function (user) {
-        resp.json(user.omit("password"));
+        resp.json(user ? user.omit("password"): user);
     });
 }
 
