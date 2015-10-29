@@ -9,7 +9,11 @@ angular.module("app").controller("appController", ["$scope", "$state", "notifica
 
      var progress = ngProgressFactory.createInstance();
 
-    $rootScope.$on("$stateChangeStart", function () {
+    $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+        if(toState.name == 'login') {
+            return;
+        }
+
         progress.start();
     });
 

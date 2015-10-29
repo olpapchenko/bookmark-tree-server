@@ -3,6 +3,7 @@ var PAGES_URL = "/html/pages/";
 angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($rootScope, $state, $stateParams) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
+
 }]).config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/overview");
     $stateProvider
@@ -34,12 +35,23 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             url: "/login",
             templateUrl: PAGES_URL + "/login.html",
             controller: "loginController",
-            resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load([
-                    "/js/app/controllers/loginController.js",
-                    "/js/app/services/userService.js"
-                ]);
-            }]
+            resolve: {
+                files: ["$ocLazyLoad", function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        "/js/app/controllers/loginController.js",
+                        "/js/app/services/userService.js"
+                    ]);
+                }],
+                currentUser: ["$ocLazyLoad", "$injector", "$rootScope", "$state", function ($ocLazyLoad, $injector, $rootScope, $state) {
+                    return $ocLazyLoad.load(["/js/app/services/userService.js", "/js/app/services/notificationService.js"]).then(function(){
+                        var userService = $injector.get("userService");
+                        return userService.getCurrentUser();
+                    }).then(function(user){
+                        if(user) {
+                            $state.go("app.overview");
+                        }
+                    });
+                }]}
         })
         .state("logout",{
             controller: "logoutController",
