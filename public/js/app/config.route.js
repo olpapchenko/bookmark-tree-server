@@ -54,7 +54,8 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/register.html",
             controller: "registerController",
             resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["/js/app/controllers/registrationController.js"]);
+                return $ocLazyLoad.load(["/js/app/services/userService.js",
+                                         "/js/app/controllers/registrationController.js"]);
             }]
         })
         .state("app.overview",{

@@ -21,6 +21,10 @@ angular.module("app").service("userService", ["$http",function($http){
         });
     }
 
+    this.register = function (user) {
+        return $http.post("/user/register", user);
+    }
+
     this.save = function (user) {
         return $http.post("/user/update", user);
     }
