@@ -26,6 +26,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                     }).then(function(user){
                         $rootScope.currentUser = user;
                     },  function( ){
+                        console.log("sdf");
                         $state.go("login");
                     });
                 }]
@@ -50,6 +51,8 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                         if(user) {
                             $state.go("app.overview");
                         }
+                    }, function () {
+                        
                     });
                 }]}
         })

@@ -170,3 +170,23 @@ input[type="checkbox"] {
   text-weight: bold;
 }
 
+::-webkit-scrollbar{ width:10px; }
+
+::-webkit-scrollbar-track{ background-color: #394A59; }
+
+::-webkit-scrollbar-thumb{
+  background-color:rgba(0,0,0,0.5);
+  border:3px solid transparent;
+  border-radius:6px;
+  background-clip:content-box;
+  box-shadow:inset 0px 0px 0px 1px rgba(9, 3, 42, 0.25);
+}
+::-webkit-scrollbar-thumb:window-inactive{
+  background-color:rgba(102,102,102,0.5);
+  border:3px solid transparent;
+  border-radius:6px;
+  background-clip:content-box;
+  box-shadow:inset 0px 0px 0px 1px rgba(192,192,192,0.5);
+}
+
+
