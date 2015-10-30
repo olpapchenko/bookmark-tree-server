@@ -189,4 +189,10 @@ input[type="checkbox"] {
   box-shadow:inset 0px 0px 0px 1px rgba(192,192,192,0.5);
 }
 
+input.ng-invalid.ng-touched{
+  border-color: #ff325c !important;
+  color: #ff325c !important;
+  border: 3px solid !important;
+}
+
 

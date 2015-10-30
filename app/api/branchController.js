@@ -80,12 +80,14 @@ module.exports={
             var branch = _.pick(req.body, "name", "id");
             (function(){
                 if(branch.id){
-                    return Branch.forge(branch).save().then(function () {
-                        return Branch.users().fetch();
+                    return Branch.forge(branch).save().then(function (branch) {
+                        return branch.users().fetch();
                     })
                     .then(function (users) {
                         users.forEach(function (user) {
-                            notificationService.branchEditNotification({branch: branchId, user: req.session.userId}, user.id, branch.id);
+                            if(req.session.userId != user.id){
+                                notificationService.branchEditNotification({branch: branch.id, user: req.session.userId}, user.id, branch.id);
+                            }
                         });
                     });
                 } else {

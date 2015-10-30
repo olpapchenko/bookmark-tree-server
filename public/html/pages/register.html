@@ -66,23 +66,25 @@
                             </div>
                         </div>
                         <div class="form-bottom">
-                            <form role="form" class="login-form">
+                            <form  name="register_form" class="login-form" novalidate>
                                 <div class="form-group">
-                                    <label class="sr-only" for="form-username">Username</label>
-                                    <input type="text" ng-model="login" name="form-username" placeholder="Name..." class="form-username form-control" id="form-username">
+                                     <input type="text" ng-model="user.name" required="" minlength="3" maxlength="30" name="username" placeholder="Name..." class="form-username form-control"  >
                                 </div>
                                 <div class="form-group">
-                                    <label class="sr-only" for="form-username">Username</label>
-                                    <input type="text" ng-model="login" name="form-username" placeholder="Mail..." class="form-username form-control" id="form-username">
+                                     <input type="email" ng-model="user.mail" required="" min="3" max="30" name="form-username" placeholder="Mail..." class="form-username form-control"  >
                                 </div>
                                 <div class="form-group">
-                                    <label class="sr-only" for="form-password">Password</label>
-                                    <input type="password" ng-model="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
+                                     <input type="password" ng-model="user.password" required="" min="5" max="30" name="form-password" placeholder="Password..." class="form-password form-control"  >
                                 </div>
                                 <div class="form-group">
-                                    <label class="sr-only" for="form-password">Password</label>
-                                    <input type="password" ng-model="password" name="form-password" placeholder="Repeat Password..." class="form-password form-control" id="form-password">
+                                     <input type="password" ng-model="user.password" name="form-password" placeholder="Repeat Password..." class="form-password form-control"  >
                                 </div>
+                                <div ng-show="register_form.$submitted">
+                                    <span ng-show="register_form.username.$error.required && re">User name is required</span>
+                                    <span ng-show="register_form.username.$error.minlength || register_form.username.$error.maxlength">User name must be between 3 and 30</span>
+
+                                </div>
+
                                 <button ng-click ="submit()" type="submit" class="btn">Sigh up!</button>
                             </form>
                         </div>
