@@ -1,4 +1,4 @@
-angular.module("app").service("userService", ["$http",function($http){
+angular.module("app").service("userService", ["$http", "$q", function($http, $q){
     this.login = function(user, password){
         return $http.post("/login", {mail: user, password: password});
     }
@@ -12,6 +12,12 @@ angular.module("app").service("userService", ["$http",function($http){
     this.get = function(id){
         return $http.get("/user/" + id).then(function(data){
             return data.data;
+        });
+    }
+
+    this.checkMailAvailability = function (mail) {
+        return $http.get("/user/mail/availability", {params: {mail: mail}}).then(function (data) {
+            return data.data.available ? true : $q.reject("Mail is already in use");
         });
     }
 

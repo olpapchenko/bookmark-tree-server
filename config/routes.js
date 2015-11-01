@@ -38,6 +38,7 @@ router.post("/notifications/read", notifications.read);
 router.get("/user/:id(\\d+)", user.get);
 router.get("/user", user.current);
 router.get("/user/:name", user.byName);
+router.get("/user/mail/availability", user.checkMailAvailability);
 router.post("/user/update", user.put);
 router.post("/registration", user.post);
 router.post("/login", user.login);

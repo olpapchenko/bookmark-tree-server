@@ -67,7 +67,7 @@
                                      <input type="text" ng-model="user.name" required="" minlength="3" maxlength="30" name="username" placeholder="Name..." class="form-username form-control"  >
                                 </div>
                                 <div class="form-group">
-                                     <input type="email" ng-model="user.mail" style = "line-height: 50px" required="" min="3" max="30" name="mail" placeholder="Mail..." class="form-username form-control"  >
+                                     <input type="email" ng-model="user.mail" mail-availability=""  style = "line-height: 50px" required="" min="3" max="30" name="mail" placeholder="Mail..." class="form-username form-control"  >
                                 </div>
                                 <div class="form-group">
                                      <input type="password" ng-model="user.password" required="" minlength="5" maxlength="30" name="password" placeholder="Password..." class="form-password form-control"  >
@@ -75,13 +75,13 @@
                                 <div class="form-group">
                                      <input type="password" ng-model="repeatPassword" name="form-password" placeholder="Repeat Password..." class="form-password form-control"  >
                                 </div>
-
-                                <div ng-show="register_form.$submitted">
+                                 <div ng-show="register_form.$submitted">
                                     <ul class="validations">
                                         <li ng-show="register_form.username.$error.required">User name is required</li>
                                         <li ng-show="register_form.username.$error.minlength || register_form.username.$error.maxlength">User name must be between 3 and 30</li>
                                         <li ng-show="register_form.mail.$error.required">Mail is required</li>
                                         <li ng-show="register_form.mail.$error.mail">We need a valid mail</li>
+                                        <li ng-show="register_form.mail.$error.mailAvailability">Mail is already in use</li>
                                         <li ng-show="register_form.password.$error.required">Password is required</li>
                                         <li ng-show="repeatPassword != user.password">Passwords does not match</li>
                                         <li ng-show="register_form.password.$error.minlength || register_form.password.$error.maxlength">Password length must be between 5 and 30</li>

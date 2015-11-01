@@ -70,7 +70,8 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             controller: "registerController",
             resolve: ["$ocLazyLoad", function($ocLazyLoad){
                 return $ocLazyLoad.load(["/js/app/services/userService.js",
-                                         "/js/app/controllers/registrationController.js"]);
+                                         "/js/app/controllers/registrationController.js",
+                                         "/js/app/directives/mailAvailabilityValidator.js"]);
             }]
         })
         .state("app.overview",{

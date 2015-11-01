@@ -25,6 +25,16 @@ module.exports.byName = function(req, resp){
     });
 }
 
+module.exports.checkMailAvailability = function (req, resp) {
+    User.forge({mail: req.query.mail}).fetch().then(function (user) {
+        if(user) {
+            resp.json({available: false});
+        } else {
+            resp.json({available: true});
+        }
+    })
+}
+
 module.exports.current = function(req,resp){
     new User({id: req.session.userId}).fetch().then(function(model){
         if(model) {
