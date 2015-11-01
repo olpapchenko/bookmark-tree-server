@@ -70,7 +70,9 @@ bookmark = AbstractModel.extend({
     }, { //todo escape raw variables
         getShared: function(userId, coOwner) {
             var _this = this;
-            return  Bookshelf.knex.raw("select distinct(bookmark_id) from bookmark_rights where user_id = " + coOwner + " and bookmark_id in (select bookmark_id from bookmark_rights where owner = true and user_id =" + userId + ")")
+            return  Bookshelf.knex.raw("select distinct(bookmark_id) from bookmark_rights " +
+            "                           where user_id = " + coOwner +
+                                        " and bookmark_id in (select bookmark_id from bookmark_rights where user_id =" + userId + ")")
                 .then(function (res) {
                     return res.rows;
                 })

@@ -96,7 +96,8 @@ var branch = AbstractModel.extend({
 
     getShared: function(userId, coOwner) {
         var _this = this;
-        return  Bookshelf.knex.raw("select distinct(branch_id) from branch_rights where user_id = " + coOwner + " and branch_id in (select branch_id from branch_rights where owner = true and user_id =" + userId + ")")
+        return  Bookshelf.knex.raw("select distinct(branch_id) from branch_rights where user_id = " + coOwner +
+                                   " and branch_id in (select branch_id from branch_rights where user_id =" + userId + ")")
             .then(function(res) {
                 return res.rows;
             })

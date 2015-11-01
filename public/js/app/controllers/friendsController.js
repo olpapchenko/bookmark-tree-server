@@ -30,9 +30,11 @@ angular.module("app").controller("friendsController", ["friends","$scope","userS
 
     $scope.loadDetails = function (index) {
         friends[index].showDetails = !friends[index].showDetails;
+
         if(!friends[index].showDetails) {
             return;
         }
+
         friendsService.getSharedEntities(friends[index].id).then(function(sharedEntitiesData){
             friends[index].sharedEntitiesData = sharedEntitiesData;
         });

@@ -15,7 +15,7 @@ var validateBranchNotDefault = require("../filters/validateBranchNotDefault");
 var actionComposer = require("./actionComposer");
 var notificationService = require("../helpers/NotificationService");
 
-module.exports={
+module.exports = {
 
     all: actionComposer({
         action: function(req, resp){

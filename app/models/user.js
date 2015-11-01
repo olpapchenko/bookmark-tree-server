@@ -26,7 +26,6 @@ var user = bookshelf.Model.extend({
             qb.where("bookmarks.id", id);
         })
     },
-
     rights: function () {
         return this.hasMany("Bookmark_rights");
     },
