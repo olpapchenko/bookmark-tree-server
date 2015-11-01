@@ -7,13 +7,13 @@ var path = require("path"),
     mandatoryParamFilter = require("../filters/mandatoryParamFilter");
 
 module.exports.get = function (req, resp) {
-    new User({id: req.params.id}).fetch().then(function(user) {
+     User.forge({id: req.params.id}).loadUser().then(function(user) {
         if(!user) {
             return user;
         }
         return User.forge({id: req.session.userId}).isFriend(user);
     }).then(function (user) {
-        resp.json(user ? user.omit("password"): user);
+        resp.json(user);
     });
 }
 
@@ -63,25 +63,7 @@ module.exports.put = actionComposer({
     }
 });
 
-
-
-module.exports.post = function (req,resp) {
-    if(req.body.mail && req.body.password){
-        User.register(req.body).then(function(model) {
-            resp.json(model);
-        }, function (model) {
-            if(model.code == 23505){
-                resp.status(400).send("user with this mail already exists");
-            } else {
-                resp.status(500).send("Internal server error, please contact administrator");
-            }
-        });r
-    } else {
-        resp.status(400).send("mail or username missing");
-    }
-}
-
-module.exports.login= function (req, resp) {
+module.exports.login = function (req, resp) {
     if(req.session.userId) {
         resp.status(400).send("you are already logged in");
     }
@@ -98,6 +80,21 @@ module.exports.login= function (req, resp) {
         resp.status(403).send("you have not specified password/mail");
     }
 }
+
+module.exports.post = actionComposer({
+    beforeFilters: [mandatoryParamFilter(["name", "mail", "password"])],
+    action: function (req,resp) {
+        User.register(req.body).then(function(model) {
+            module.exports.login(req, resp);
+        }, function (model) {
+            if(model.code == 23505){
+                resp.status(400).send("user with this mail already exists");
+            } else {
+                resp.status(500).send("Internal server error, please contact administrator");
+            }
+        });
+    }
+});
 
 module.exports.logout = function(req, resp) {
     req.session.destroy();

@@ -28,7 +28,7 @@ angular.module("app").service("userService", ["$http", "$q", function($http, $q)
     }
 
     this.register = function (user) {
-        return $http.post("/user/register", user);
+        return $http.post("/registration", user);
     }
 
     this.save = function (user) {

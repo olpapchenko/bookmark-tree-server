@@ -1,3 +1,5 @@
+var _ = require("underscore");
+
 var bookshelf = require ('../../config/db/bookshelf');
 var encodeSHA = require("../helpers/encodeSHA");
 var Bookmark = require('./bookmark');
@@ -57,18 +59,30 @@ var user = bookshelf.Model.extend({
         return this.notifications().query({where: {is_read: false}});
     },
 
+    loadUser: function () {
+        return this.fetch().then(function (user) {
+                return omitPassword(user);
+        })
+    },
+
     isFriend: function(users) {
         _this = this;
        var usersArray = [];
-        usersArray.push(users);
+
+        if(users instanceof Array) {
+            usersArray = users;
+        } else {
+            usersArray.push(users);
+        }
+
        return this.load("friends").then(function() {
             return usersArray.map(function(friend){
                 if(_this.related("friends").any(function(user){
                     return user.id == friend.id;
                 })){
-                    friend.set({isFriend: true});
+                    friend.isFriend = true;
                 } else {
-                    friend.set({isFriend: false});
+                    friend.isFriend  = false;
                 };
                 return friend;
             });

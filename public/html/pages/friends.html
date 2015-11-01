@@ -14,7 +14,7 @@
             <div ng-repeat="friend in friends" class="collapseble panel panel-primary" >
                 <div class="panel-heading custom-panel-header" style = "overflow: hidden; cursor: pointer;"   ng-click="loadDetails($index)" ng-class="{open: friend.showDetails}">
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-7">
                             <span class="profile-ava">
                                 <img ng-src="{{avatarService.getPath(friend.avatar)}}" alt="" style="height: 40px; width: 40px;"/>
                             </span>
@@ -23,7 +23,7 @@
                         <div class="col-lg-2 col-md-offset-1">
 
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-5">
                             <span ng-class="{'glyphicon-chevron-down': !friend.showDetails, 'glyphicon-chevron-up': friend.showDetails}" style="margin-left: 10px;" class="pull-right glyphicon" title="expand/hide"></span>
                             <span ng-click="removeFriend(friend.id)" class="pull-right glyphicon glyphicon-remove-sign" title="remove"></span>
                         </div>
