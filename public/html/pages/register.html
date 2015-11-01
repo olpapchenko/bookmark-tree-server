@@ -36,12 +36,8 @@
     <script src="js/vendor/placeholder.js"></script>
     <![endif]-->
 
-</head>
-
-
-
-<!-- Top content -->
-<div class="top-content"  style="">
+ <!-- Top content -->
+<div class="top-content">
     <div class="fade-in-up">
         <div>
             <div class="container">
@@ -71,17 +67,25 @@
                                      <input type="text" ng-model="user.name" required="" minlength="3" maxlength="30" name="username" placeholder="Name..." class="form-username form-control"  >
                                 </div>
                                 <div class="form-group">
-                                     <input type="email" ng-model="user.mail" required="" min="3" max="30" name="form-username" placeholder="Mail..." class="form-username form-control"  >
+                                     <input type="email" ng-model="user.mail" style = "line-height: 50px" required="" min="3" max="30" name="mail" placeholder="Mail..." class="form-username form-control"  >
                                 </div>
                                 <div class="form-group">
-                                     <input type="password" ng-model="user.password" required="" min="5" max="30" name="form-password" placeholder="Password..." class="form-password form-control"  >
+                                     <input type="password" ng-model="user.password" required="" minlength="5" maxlength="30" name="password" placeholder="Password..." class="form-password form-control"  >
                                 </div>
                                 <div class="form-group">
-                                     <input type="password" ng-model="user.password" name="form-password" placeholder="Repeat Password..." class="form-password form-control"  >
+                                     <input type="password" ng-model="repeatPassword" name="form-password" placeholder="Repeat Password..." class="form-password form-control"  >
                                 </div>
+
                                 <div ng-show="register_form.$submitted">
-                                    <span ng-show="register_form.username.$error.required && re">User name is required</span>
-                                    <span ng-show="register_form.username.$error.minlength || register_form.username.$error.maxlength">User name must be between 3 and 30</span>
+                                    <ul class="validations">
+                                        <li ng-show="register_form.username.$error.required">User name is required</li>
+                                        <li ng-show="register_form.username.$error.minlength || register_form.username.$error.maxlength">User name must be between 3 and 30</li>
+                                        <li ng-show="register_form.mail.$error.required">Mail is required</li>
+                                        <li ng-show="register_form.mail.$error.mail">We need a valid mail</li>
+                                        <li ng-show="register_form.password.$error.required">Password is required</li>
+                                        <li ng-show="repeatPassword != user.password">Passwords does not match</li>
+                                        <li ng-show="register_form.password.$error.minlength || register_form.password.$error.maxlength">Password length must be between 5 and 30</li>
+                                    </ul>
 
                                 </div>
 
@@ -110,9 +114,8 @@
         </div>
     </div>
 </div>
-<div style="position: absolute; top: 0; z-index: -9999; background-image: url(/images/login.jpg); background-size: cover; height: 100vh; width: 100vw">
-</div>
 
+<div  style="position: fixed; top: 0; z-index: -99;   background-image: url(/images/login.jpg); background-size: cover; min-height: 100vh; min-width: 100vw"></div>
 
 
 
