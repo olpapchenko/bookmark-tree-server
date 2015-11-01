@@ -27,10 +27,11 @@
             scope: {
                 remove: "=",
                 edit: "=",
+                isOwner: "=?",
                 share: "=",
                 entity: "=",
                 branch: "=",
-                enableEditing: "="
+                enableEditing: "=?"
             },
             templateUrl: "/html/templates/branchBookmark.html",
             link: function(scope, iElement, attrs) {
@@ -50,6 +51,10 @@
                         });
                     }
                 };
+
+                scope.enableEditing = typeof scope.enableEditing == 'undefined' ? scope.isOwner : scope.enableEditing;
+
+                console.log(scope.enableEditing);
 
                 scope.navigatePath = scope.branch ? branchDatasource.path : bookmarkDatasource.path;
                 scope.removeHandler = scope.remove || getRemoveHandler(scope.branch);

@@ -4,6 +4,8 @@ var path = require("path"),
     User      = require("../models/user"),
     appConfig = require("../../config/app_config"),
     actionComposer = require("./actionComposer"),
+    Branch = ("../models/branch"),
+    Bookshelf = require ('../../config/db/bookshelf'),
     mandatoryParamFilter = require("../filters/mandatoryParamFilter");
 
 module.exports.get = function (req, resp) {
@@ -84,14 +86,12 @@ module.exports.login = function (req, resp) {
 module.exports.post = actionComposer({
     beforeFilters: [mandatoryParamFilter(["name", "mail", "password"])],
     action: function (req,resp) {
-        User.register(req.body).then(function(model) {
+        User.register(req.body)
+        .then(function (user) {
+           return  Bookshelf.model("Branch").createBranch({name: "Default Branch", default: true}, user.id);
+        })
+        .then(function(model) {
             module.exports.login(req, resp);
-        }, function (model) {
-            if(model.code == 23505){
-                resp.status(400).send("user with this mail already exists");
-            } else {
-                resp.status(500).send("Internal server error, please contact administrator");
-            }
         });
     }
 });

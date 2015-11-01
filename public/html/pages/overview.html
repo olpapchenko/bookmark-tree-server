@@ -10,7 +10,7 @@
             </div>
             <div class="row">
                 <div ng-repeat="branch in branches|filter:branchName">
-                    <bookmark-panel branch="true" entity="branch"></bookmark-panel>
+                    <bookmark-panel branch="true" is-owner="branch.rightsInfo[currentUser.id]" entity="branch"></bookmark-panel>
                 </div>
 
 

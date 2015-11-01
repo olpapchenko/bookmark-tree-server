@@ -52,27 +52,6 @@ var branch = AbstractModel.extend({
             return {owners: res[0].models, observers: res[1].models}
         });
     },
-    shareSecure: function(owner, user_id, ownership){
-         var _this = this;
-         return _this.checkOwnerhip(owner)
-        .then(function(){
-                return _this.addRight(user_id, ownership);
-            }, function(){
-                Promise.reject("You are not eligible to share this branch!");
-            })
-        .then(function(){
-                logger.info("Branch %d was shared with %d, ownership %s", this.id, user_id, ownership);
-                return "Branch was successfully shared";
-            }, function(m){
-                logger.error("Branch %d was not shared due to error %s", this.id, m.message);
-                var message = m.message || m;
-                if(message.indexOf("повторяющееся значение ключа") > -1){
-                    return Promise.reject("Branch is already shared");
-                } else {
-                    return Promise.reject(message);
-                }
-            });
-    },
 
     remove: function () {
         return this.fetch().then(function(model){
@@ -90,7 +69,7 @@ var branch = AbstractModel.extend({
     fetchById: function (id, userId){
         return this.forge({id: id}).fetch()
             .then(function (branch) {
-                return BranchRights.attachBranchRight(branch, userId);
+                return BranchRights.attachBranchRight(branch);
             })
     },
 
@@ -105,6 +84,7 @@ var branch = AbstractModel.extend({
                 return _this.fetchById(row.branch_id, coOwner);
             });
     },
+
     createBranch: function (attrs, owner) {
         var _this = this;
         return Bookshelf.transaction(function (t) {

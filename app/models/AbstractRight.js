@@ -68,12 +68,19 @@ var model = AbstractModel.extend({
 
     },
 
-    attachOwnershipInfo: function (model, entity_key, userId) {
+    attachOwnershipInfo: function (model, entity_key) {
         var right = {};
         right[entity_key] = model.id;
-        right.user_id = userId;
-        return this.forge(right).fetch().then(function (right) {
-            model.set({isOwner: right ? right.get("owner") : false});
+
+        return this.query(function (qb){ qb.where(entity_key, model.id)}).fetchAll().then(function (rightz) {
+            var rights = {};
+
+            rightz.map(function (right) {
+                rights[right.get("user_id")] = right.get("owner");
+            });
+
+            model.set({rightsInfo: rights});
+
             return model;
         });
     },

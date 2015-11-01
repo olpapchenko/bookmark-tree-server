@@ -116,10 +116,7 @@ var user = bookshelf.Model.extend({
         return new this({name: userData.name,
                   password: encodeSHA(userData.password),
                   about: userData.about,
-                  mail: userData.mail}).save()
-        .then(function  (model) {
-           return model.omit("password");
-        });
+                  mail: userData.mail}).save();
     },
 
     byName: function(name){
