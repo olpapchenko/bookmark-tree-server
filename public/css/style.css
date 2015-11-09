@@ -212,5 +212,30 @@ input:focus.ng-invalid.ng-touched {
   -moz-animation: stretch 5s;
 }
 
+.panel-heading.back-yellow {
+  background-color: #FAB71E;
+}
+
+.panel-heading.back-blue {
+  background-color: #16A3E5;
+}
+
+.back-blue {
+  background-color: #23B7E5;
+}
+
+.back-green {
+  background-color: #C24C27;
+}
+
+.back-yellow {
+  background-color: #FAD733;
+}
+
+.panel-heading h3 {
+  font-weight: 100;
+  color: white;
+}
+
 
 

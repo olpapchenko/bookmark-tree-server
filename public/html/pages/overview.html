@@ -8,6 +8,15 @@
                 <div class="list-group">
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <div class="pull-right">
+                        <i ng-click= "switchView()" class="glyphicon glyphicon-list" style="color: black; font-size: 20px; cursor: pointer;" alt="Change view"></i>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div ng-repeat="branch in branches|filter:branchName">
                     <bookmark-panel branch="true" is-owner="branch.rightsInfo[currentUser.id]" entity="branch"></bookmark-panel>

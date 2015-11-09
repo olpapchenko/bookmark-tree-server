@@ -135,6 +135,15 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             }],
             controller: "profileController"
         })
+        .state("app.plan", {
+            url: "/plan",
+            templateUrl: PAGES_URL + "/plan.html",
+            resolve: ["$ocLazyLoad", function($ocLazyLoad){
+                return $ocLazyLoad.load([
+                    "/js/app/controllers/planController.js"]);
+            }],
+            controller: "planController"
+        })
         .state("app.friends", {
             url: "/friends",
             templateUrl: PAGES_URL + "/friends.html",
