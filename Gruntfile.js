@@ -23,11 +23,28 @@ module.exports = function(grunt) {
                 directory: './config/db/seeds',
                 database: DB_CONNECTION
             }
+        },
+        browserSync: {
+            default_options: {
+                bsFiles: {
+                    src : [
+                        './public/**/*.*',
+                        './views/index.html'
+                    ]
+                },
+                options: {
+                    port: 1001,
+                    watchTask: true,
+                    server: './public',
+                    proxy: 'localhost:3000'
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-knexseed');
     grunt.loadNpmTasks('grunt-knex-migrate');
+    grunt.loadNpmTasks('grunt-browser-sync');
 
     grunt.registerTask("setupDB", ['knexmigrate:latest', 'knexseed:run']);
 };
