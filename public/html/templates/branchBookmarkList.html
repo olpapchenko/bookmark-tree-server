@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<ul class="list-group">
+    <li ng-repeat = "entity in entities" class="list-group-item pointer">
+        {{entity.name}}
+        <span class="badge" ng-if="isOwner">owner</span>
 
-</body>
-</html>
+        <span ng-show="enableEditing && !entity.default">
+            <i class="glyphicon glyphicon-remove-sign pointer" ng-click="removeHandler(entity.id)"></i>
+            <i class="glyphicon glyphicon-pencil pointer" ng-click="editHandler(entity.edit)"></i>
+            <i class="glyphicon glyphicon-share-alt pointer" ng-click="shareHandler(entity.share)"></i>
+        </span>
+    </li>
+</ul>

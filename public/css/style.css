@@ -237,5 +237,9 @@ input:focus.ng-invalid.ng-touched {
   color: white;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 
 

@@ -98,7 +98,9 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                                          "/js/app/datasources/shareDataSourceAllBookmark.js",
                                          "/js/app/datasources/shareDataSourceAllBranch.js",
                                          "/js/app/services/shareHandler.js",
-                                         "/js/app/directives/branchBookmarkPanel.js"]);
+                                         "/js/app/services/removeHandler.js",
+                                         "/js/app/directives/branchBookmarkPanel.js",
+                                         "/js/app/directives/switchableView.js"]);
             }],
             controller: "overviewController"
         })
@@ -153,6 +155,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                                          "/js/app/controllers/friendsController.js",
                                          "/js/app/services/friendsService.js",
                                          "/js/app/controllers/removeFriendController.js",
+                                         "/js/app/directives/branchBookmarkList.js",
                                          "/js/app/directives/branchBookmarkPanel.js",
                                          "/js/app/datasources/editBookmarkDatasource.js",
                                          "/js/app/datasources/editBranchDatasource.js",

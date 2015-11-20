@@ -11,6 +11,7 @@
          "editHandler",
          "editBookmarkDatasource",
          "editBranchDatasource",
+         "removeHandler",
          function ($rootScope,
                    ngDialog,
                    $state,
@@ -21,7 +22,8 @@
                    shareDatasourceAllBookmark,
                    editHandler,
                    editBookmarkDatasource,
-                   editBranchDatasource) {
+                   editBranchDatasource,
+                   removeHandler) {
         return {
             restrict: "E",
             scope: {
@@ -30,36 +32,19 @@
                 isOwner: "=?",
                 share: "=",
                 entity: "=",
-                branch: "=",
+                isBranch: "=",
                 enableEditing: "=?"
             },
             templateUrl: "/html/templates/branchBookmark.html",
+
             link: function(scope, iElement, attrs) {
 
-                function getRemoveHandler(isBranch) {
-                    return function (id) {
-                        var scope = $rootScope.$new();
-                        scope.id = id;
-                        scope.isBranch = isBranch;
-                        var dialog = ngDialog.open({
-                            template: '/html/templates/removeBranch.html',
-                            controller: 'removeBranchController',
-                            scope: scope
-                        });
-                        dialog.closePromise.then(function(){
-                            $state.reload();
-                        });
-                    }
-                };
+                scope.enableEditing = scope.enableEditing || scope.isOwner;
 
-                scope.enableEditing = typeof scope.enableEditing == 'undefined' ? scope.isOwner : scope.enableEditing;
-
-                console.log(scope.enableEditing);
-
-                scope.navigatePath = scope.branch ? branchDatasource.path : bookmarkDatasource.path;
-                scope.removeHandler = scope.remove || getRemoveHandler(scope.branch);
-                scope.editHandler = scope.edit || editHandler(scope.branch ? editBranchDatasource : editBookmarkDatasource);
-                scope.shareHandler = scope.share || shareHandler(scope.branch ? shareDatasourceAllBranch : shareDatasourceAllBookmark);
+                scope.navigatePath = scope.isBranch ? branchDatasource.path : bookmarkDatasource.path;
+                scope.removeHandler = scope.remove || removeHandler(scope.isBranch);
+                scope.editHandler = scope.edit || editHandler(scope.isBranch ? editBranchDatasource : editBookmarkDatasource);
+                scope.shareHandler = scope.share || shareHandler(scope.isBranch ? shareDatasourceAllBranch : shareDatasourceAllBookmark);
             }
         }
     }]);

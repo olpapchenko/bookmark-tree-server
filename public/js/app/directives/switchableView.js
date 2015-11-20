@@ -1,10 +1,9 @@
-angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope", "$compile", "$controller",
-    function ($http, $q, $rootScope, $compile , $controller) {
+angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope", "$compile", "$controller", "$timeout",
+    function ($http, $q, $rootScope, $compile , $controller, $timeout) {
         return {
             restrict: "E",
             scope: {
                 scope: "=",
-                datasource: "=",
                 remote: "="
             },
             templateUrl: "/html/templates/switcheableView.html",
@@ -20,7 +19,7 @@ angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope",
                         templates.push($http.get(attrs.two));
                         return $q.all(templates).then(function (templates) {
                             return templates.map(function (template) {
-                                return $el(template);
+                                return $el(template.data);
                             })
                         });
                     } else {
@@ -38,20 +37,19 @@ angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope",
                 }
 
                 function getNewScope() {
-                    return $scope.scope ? $scope.$new() : $rootScope.$new();
+                    return $scope.scope ? $scope.scope.$new() : $rootScope.$new();
                 }
 
                 $scope.switch = function () {
                     $scope.isTurnedOn = ! $scope.isTurnedOn;
-                    $rootScope.emit("switch.changed", $scope.isTurnedOn);
+                    $rootScope.$emit("switch.changed", $scope.isTurnedOn);
                 }
 
                 getTemplates().then(function (templates) {
                     var container1 = $el(iElement[0].querySelector("#content1")),
                         container2 = $el(iElement[0].querySelector("#content2")),
                         scope1 = getNewScope(),
-                        scope2 = getNewScope;
-
+                        scope2 = getNewScope();
 
                     container1.append(templates[0]);
                     container2.append(templates[1]);
@@ -59,8 +57,10 @@ angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope",
                     bindController(attrs.controllerOne, container1, scope1);
                     bindController(attrs.controllerTwo, container2, scope2);
 
-                    $compile(container1)(scope1);
-                    $compile(container1)(scope2);
+                    $timeout(function () {
+                        $compile(container1)(scope1);
+                        $compile(container2)(scope2);
+                    });
 
                 });
             }
