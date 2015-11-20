@@ -18,16 +18,16 @@ angular.module("app").directive("branchBookmarkList", ["editHandler",
         scope: {
             entity: "=",
             isBranch: "=",
-            edit: "=",
-            share: "=",
-            remove: "=",
+            edit: "=?",
+            share: "=?",
+            remove: "=?",
             isOwner: "=",
-            enableEditing: "=",
-            templateUrl: "/html/templates/branchBookmarkList.html"
+            enableEditing: "=?"
         },
+        templateUrl: "/html/templates/branchBookmarkList.html",
 
         link: function (scope, element, attr){
-
+            console.log("matched");
             scope.enableEditing = scope.enableEditing || scope.isOwner;
             console.log(scope.enableEditing);
 
