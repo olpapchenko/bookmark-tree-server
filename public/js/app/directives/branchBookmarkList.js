@@ -16,18 +16,18 @@ angular.module("app").directive("branchBookmarkList", ["editHandler",
     return {
         restrict: "E",
         scope: {
-            entity: "=",
+            entities: "=",
             isBranch: "=",
             edit: "=?",
             share: "=?",
             remove: "=?",
-            isOwner: "=",
-            enableEditing: "=?"
+            enableEditing: "=?",
+            filterPredicate: "=",
+            currentUser: "="
         },
         templateUrl: "/html/templates/branchBookmarkList.html",
 
         link: function (scope, element, attr){
-            scope.enableEditing = scope.enableEditing || scope.isOwner;
 
             scope.removeHandler = scope.remove || removeHandler(scope.isBranch);
             scope.editHandler = scope.edit || editHandler(scope.isBranch ? editBranchDatasource : editBookmarkDatasource);
