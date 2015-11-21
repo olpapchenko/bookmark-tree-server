@@ -27,9 +27,7 @@ angular.module("app").directive("branchBookmarkList", ["editHandler",
         templateUrl: "/html/templates/branchBookmarkList.html",
 
         link: function (scope, element, attr){
-            console.log("matched");
             scope.enableEditing = scope.enableEditing || scope.isOwner;
-            console.log(scope.enableEditing);
 
             scope.removeHandler = scope.remove || removeHandler(scope.isBranch);
             scope.editHandler = scope.edit || editHandler(scope.isBranch ? editBranchDatasource : editBookmarkDatasource);
