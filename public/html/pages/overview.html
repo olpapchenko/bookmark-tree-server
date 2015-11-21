@@ -1,6 +1,6 @@
 <div class="fade-in-up">
     <h3 class="page-header"><i class="glyphicon glyphicon-book"></i> Branches</h3>
-    <div class="row" id="portfolio">
+    <div class="row">
         <div class="col-sm-12">
             <input placeholder="Search" ng-model="entityName" type="text" class="form-control round-input search-bar">
 
@@ -9,8 +9,9 @@
                 </div>
             </div>
 
-            <switcheable-view scope="scope" remote="true" one="/html/partials/svBranchBookmarkList.html" two="/html/partials/svBranchBookmarksPanel.html"></switcheable-view>
-
+            <div style="color: black">
+                <switcheable-view scope="scope" remote="true" one="/html/partials/svBranchBookmarkList.html" two="/html/partials/svBranchBookmarksPanel.html"></switcheable-view>
+            </div>
 
         </div>
     </div>

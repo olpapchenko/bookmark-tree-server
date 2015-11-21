@@ -31,9 +31,9 @@ angular.module("app").directive("branchBookmarkList", ["editHandler",
             scope.enableEditing = scope.enableEditing || scope.isOwner;
             console.log(scope.enableEditing);
 
-            scope.removeHandler = scope.remove || removeHandler(scope.branch);
-            scope.editHandler = scope.edit || editHandler(scope.branch ? editBranchDatasource : editBookmarkDatasource);
-            scope.shareHandler = scope.share || shareHandler(scope.branch ? shareDatasourceAllBranch : shareDatasourceAllBookmark);
+            scope.removeHandler = scope.remove || removeHandler(scope.isBranch);
+            scope.editHandler = scope.edit || editHandler(scope.isBranch ? editBranchDatasource : editBookmarkDatasource);
+            scope.shareHandler = scope.share || shareHandler(scope.isBranch ? shareDatasourceAllBranch : shareDatasourceAllBookmark);
         }
     }
 }]);

@@ -241,5 +241,10 @@ input:focus.ng-invalid.ng-touched {
   cursor: pointer;
 }
 
+.nav-elements i {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
 
 
