@@ -5,6 +5,7 @@ var encodeSHA = require("../helpers/encodeSHA");
 var Bookmark = require('./bookmark');
 var Rights = require('./bookmarkRights');
 var Branch = require('./branch');
+var Preference = require("./preferences");
 var BookmarksBranches = require('./BookmarksBranches');
 
 var BookmarksBranches = bookshelf.model("BookmarksBranches");
@@ -38,6 +39,10 @@ var user = bookshelf.Model.extend({
         return this.branches().query(function(qb){
             qb.where("branches.id", id);
         })
+    },
+
+    preference: function () {
+      return this.hasOne("Preference");
     },
 
     defaultBranch: function() {
