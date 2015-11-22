@@ -12,7 +12,7 @@ angular.module("app").factory("removeHandler", ["$rootScope", "ngDialog", functi
                 scope: scope
             });
 
-            return dialog;
+            return dialog.closePromise;
         }
     };
 }]);

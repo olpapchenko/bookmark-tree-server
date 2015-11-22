@@ -5,8 +5,7 @@ angular.module("app").controller("removeBranchController", ["$scope", "branchSer
 
     $scope.remove = function(){
         persistService.remove($scope.id).then(function () {
-            $scope.closeThisDialog();
-            $scope.$state.reload();
+            $scope.closeThisDialog(true);
         }, function (message) {
             //todo add toaster message
         });
