@@ -4,7 +4,8 @@ angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope",
             restrict: "E",
             scope: {
                 scope: "=",
-                remote: "="
+                remote: "=",
+                changeHandler: "&"
             },
             templateUrl: "/html/templates/switcheableView.html",
 
@@ -42,7 +43,7 @@ angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope",
 
                 $scope.switch = function () {
                     $scope.isTurnedOn = ! $scope.isTurnedOn;
-                    $rootScope.$emit("switch.changed", $scope.isTurnedOn);
+                    $rootScope.$emit("switch.changed"  +  $scope.isTurnedOn);
                 }
 
                 getTemplates().then(function (templates) {
