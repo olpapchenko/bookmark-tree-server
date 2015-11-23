@@ -92,6 +92,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                                          "/js/app/controllers/editBranchController.js",
                                          "/js/app/controllers/removeBranchController.js",
                                          "/js/app/services/bookmarkService.js",
+                                         "/js/app/services/preferencesService.js",
                                          "/js/app/datasources/editBookmarkDatasource.js",
                                          "/js/app/services/editHandler.js",
                                          "/js/app/datasources/shareDatasourceAbstract.js",

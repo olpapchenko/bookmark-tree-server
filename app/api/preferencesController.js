@@ -3,12 +3,14 @@ var Preferences = require("../models/preferences"),
 
 module.exports = {
     get: actionComposer({action: function (req, resp) {
-        Preferences.forge({user_id: req.session.userId, key: req.query.key}).fetch().then(function (preference) {
+        return Preferences.forge({user_id: req.session.userId, key: req.query.key}).fetch().then(function (preference) {
             resp.json(preference);
         });
     }}),
 
     post: actionComposer({action: function (req, resp) {
-        //Preferences.forge({user_id: req.session.userId, key: req.query.key})
+         Preferences.forge({user_id: req.session.userId, key: req.body.key}).saveBasedOnParams({value: req.body.value}).then(function () {
+            resp.sendStatus(200);
+        });
     }})
 }

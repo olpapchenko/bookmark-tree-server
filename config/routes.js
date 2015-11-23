@@ -8,7 +8,8 @@ var bookmark = require("../app/api/bookmarkController"),
     branch = require("../app/api/branchController"),
     notifications = require("../app/api/notificationsController"),
     friends = require("../app/api/friendsController"),
-    files = require("../app/api/filesController");
+    files = require("../app/api/filesController"),
+    preferences = require("../app/api/preferencesController");
 
 ///routes
 
@@ -52,6 +53,10 @@ router.get("/friends/shared/:id(\\d+)", friends.shared);
 
 // files routes
 router.post("/uploads/avatar", files.avatar);
+
+//preferences
+router.post("/preferences", preferences.post);
+router.get("/preferences", preferences.get);
 
 ///entry point
 router.get("/", function (req, res){
