@@ -44,7 +44,7 @@ angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope",
                 $scope.switch = function () {
                     $scope.isTurnedOn = ! $scope.isTurnedOn;
                     $rootScope.$emit("switch.changed"  +  $scope.isTurnedOn);
-                    $scope.changeHandler($scope.isTurnedOn);
+                    $scope.changeHandler({flag: $scope.isTurnedOn});
                 }
 
                 getTemplates().then(function (templates) {
