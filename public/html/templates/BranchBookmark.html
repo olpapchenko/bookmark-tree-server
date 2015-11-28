@@ -13,8 +13,8 @@
             </div>
             <div   ng-class="{'background-hover': (entity.rightsInfo[currentUser.id] || enableEditing) && !entity.default}">
                 <div ng-class="{'hover-image': (entity.rightsInfo[currentUser.id] || enableEditing) && !entity.default}">
-                        <img ng-if="branch" src="images/default_branch.jpg" class="img-responsive" alt="" style="width: 100%; height: 166px;">
-                        <img ng-if="!branch" src="images/default_bookmark.jpg" class="img-responsive" alt="" style="width: 100%;  height: 166px;">
+                        <img ng-if="isBranch" src="images/default_branch.jpg" class="img-responsive" alt="" style="width: 100%; height: 166px;">
+                        <img ng-if="!isBranch" src="images/default_bookmark.jpg" class="img-responsive" alt="" style="width: 100%;  height: 166px;">
                 </div>
             </div>
 

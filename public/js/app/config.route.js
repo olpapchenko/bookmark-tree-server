@@ -104,7 +104,9 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                                          "/js/app/services/removeHandler.js",
                                          "/js/app/directives/branchBookmarkList.js",
                                          "/js/app/directives/branchBookmarkPanel.js",
-                                         "/js/app/directives/switchableView.js"]);
+                                         "/js/app/directives/switchableView.js",
+                                         "/js/app/directives/addEntityButton.js"
+                                    ]);
                     }
                 ],
                 preferedView: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {

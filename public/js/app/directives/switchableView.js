@@ -20,6 +20,10 @@ angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope",
                         var templates = [];
                         templates.push($http.get(attrs.one));
                         templates.push($http.get(attrs.two));
+
+                        if(attrs.header) {
+                            templates.push($http.get(attrs.header));
+                        }
                         return $q.all(templates).then(function (templates) {
                             return templates.map(function (template) {
                                 return $el(template.data);
@@ -51,7 +55,8 @@ angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope",
 
                 getTemplates().then(function (templates) {
                     var container1 = $el(iElement[0].querySelector("#content1")),
-                        container2 = $el(iElement[0].querySelector("#content2"));
+                        container2 = $el(iElement[0].querySelector("#content2")),
+                        header = $el(iElement[0].querySelector("#header"));
 
                     //setup scope
                     scope1.isTurnedOn = $scope.isTurnedOn;
@@ -60,12 +65,17 @@ angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope",
                     container1.append(templates[0]);
                     container2.append(templates[1]);
 
+                    if(templates[2]) {
+                        header.append(templates[2]);
+                    }
+
                     bindController(attrs.controllerOne, container1, scope1);
                     bindController(attrs.controllerTwo, container2, scope1);
 
                     $timeout(function () {
                         $compile(container1)(scope1);
                         $compile(container2)(scope1);
+                        $compile(header)(scope1);
                     });
 
                 });
