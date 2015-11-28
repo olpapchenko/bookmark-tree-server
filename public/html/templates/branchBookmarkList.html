@@ -2,7 +2,7 @@
     <li class="list-group-item pointer" ng-repeat="entity in entities|filter:filterPredicate track by entity.id">
         <div class="row">
             <div class="col-sm-10">
-                <span class="nav-elements">{{entity.name}} </span>
+                <span class="nav-elements"><a href="{{navigatePath(entity.id)}}" class="minimal-path">{{entity.name}} </a></span>
                 <span class="badge bg-important" ng-if="entity.rightsInfo[currentUser.id]">owner</span>
             </div>
 

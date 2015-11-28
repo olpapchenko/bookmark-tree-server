@@ -247,5 +247,14 @@ input:focus.ng-invalid.ng-touched {
   color: #666;
 }
 
+.minimal-path {
+  color: #666;
+}
+
+.minimal-path:hover,
+.minimal-path:hover {
+  text-decoration: none;
+}
+
 
 

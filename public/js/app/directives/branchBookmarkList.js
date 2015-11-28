@@ -5,13 +5,17 @@ angular.module("app").directive("branchBookmarkList", ["editHandler",
     "editBookmarkDatasource",
     "shareDatasourceAllBranch",
     "shareDatasourceAllBookmark",
+    "branchDatasource",
+    "bookmarkDatasource",
     function (editHandler,
               removeHandler,
               shareHandler,
               editBranchDatasource,
               editBookmarkDatasource,
               shareDatasourceAllBranch,
-              shareDatasourceAllBookmark
+              shareDatasourceAllBookmark,
+              branchDatasource,
+              bookmarkDatasource
     ) {
     return {
         restrict: "E",
@@ -30,6 +34,7 @@ angular.module("app").directive("branchBookmarkList", ["editHandler",
         link: function (scope, element, attr){
 
             var rmHandler = scope.remove || removeHandler(scope.isBranch);
+            scope.navigatePath = scope.isBranch ? branchDatasource.path : bookmarkDatasource.path;
 
             scope.removeHandler = function (id) {
                 rmHandler(id).then(function (value) {
