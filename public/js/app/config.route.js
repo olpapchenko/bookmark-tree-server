@@ -77,8 +77,10 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
         .state("app.overview",{
             url: "/overview",
             templateUrl: PAGES_URL + "/overview.html",
-            resolve: ["$ocLazyLoad", function($ocLazyLoad){
-            return $ocLazyLoad.load([
+            resolve: {
+                files:
+                ["$ocLazyLoad", function($ocLazyLoad){
+                                    return $ocLazyLoad.load([
                                          "/js/app/datasources/abstractEntityDatasource.js",
                                          "/js/app/datasources/bookmarkDatasource.js",
                                          "/js/app/datasources/branchDatasource.js",
@@ -103,7 +105,15 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                                          "/js/app/directives/branchBookmarkList.js",
                                          "/js/app/directives/branchBookmarkPanel.js",
                                          "/js/app/directives/switchableView.js"]);
-            }],
+                    }
+                ],
+                preferedView: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {
+                    return $ocLazyLoad.load("/js/app/services/preferencesService.js").then(function () {
+                        var preferencesService = $injector.get("preferencesService");
+                        return preferencesService.getOverviewListView();
+                    });
+               }]
+            },
             controller: "overviewController"
         })
         .state("app.shared", {

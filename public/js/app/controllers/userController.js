@@ -10,7 +10,8 @@ angular.module("app").controller("userController", ["$scope", "user", "avatarSer
         $scope.pageOfCurrentUser = user.id == $scope.currentUser.id;
 
         $scope.addToFriends = function () {
-            friendsService.addFriend(user.id);
+            friends
+            Service.addFriend(user.id);
             toaster.pop('success', "Friend added", "You are now friends with " + user.name);
             $state.reload();
         }

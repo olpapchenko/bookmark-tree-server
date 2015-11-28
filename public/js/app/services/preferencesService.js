@@ -1,10 +1,25 @@
 angular.module("app").service("preferencesService", ["$http", function ($http) {
-    this.save = function (preference) {
-        console.log(preference);
-        return $http.post("/preferences", preference);
+    String.prototype.capitalizeFirstLetter = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
     }
 
-    this.get = function (key) {
-        return $http.get("/preferences", {params: {key: key}});
-    }
+    var PREFERENCES_KEYS = "overviewListView friendsBranchListView friendsBookmarkListView".split(" "),
+        _this = this;
+
+    PREFERENCES_KEYS.forEach(function (key) {
+        _this["get" + key.capitalizeFirstLetter()] = function () {
+            return $http.get("/preferences", {params: {key: key}}).then(function (preference) {
+                return preference.data.value === 'true';
+            });
+        }
+    });
+
+    PREFERENCES_KEYS.forEach(function (key) {
+        _this["save" + key.capitalizeFirstLetter()] = function (preference) {
+            return $http.post("/preferences", {key: key, value: preference});
+        }
+    });
+
+
+
 }]);

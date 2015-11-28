@@ -5,13 +5,14 @@ angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope",
             scope: {
                 scope: "=",
                 remote: "=",
+                isTurnedOn: "=",
                 changeHandler: "&"
             },
             templateUrl: "/html/templates/switcheableView.html",
 
             link: function ($scope, iElement, attrs) {
-                var $el = angular.element;
-                $scope.isTurnedOn = false;
+                var $el = angular.element,
+                    scope1 = getNewScope();
 
                 function getTemplates() {
                     if ($scope.remote) {
@@ -42,26 +43,26 @@ angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope",
                 }
 
                 $scope.switch = function () {
-                    $scope.isTurnedOn = ! $scope.isTurnedOn;
+                    scope1.isTurnedOn = !scope1.isTurnedOn;
                     $rootScope.$emit("switch.changed"  +  $scope.isTurnedOn);
-                    $scope.changeHandler({flag: $scope.isTurnedOn});
+                    $scope.changeHandler({flag: scope1.isTurnedOn});
                 }
 
                 getTemplates().then(function (templates) {
                     var container1 = $el(iElement[0].querySelector("#content1")),
-                        container2 = $el(iElement[0].querySelector("#content2")),
-                        scope1 = getNewScope(),
-                        scope2 = getNewScope();
+                        container2 = $el(iElement[0].querySelector("#content2"));
+
+                    scope1.isTurnedOn = $scope.isTurnedOn;
 
                     container1.append(templates[0]);
                     container2.append(templates[1]);
 
                     bindController(attrs.controllerOne, container1, scope1);
-                    bindController(attrs.controllerTwo, container2, scope2);
+                    bindController(attrs.controllerTwo, container2, scope1);
 
                     $timeout(function () {
                         $compile(container1)(scope1);
-                        $compile(container2)(scope2);
+                        $compile(container2)(scope1);
                     });
 
                 });

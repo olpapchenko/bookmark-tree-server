@@ -4,13 +4,16 @@ angular.module("app").controller("overviewController", [
     "editHandler",
     "addBranchDatasource",
     "preferencesService",
-    function($scope, branchService, editHandler, addBranchDatasource, preferencesService){
+    "preferedView",
+    function($scope, branchService, editHandler, addBranchDatasource, preferencesService, preferedView){
         branchService.all().then(function (data) {
         $scope.entities = data;
     });
 
+    $scope.isDisplayModeList = preferedView;
+
     $scope.savePreferedView = function (value) {
-        preferencesService.save({key: "overviewListView", value: value});
+        preferencesService.saveOverviewListView(value);
     }
 
     $scope.scope = $scope;

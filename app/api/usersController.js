@@ -4,7 +4,7 @@ var path = require("path"),
     User      = require("../models/user"),
     appConfig = require("../../config/app_config"),
     actionComposer = require("./actionComposer"),
-    Branch = ("../models/branch"),
+    Branch = require("../models/branch"),
     Bookshelf = require ('../../config/db/bookshelf'),
     mandatoryParamFilter = require("../filters/mandatoryParamFilter");
 
@@ -38,12 +38,14 @@ module.exports.checkMailAvailability = function (req, resp) {
 }
 
 module.exports.current = function(req,resp){
-    new User({id: req.session.userId}).fetch().then(function(model){
-        if(model) {
-            resp.json(model.omit("password"));
-        }else {
-            resp.sendStatus(400);
-        }
+    new User({id: req.session.userId}).fetch()
+        .then(function(model){
+
+            if(model) {
+                resp.json(model.omit("password"));
+            }else {
+                resp.sendStatus(400);
+            }
     });
 }
 
