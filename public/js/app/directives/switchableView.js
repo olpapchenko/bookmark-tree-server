@@ -6,6 +6,7 @@ angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope",
                 scope: "=",
                 remote: "=",
                 isTurnedOn: "=",
+                entities: "=",
                 changeHandler: "&"
             },
             templateUrl: "/html/templates/switcheableView.html",
@@ -52,7 +53,9 @@ angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope",
                     var container1 = $el(iElement[0].querySelector("#content1")),
                         container2 = $el(iElement[0].querySelector("#content2"));
 
+                    //setup scope
                     scope1.isTurnedOn = $scope.isTurnedOn;
+                    scope1.entities = scope1.entities || $scope.entities;
 
                     container1.append(templates[0]);
                     container2.append(templates[1]);

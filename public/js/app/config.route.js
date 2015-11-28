@@ -112,7 +112,13 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                         var preferencesService = $injector.get("preferencesService");
                         return preferencesService.getOverviewListView();
                     });
-               }]
+               }],
+                branches: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {
+                    return $ocLazyLoad.load("/js/app/services/branchService.js").then(function () {
+                        var branchService = $injector.get("branchService");
+                        return branchService.all();
+                    })
+                }]
             },
             controller: "overviewController"
         })
@@ -181,6 +187,18 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                 }],
                 friends: ["friendsService", function(friendsService){
                     return friendsService.all();
+                }],
+                isFriendsBranchesDisplayModeList: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {
+                    return $ocLazyLoad.load("/js/app/services/preferencesService.js").then(function () {
+                        var preferencesService = $injector.get("preferencesService");
+                        return preferencesService.getFriendsBranchListView();
+                    })
+                }],
+                isFriendsBookmarksDisplayModeList: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {
+                    return $ocLazyLoad.load("/js/app/services/preferencesService.js").then(function () {
+                        var preferencesService = $injector.get("preferencesService");
+                        return preferencesService.getFriendsBookmarkListView();
+                    })
                 }]
             },
             controller: "friendsController"
@@ -197,6 +215,12 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                 }],
                 branch: ["branchService", "$stateParams", function (branchService, $stateParams) {
                     return branchService.get($stateParams.id);
+                }],
+                bookmarksDisplayMode: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {
+                    return $ocLazyLoad.load("/js/app/services/preferencesService.js").then(function () {
+                        var preferencesService = $injector.get("preferencesService");
+                        return preferencesService.getBookmarkListView();
+                    })
                 }]
             },
             controller: "bookmarksController"

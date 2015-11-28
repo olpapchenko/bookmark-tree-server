@@ -3,13 +3,13 @@ angular.module("app").service("preferencesService", ["$http", function ($http) {
         return this.charAt(0).toUpperCase() + this.slice(1);
     }
 
-    var PREFERENCES_KEYS = "overviewListView friendsBranchListView friendsBookmarkListView".split(" "),
+    var PREFERENCES_KEYS = "overviewListView friendsBranchListView friendsBookmarkListView bookmarkListView".split(" "),
         _this = this;
 
     PREFERENCES_KEYS.forEach(function (key) {
         _this["get" + key.capitalizeFirstLetter()] = function () {
             return $http.get("/preferences", {params: {key: key}}).then(function (preference) {
-                return preference.data.value === 'true';
+                return !preference.data || preference.data.value === 'true';
             });
         }
     });

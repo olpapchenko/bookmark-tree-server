@@ -7,10 +7,8 @@
             <div class="list-group">
             </div>
         </div>
-         <div class="row">
-            <div ng-repeat="bookmark in bookmarks|filter:bookmarkName">
-                <bookmark-panel branch="false" entity="bookmark"></bookmark-panel>
-            </div>
+         <div >
+            <switcheable-view is-turned-on="isDisplayModeList" scope="scope" change-handler="savePreferedView(flag)" remote="true" one="/html/partials/svBookmarkList.html" two="/html/partials/svBookmarkPanel.html"></switcheable-view>
         </div>
     </div>
 </div>

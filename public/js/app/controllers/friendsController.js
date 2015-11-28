@@ -1,7 +1,33 @@
-angular.module("app").controller("friendsController", ["friends","$scope","userService", "friendsService","ngDialog", "avatarService",
-    function(friends, $scope, userService, friendsService, ngDialog, avatarService){
+angular.module("app").controller("friendsController", ["friends",
+    "$scope",
+    "userService",
+    "friendsService",
+    "ngDialog",
+    "avatarService",
+    "preferencesService",
+    "isFriendsBranchesDisplayModeList",
+    "isFriendsBookmarksDisplayModeList",
+    function(friends,
+             $scope,
+             userService,
+             friendsService,
+             ngDialog,
+             avatarService,
+             preferencesService,
+             isFriendsBranchesDisplayModeList,
+             isFriendsBookmarksDisplayModeList){
     $scope.friends = friends;
     $scope.avatarService = avatarService;
+    $scope.isFriendsBookmarksDisplayModeList = isFriendsBookmarksDisplayModeList;
+    $scope.isFriendsBranchesDisplayModeList = isFriendsBranchesDisplayModeList;
+
+    $scope.saveViewModeBranches = function (isListMode) {
+        return preferencesService.saveFriendsBranchListView(isListMode);
+    }
+
+    $scope.saveViewModeBookmarks = function (isListMode) {
+        return preferencesService.saveFriendsBookmarkListView(isListMode);
+    }
 
     $scope.$watch("userName", function(){
         if(!$scope.userName || $scope.userName.length < 3){
