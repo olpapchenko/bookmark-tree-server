@@ -7,7 +7,7 @@ angular.module("app").controller("profileController", ["$scope", "userService", 
     $scope.avatarPreview = { height: "200px", width:  document.getElementById("avatar-container").offsetWidth};
 
     $scope.save = function () {
-        if($scope.nameForm.name.$invalid) {
+        if($scope.nameForm.$invalid || $scope.avatars.$invalid) {
             return;
         }
 

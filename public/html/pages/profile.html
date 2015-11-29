@@ -15,7 +15,7 @@
                                     <form method="post" action="/files/avatar" class="avatar" name="avatars" enctype="multipart/form-data">
                                         <label class="btn btn-success">upload
                                         <span>
-                                           <input ngf-select type="file" ng-model="avatarFile" name="avatar"/>
+                                           <input ngf-select ngf-max-size="2MB" type="file" ng-model="avatarFile" name="avatar"/>
                                         </span>
                                         </label>
                                     </form>
@@ -39,6 +39,11 @@
                                 <div class="col-sm-offset-2 col-sm-10">
                                     <div ng-show="nameForm.name.$error.required && nameForm.name.$touched" class="col-sm-5 validations">
                                         <span>Name is required</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <div ng-show="avatars.avatar.$error.maxSize && avatars.avatar.$touched" class="col-sm-5 validations">
+                                        <span>Max file size is 2MB</span>
                                     </div>
                                 </div>
                             </div>
