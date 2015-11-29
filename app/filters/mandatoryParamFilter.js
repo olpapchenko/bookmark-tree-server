@@ -10,7 +10,7 @@ module.exports = function(args) {
          });
          args.forEach(function(arg) {
              if (!(_.flatten(keys).indexOf(arg) > -1)) {
-                throw new FilterError("request dost not contains " + arg);
+                throw new FilterError("request dost not contain " + arg);
              }
          })
     }

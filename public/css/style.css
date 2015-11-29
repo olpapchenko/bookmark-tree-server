@@ -13,6 +13,10 @@
   transition: all 0.3s linear;
 }
 
+.animated {
+  transition: all 0.3s linear;
+}
+
 .user-list .dndPlaceholder {
   display: none;
 }

@@ -1,6 +1,6 @@
 angular.module("app").controller("editBranchController", ["$scope", "$state", "toaster", function ($scope, $state, toaster) {
     var datasource = $scope.datasource;
-    var initialEntity = _.clone($scope.entity);
+    var initialEntity = angular.copy($scope.entity);
 
     $scope.entity = $scope.entity || {};
     $scope.header = datasource.header;
@@ -16,6 +16,11 @@ angular.module("app").controller("editBranchController", ["$scope", "$state", "t
     }
 
     $scope.save = function(){
+
+        if($scope.nameForm.name.$invalid) {
+            return;
+        }
+
         if(initialEntity && initialEntity.name == $scope.entity.name && (datasource.initializePickerValue == null || datasource.initializePickerValue($scope.entity).id === $scope.selected)) {
             $scope.closeThisDialog();
             return;
@@ -27,9 +32,10 @@ angular.module("app").controller("editBranchController", ["$scope", "$state", "t
 
         persistService.persist($scope.entity).then(function(){
             $scope.closeThisDialog();
+            toaster.pop('success', "Saved!", "");
             $state.reload();
         }, function() {
-            //todo: write http interceptor
+            $scope.entity.name = initialEntity.name;
             toaster.pop('error', "Save error", "Something went wrong!");
             $scope.closeThisDialog();
         });
