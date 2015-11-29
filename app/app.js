@@ -1,4 +1,5 @@
 var express = require('express');
+var mincer = require("mincer");
 var path = require('path');
 var app_config = require("../config/app_config");
 var logger = require('morgan');
@@ -14,6 +15,16 @@ var FileStore = require("session-file-store")(session);
 var authorizeFilter = require("./filters/authorizeFilter");
 
 var app = express();
+
+//mincer assets pipeline
+var mincerEnvironment = new mincer.Environment();
+mincerEnvironment.appendPath('./public');
+
+if(app_config.mode == "production") {
+  mincerEnvironment.jsCompressor  = 'uglify';
+}
+
+app.use("/assets", mincer.createServer(mincerEnvironment));
 
 // static files
 app.use(app_config.views);
