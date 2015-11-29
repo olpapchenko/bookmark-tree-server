@@ -7,6 +7,9 @@ angular.module("app").controller("profileController", ["$scope", "userService", 
     $scope.avatarPreview = { height: "200px", width:  document.getElementById("avatar-container").offsetWidth};
 
     $scope.save = function () {
+        if($scope.nameForm.name.$invalid) {
+            return;
+        }
 
         if($scope.avatarFile) {
             var fileUpload = upload.upload({
