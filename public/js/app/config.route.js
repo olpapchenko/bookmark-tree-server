@@ -35,7 +35,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                     ]);
                 }],
                 currentUser: ["$ocLazyLoad", "$injector", "$rootScope", "$state", function ($ocLazyLoad, $injector, $rootScope, $state) {
-                    return $ocLazyLoad.load(["/js/app/services/userService.js", "/js/app/services/notificationService.js"]).then(function(){
+                    return $ocLazyLoad.load(["/assets/js/app/services/userService.js", "/assets/js/app/services/notificationService.js"]).then(function(){
                         var userService = $injector.get("userService");
                         return userService.getCurrentUser();
                     }).then(function(user){
@@ -51,7 +51,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             controller: "logoutController",
             resolve: ["$ocLazyLoad", function($ocLazyLoad){
                 return $ocLazyLoad.load([
-                    "/js/app/controllers/logoutController.js"
+                    "/assets/js/app/controllers/logoutController.js"
                 ]);
             }]
         })
@@ -60,9 +60,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/register.html",
             controller: "registerController",
             resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["/js/app/services/userService.js",
-                                         "/js/app/controllers/registrationController.js",
-                                         "/js/app/directives/mailAvailabilityValidator.js"]);
+                return $ocLazyLoad.load(["/assets/bundles/js/register.js"]);
             }]
         })
         .state("app.overview",{
@@ -77,13 +75,13 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                     }
                 ],
                 preferedView: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {
-                    return $ocLazyLoad.load("/js/app/services/preferencesService.js").then(function () {
+                    return $ocLazyLoad.load("/assets/js/app/services/preferencesService.js").then(function () {
                         var preferencesService = $injector.get("preferencesService");
                         return preferencesService.getOverviewListView();
                     });
                }],
                 branches: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {
-                    return $ocLazyLoad.load("/js/app/services/branchService.js").then(function () {
+                    return $ocLazyLoad.load("/assets/js/app/services/branchService.js").then(function () {
                         var branchService = $injector.get("branchService");
                         return branchService.all();
                     })
@@ -95,7 +93,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             url: "/shared",
             templateUrl: PAGES_URL + "/shared.html",
             resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["/js/app/controllers/sharedController.js"]);
+                return $ocLazyLoad.load(["/assets/js/app/controllers/sharedController.js"]);
             }],
             controller: "sharedController"
         })
@@ -104,9 +102,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/user.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                    return $ocLazyLoad.load(["/js/app/controllers/userController.js",
-                                             "js/app/services/avatarService.js",
-                                             "js/app/services/userService.js"]);
+                    return $ocLazyLoad.load(["/assets/bundles/js/user.js"]);
                 }],
                 user: ["userService", "$stateParams", function (userService, $stateParams) {
                     return userService.get($stateParams.id);
