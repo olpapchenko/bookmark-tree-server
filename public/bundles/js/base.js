@@ -13,3 +13,7 @@
 //= require /js/vendor/bootstrap/dist/js/bootstrap.min.js
 //= require /js/vendor/ngDialog/js/ngDialog.min.js
 //= require /js/vendor/moment/min/moment.min.js
+
+//= require /js/app/services/avatarService.js
+//= require /js/app/controllers/appController.js
+//= require /js/app/directives/notification.js

@@ -12,13 +12,6 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/app.html",
             controller: "appController",
             resolve:{
-                files: ["$ocLazyLoad", "$injector",
-                    function($ocLazyLoad){
-                        return $ocLazyLoad.load([
-                                                "/js/app/services/avatarService.js",
-                                                "/js/app/controllers/appController.js",
-                                                "/js/app/directives/notification.js"])
-                    }],
                 currentUser: ["$ocLazyLoad", "$injector", "$rootScope", "$state", function ($ocLazyLoad, $injector, $rootScope, $state) {
                     return $ocLazyLoad.load(["/js/app/services/userService.js", "/js/app/services/notificationService.js"]).then(function(){
                         var userService = $injector.get("userService");
