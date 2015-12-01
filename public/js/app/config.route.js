@@ -19,7 +19,6 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                     }).then(function(user){
                         $rootScope.currentUser = user;
                     },  function( ){
-                        console.log("sdf");
                         $state.go("login");
                     });
                 }]
@@ -32,8 +31,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
                     return $ocLazyLoad.load([
-                        "/js/app/controllers/loginController.js",
-                        "/js/app/services/userService.js"
+                        "/assets/bundles/js/login.js"
                     ]);
                 }],
                 currentUser: ["$ocLazyLoad", "$injector", "$rootScope", "$state", function ($ocLazyLoad, $injector, $rootScope, $state) {
