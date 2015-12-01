@@ -114,21 +114,19 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             url: "/profile",
             templateUrl: PAGES_URL + "/profile.html",
             resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load([
-                                        "js/app/services/avatarService.js",
-                                        "/js/app/controllers/profileController.js"]);
+                return $ocLazyLoad.load(["/assets/bundles/js/profile.js"]);
             }],
             controller: "profileController"
         })
-        .state("app.plan", {
-            url: "/plan",
-            templateUrl: PAGES_URL + "/plan.html",
-            resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load([
-                    "/js/app/controllers/planController.js"]);
-            }],
-            controller: "planController"
-        })
+        //.state("app.plan", {
+        //    url: "/plan",
+        //    templateUrl: PAGES_URL + "/plan.html",
+        //    resolve: ["$ocLazyLoad", function($ocLazyLoad){
+        //        return $ocLazyLoad.load([
+        //            "/js/app/controllers/planController.js"]);
+        //    }],
+        //    controller: "planController"
+        //})
         .state("app.friends", {
             url: "/friends",
             templateUrl: PAGES_URL + "/friends.html",
