@@ -132,21 +132,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/friends.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["/js/app/services/avatarService.js",
-                                         "/js/app/controllers/friendsController.js",
-                                         "/js/app/services/friendsService.js",
-                                         "/js/app/controllers/removeFriendController.js",
-                                         "/js/app/directives/branchBookmarkList.js",
-                                         "/js/app/directives/branchBookmarkPanel.js",
-                                         "/js/app/datasources/editBookmarkDatasource.js",
-                                         "/js/app/datasources/editBranchDatasource.js",
-                                         "/js/app/services/editHandler.js",
-                                         "/js/app/services/bookmarkService.js",
-                                         "/js/app/services/branchService.js",
-                                         "/js/app/datasources/shareDatasourceAbstract.js",
-                                         "/js/app/datasources/shareDataSourceAllBookmark.js",
-                                         "/js/app/datasources/shareDataSourceAllBranch.js",
-                                         "/js/app/services/shareHandler.js"]);
+                return $ocLazyLoad.load(["/assets/bundles/js/friends.js"]);
                 }],
                 friends: ["friendsService", function(friendsService){
                     return friendsService.all();
