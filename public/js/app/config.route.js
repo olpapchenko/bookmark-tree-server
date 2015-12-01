@@ -13,7 +13,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             controller: "appController",
             resolve:{
                 currentUser: ["$ocLazyLoad", "$injector", "$rootScope", "$state", function ($ocLazyLoad, $injector, $rootScope, $state) {
-                    return $ocLazyLoad.load(["/js/app/services/userService.js", "/js/app/services/notificationService.js"]).then(function(){
+                    return $ocLazyLoad.load(["/assets/js/app/services/userService.js", "/assets/js/app/services/notificationService.js"]).then(function(){
                         var userService = $injector.get("userService");
                         return userService.getCurrentUser();
                     }).then(function(user){
@@ -138,13 +138,13 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                     return friendsService.all();
                 }],
                 isFriendsBranchesDisplayModeList: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {
-                    return $ocLazyLoad.load("/js/app/services/preferencesService.js").then(function () {
+                    return $ocLazyLoad.load("/assets/js/app/services/preferencesService.js").then(function () {
                         var preferencesService = $injector.get("preferencesService");
                         return preferencesService.getFriendsBranchListView();
                     })
                 }],
                 isFriendsBookmarksDisplayModeList: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {
-                    return $ocLazyLoad.load("/js/app/services/preferencesService.js").then(function () {
+                    return $ocLazyLoad.load("/assets/js/app/services/preferencesService.js").then(function () {
                         var preferencesService = $injector.get("preferencesService");
                         return preferencesService.getFriendsBookmarkListView();
                     })
@@ -157,7 +157,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "bookmarks.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                    return $ocLazyLoad.load(["/js/app/controllers/bookmarksController.js"]);
+                    return $ocLazyLoad.load(["/assets/js/app/controllers/bookmarksController.js"]);
                 }],
                 bookmarks: ["bookmarkService", "$stateParams", function(bookmarkService, $stateParams){
                      return bookmarkService.allByBranch($stateParams.id);
@@ -166,7 +166,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                     return branchService.get($stateParams.id);
                 }],
                 bookmarksDisplayMode: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {
-                    return $ocLazyLoad.load("/js/app/services/preferencesService.js").then(function () {
+                    return $ocLazyLoad.load("/assets/js/app/services/preferencesService.js").then(function () {
                         var preferencesService = $injector.get("preferencesService");
                         return preferencesService.getBookmarkListView();
                     })
@@ -179,8 +179,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "notifications.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                    return $ocLazyLoad.load(["/js/app/controllers/notificationsController.js",
-                                             "/js/app/services/notificationService.js"]);
+                    return $ocLazyLoad.load(["/assets/bundles/js/notifications.js"]);
                 }],
                 notifications: ["notificationService", function (notificationsService) {
                     return notificationsService.all();
