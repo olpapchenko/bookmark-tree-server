@@ -16,20 +16,20 @@ var authorizeFilter = require("./filters/authorizeFilter");
 
 var app = express();
 
+// static files
+app.use(app_config.views);
+app.use(app_config.static);
+app.use(app_config.avatars);
+
 //mincer assets pipeline
 var mincerEnvironment = new mincer.Environment();
-mincerEnvironment.appendPath('./public');
+mincerEnvironment.appendPath('./assets');
 
 if(app_config.mode == "production") {
   mincerEnvironment.jsCompressor  = 'uglify';
 }
 
 app.use("/assets", mincer.createServer(mincerEnvironment));
-
-// static files
-app.use(app_config.views);
-app.use(app_config.static);
-app.use(app_config.avatars);
 
 //session store
 app.use(session({

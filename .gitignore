@@ -30,7 +30,7 @@ build/Release
 node_modules
 
 #front end files
-public/js/vendor
+assets/js/vendor
 
 #ide files
 .idea
