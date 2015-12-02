@@ -13,6 +13,7 @@ var FileStore = require("session-file-store")(session);
 
 //filters
 var authorizeFilter = require("./filters/authorizeFilter");
+var mincerEnv = require("../config/assetsPipelineEnvironment");
 
 var app = express();
 
@@ -21,15 +22,9 @@ app.use(app_config.views);
 app.use(app_config.static);
 app.use(app_config.avatars);
 
-//mincer assets pipeline
-var mincerEnvironment = new mincer.Environment();
-mincerEnvironment.appendPath('./assets');
 
-if(app_config.mode == "production") {
-  mincerEnvironment.jsCompressor  = 'uglify';
-}
 
-app.use("/assets", mincer.createServer(mincerEnvironment));
+app.use("/assets", mincer.createServer(mincerEnv));
 
 //session store
 app.use(session({
@@ -42,7 +37,9 @@ app.use(session({
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
+if(app_config.mode == "dev") {
+  app.use(logger('dev'));
+}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

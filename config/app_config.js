@@ -23,3 +23,7 @@ module.exports.defaultAvatarModerate = path.resolve("./public/images/user-modera
 module.exports.defaultAvatarSmall = path.resolve("./public/images/user-small.png");
 
 module.exports.sessionsPath = path.resolve(__dirname, "../sessions");
+
+module.exports.assetsPath = path.resolve("./assets");
+
+module.exports.compiledAssetsPath = path.resolve("./public/assets");

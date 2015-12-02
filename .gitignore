@@ -38,3 +38,5 @@ BookmarkTree.iml
 sessions
 
 uploads
+
+public/assets/*
