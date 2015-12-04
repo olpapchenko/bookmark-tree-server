@@ -1,15 +1,19 @@
 var router = require("express").Router(),
     getassetPath = require('./assetsPipelineEnvironment').getAssetPath;
 
+///=====controllers section
+var loginController     = require("../app/controllers/loginController"),
+    indexController     = require("../app/controllers/indexController"),
+    registerController  = require("../app/controllers/registerController");
 
 ///=====api section
-var bookmark = require("../app/api/bookmarkController"),
-    user = require("../app/api/usersController"),
-    branch = require("../app/api/branchController"),
-    notifications = require("../app/api/notificationsController"),
-    friends = require("../app/api/friendsController"),
-    files = require("../app/api/filesController"),
-    preferences = require("../app/api/preferencesController");
+var bookmark        = require("../app/api/bookmarkController"),
+    user            = require("../app/api/usersController"),
+    branch          = require("../app/api/branchController"),
+    notifications   = require("../app/api/notificationsController"),
+    friends         = require("../app/api/friendsController"),
+    files           = require("../app/api/filesController"),
+    preferences     = require("../app/api/preferencesController");
 
 ///routes
 
@@ -58,14 +62,15 @@ router.post("/uploads/avatar", files.avatar);
 router.post("/preferences", preferences.post);
 router.get("/preferences", preferences.get);
 
-///entry point
-router.get("/", function (req, res){
-    console.log("env" + getassetPath('/bundles/js/base.js'));
-    var context = {
-       asset_path: getassetPath
-    }
+///controllers
 
-    res.render("index", context);
-})
+///entry point
+router.get("/", indexController.get);
+
+///login
+router.get("/login", loginController.get);
+
+///register
+router.get("/register", registerController.get)
 
 module.exports = router;

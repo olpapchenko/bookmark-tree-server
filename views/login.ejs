@@ -7,9 +7,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-    <link rel="stylesheet" href="/fonts/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/vendor/form-elements.css">
-    <link rel="stylesheet" href="/css/vendor/style.css">
+    <link rel="stylesheet" href="<%= asset_path('/bundles/css/login.css')%>">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,7 +15,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    <script src="<%= asset_path('/bundles/js/loginPage.js')%>"></script>
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="/image/ico/favicon.png">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/image/ico/apple-touch-icon-144-precomposed.png">
@@ -75,8 +73,8 @@
                                 </div>
                                 <div class="form-group">
                                     <button  class="btn" ui-sref="register" style="background: #49B775">Sign up!</button>
-                                 </div>
-                        </form>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -104,11 +102,7 @@
 </div>
 
 
-<!-- Javascript -->
-<script src="/js/vendor/jquery-1.11.1.min.js"></script>
-<script src="/js/vendor/bootstrap.min.js"></script>
-<script src="/js/vendor/jquery.backstretch.min.js"></script>
-<script src="/js/vendor/scripts.js"></script>
+
 
 <!--[if lt IE 10]>
 <script src="js/vendor/placeholder.js"></script>
