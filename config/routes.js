@@ -1,5 +1,5 @@
-var router = require("express").Router();
-var app_config = require("./app_config");
+var router = require("express").Router(),
+    getassetPath = require('./assetsPipelineEnvironment').getAssetPath;
 
 
 ///=====api section
@@ -60,7 +60,12 @@ router.get("/preferences", preferences.get);
 
 ///entry point
 router.get("/", function (req, res){
-    res.redirect("/login.html");
+    console.log("env" + getassetPath('/bundles/js/base.js'));
+    var context = {
+       asset_path: getassetPath
+    }
+
+    res.render("index", context);
 })
 
 module.exports = router;

@@ -17,12 +17,12 @@ var mincerEnv = require("../config/assetsPipelineEnvironment");
 
 var app = express();
 
+app.set('view engine', 'ejs');
+app.set('views', app_config.views);
+
 // static files
-app.use(app_config.views);
 app.use(app_config.static);
 app.use(app_config.avatars);
-
-
 
 app.use("/assets", mincer.createServer(mincerEnv));
 
@@ -45,7 +45,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //authorize filter
-app.use(/^(?!\/login|\/logout|\/registration|\/user\/mail\/availability)/, authorizeFilter);
+app.use(/^(?!\/login|\/logout|\/registration|\/user\/mail\/availability|\/)/, authorizeFilter);
 
 //register routes
 app.use("/",routes);

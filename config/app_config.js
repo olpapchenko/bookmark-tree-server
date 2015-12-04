@@ -4,7 +4,7 @@ module.exports.mode = "dev";
 
 module.exports.static = require("express").static(path.resolve(__dirname, "../", "./public"));
 
-module.exports.views = require("express").static(path.resolve(__dirname, "../", "./views"));
+module.exports.views =  path.resolve(__dirname, "../", "./views");
 
 module.exports.avatars = require("express").static(path.resolve(__dirname, "../", "./uploads"));
 
