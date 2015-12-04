@@ -2,3 +2,4 @@
 //= require /js/vendor/bootstrap/dist/js/bootstrap.js
 //= require /js/vendor/jquery.backstretch.js
 //= require /js/vendor/scripts.js
+//= require /js/vendor/placeholder.js

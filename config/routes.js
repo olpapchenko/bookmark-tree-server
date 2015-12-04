@@ -71,6 +71,6 @@ router.get("/", indexController.get);
 router.get("/login", loginController.get);
 
 ///register
-router.get("/register", registerController.get)
+router.get("/registration", registerController.get)
 
 module.exports = router;
