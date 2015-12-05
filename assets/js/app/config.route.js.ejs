@@ -49,19 +49,22 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
         })
         .state("logout",{
             controller: "logoutController",
-            resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load([
-                    "<%= asset_path('/js/app/controllers/logoutController.js') %>"
-                ]);
-            }]
+            resolve: {
+                files: ["$ocLazyLoad", function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        "<%= asset_path('/js/app/controllers/logoutController.js') %>"
+                    ]);
+                }]
+            }
         })
         .state("register",{
             url: "/register",
             templateUrl: "/registration",
             controller: "registerController",
-            resolve: ["$ocLazyLoad", function($ocLazyLoad){
+            resolve: {
+                files: ["$ocLazyLoad", function($ocLazyLoad){
                 return $ocLazyLoad.load(["<%= asset_path('/bundles/js/register.js') %>"]);
-            }]
+            }]}
         })
         .state("app.overview",{
             url: "/overview",
@@ -92,9 +95,11 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
         .state("app.shared", {
             url: "/shared",
             templateUrl: PAGES_URL + "/shared.html",
-            resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["<%= asset_path('/js/app/controllers/sharedController.js') %>"]);
-            }],
+            resolve: {
+                files: ["$ocLazyLoad", function($ocLazyLoad){
+                    return $ocLazyLoad.load(["<%= asset_path('/js/app/controllers/sharedController.js') %>"]);
+                }]
+            },
             controller: "sharedController"
         })
         .state("app.user", {
@@ -113,9 +118,11 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
         .state("app.profile", {
             url: "/profile",
             templateUrl: PAGES_URL + "/profile.html",
-            resolve: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["<%= asset_path('/bundles/js/profile.js') %>"]);
-            }],
+            resolve: {
+                files: ["$ocLazyLoad", function($ocLazyLoad){
+                    return $ocLazyLoad.load(["<%= asset_path('/bundles/js/profile.js') %>"]);
+                }]
+            },
             controller: "profileController"
         })
         //.state("app.plan", {

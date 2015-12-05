@@ -12,7 +12,7 @@
 //= require /js/vendor/jquery-1.11.1.min.js
 //= require /js/vendor/bootstrap/dist/js/bootstrap.min.js
 //= require /js/vendor/ngDialog/js/ngDialog.min.js
-//= require /js/vendor/moment/min/moment.min.js
+//= require /js/vendor/moment/moment.js
 
 //= require /js/app/services/avatarService.js
 //= require /js/app/controllers/appController.js

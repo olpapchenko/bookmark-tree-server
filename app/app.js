@@ -1,7 +1,7 @@
 var express = require('express');
 var mincer = require("mincer");
 var path = require('path');
-var app_config = require("../config/app_config");
+var appConfig = require("../config/app_config");
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -18,26 +18,28 @@ var mincerEnv = require("../config/assetsPipelineEnvironment");
 var app = express();
 
 app.set('view engine', 'ejs');
-app.set('views', app_config.views);
+app.set('views', appConfig.views);
 
 // static files
-app.use(app_config.static);
-app.use(app_config.avatars);
+app.use(appConfig.static);
+app.use(appConfig.avatars);
 
-app.use("/assets", mincer.createServer(mincerEnv));
+if(appConfig.mode == "dev") {
+  app.use("/assets", mincer.createServer(mincerEnv));
+}
 
 //session store
 app.use(session({
   store: new FileStore({ttl: 3600*24*30, reapInterval: 3600}),
   resave: false,
   saveUninitialized: true,
-  secret: app_config.salt,
+  secret: appConfig.salt,
   maxAge: 1000*60*60*24*500
 }));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-if(app_config.mode == "dev") {
+if(appConfig.mode == "dev") {
   app.use(logger('dev'));
 }
 app.use(bodyParser.json());
