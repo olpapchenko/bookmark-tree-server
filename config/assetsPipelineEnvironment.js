@@ -9,6 +9,7 @@ mincerEnvironment.appendPath(appConfig.assetsPath);
 
 if(appConfig.mode == "production") {
     mincerEnvironment.jsCompressor  = 'uglify';
+    mincerEnvironment.cssCompressor = 'csso';
 }
 
 var constructPath = function (path) {
