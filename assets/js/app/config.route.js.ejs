@@ -139,10 +139,13 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/friends.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["<%= asset_path('/bundles/js/friends.js') %>"]);
+                    return $ocLazyLoad.load(["<%= asset_path('/bundles/js/friends.js') %>"]);
                 }],
-                friends: ["friendsService", function(friendsService){
-                    return friendsService.all();
+                friends: ["$ocLazyLoad", "$injector", function($ocLazyLoad, $injector){
+                    return $ocLazyLoad.load("<%= asset_path('/js/app/services/preferencesService.js') %>").then(function () {
+                        var friendsService = $injector.get("friendsService");
+                        return friendsService.all();
+                    })
                 }],
                 isFriendsBranchesDisplayModeList: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {
                     return $ocLazyLoad.load("<%= asset_path('/js/app/services/preferencesService.js') %>").then(function () {
@@ -166,11 +169,17 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                 files: ["$ocLazyLoad", function($ocLazyLoad){
                     return $ocLazyLoad.load(["<%= asset_path('/js/app/controllers/bookmarksController.js') %>"]);
                 }],
-                bookmarks: ["bookmarkService", "$stateParams", function(bookmarkService, $stateParams){
-                     return bookmarkService.allByBranch($stateParams.id);
+                bookmarks: [ "$ocLazyLoad", "$stateParams", "$injector",  function($ocLazyLoad, $stateParams, $injector){
+                     return $ocLazyLoad.load(["<%= asset_path('/js/app/services/bookmarkService.js') %>"]).then(function () {
+                         var bookmarkService = $injector.get("bookmarkService");
+                         return bookmarkService.allByBranch($stateParams.id);
+                     })
                 }],
-                branch: ["branchService", "$stateParams", function (branchService, $stateParams) {
-                    return branchService.get($stateParams.id);
+                branch: ["$ocLazyLoad", "$stateParams", "$injector", function ($ocLazyLoad, $stateParams, $injector) {
+                    return $ocLazyLoad.load(["<%= asset_path('/js/app/services/branchService.js') %>"]).then(function () {
+                        var branchService = $injector.get("branchService");
+                        return branchService.get($stateParams.id);
+                    })
                 }],
                 bookmarksDisplayMode: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {
                     return $ocLazyLoad.load("<%= asset_path('/js/app/services/preferencesService.js') %>").then(function () {
@@ -195,6 +204,3 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             controller: "notificationsController"
         })
 }]);
-
-
-
