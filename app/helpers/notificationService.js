@@ -16,7 +16,7 @@ var MESSAGE_BODIES = [
     },
     {type: 2,
      name: "bookmarkShareNotificationObserver",
-     str: "Bookmark  {{bookmark}}  was shared with you by {{user}} without observer rights"
+     str: "Bookmark  {{bookmark}}  was shared with you by {{user}} with observer rights"
     },
     {type: 3,
      name: "bookmarkEditNotification",

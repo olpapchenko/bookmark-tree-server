@@ -13,7 +13,6 @@ angular.module("app").service("notificationService", ["$http","$interval", funct
     };
 
     this.all = function () {
-        console.log("sdfasdfasdfasd");
         return $http.get("/notifications/all").then(function (data) {
             return data.data;
         });

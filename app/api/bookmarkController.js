@@ -72,7 +72,7 @@ module.exports.post = actionComposer({
 
             users.forEach(function (user) {
                 if(req.session.userId != user.id) {
-                    promises.push(notificationService.bookmarkEditNotification({bookmark: req.body.id, user: req.session.userId}, user.id, req.body.id));
+                    promises.push(notificationService.bookmarkEditNotification({bookmark: req.body.id, user: req.session.userId}, user.id, req.session.userId));
                 }
             });
             return Promise.all(promises);
@@ -116,9 +116,9 @@ module.exports.share =  actionComposer({
         Promise.all([ BookmarkRights.updateBookmarkRight(req.body, function(isSaved, userId, bookmarkId, operation) {
             if(isSaved) {
                 if(operation == "addOwner") {
-                    notificationService.bookmarkShareNotificationOwner({bookmark: bookmarkId, user: req.session.userId}, userId, bookmarkId)
+                    notificationService.bookmarkShareNotificationOwner({bookmark: bookmarkId, user: req.session.userId}, userId, req.session.userId)
                 } else if (operation == "addObserver") {
-                    notificationService.bookmarkShareNotificationObserver({bookmark: bookmarkId, user: req.session.userId}, userId, bookmarkId);
+                    notificationService.bookmarkShareNotificationObserver({bookmark: bookmarkId, user: req.session.userId}, userId, req.session.userId);
                 }
                 logger.info("attach branch  to default branch, userID " + userId);
                 return User.forge({id: userId}).addBookmarkToDefaultBranch(req.body.id);

@@ -12,9 +12,9 @@ angular.module("app").directive("notification", ["$state", function ($state) {
         link: function (scope) {
             scope.showTime = scope.showTime || true;
 
-            var TYPE2PATH =["app.bookmark",
-                            "app.bookmark",
-                            "app.bookmark",
+            var TYPE2PATH =["app.user",
+                            "app.user",
+                            "app.user",
                             "app.user",
                             "app.user",
                             "app.branch",
@@ -24,8 +24,8 @@ angular.module("app").directive("notification", ["$state", function ($state) {
                             "app.user"];
 
             scope.navigateToContext = function (type, context) {
-                console.log(type);
-                $state.go(TYPE2PATH[type], {id: context});
+                console.log("t " + TYPE2PATH[type]);
+                $state.go(TYPE2PATH[type-1], {id: context});
             }
         }
     }
