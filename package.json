@@ -6,6 +6,7 @@
     "start": "node ./app_main"
   },
   "dependencies": {
+    "autoprefixer": "^6.1.2",
     "bluebird": "*",
     "body-parser": "~1.12.4",
     "bookshelf": "*",
