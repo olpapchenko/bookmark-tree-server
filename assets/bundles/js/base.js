@@ -13,6 +13,8 @@
 //= require /js/vendor/bootstrap/dist/js/bootstrap.min.js
 //= require /js/vendor/ngDialog/js/ngDialog.min.js
 //= require /js/vendor/moment/moment.js
+//= require /js/vendor/moment-timezone/builds/moment-timezone-with-data.js
+//= require /js/vendor/moment-timezone/builds/moment-timezone-with-data-2010-2020.js
 
 //= require /js/app/services/avatarService.js
 //= require /js/app/controllers/appController.js

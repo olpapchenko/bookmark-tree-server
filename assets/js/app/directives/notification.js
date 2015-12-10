@@ -10,7 +10,7 @@ angular.module("app").directive("notification", ["$state", function ($state) {
         restrict: "E",
 
         link: function (scope) {
-            scope.showTime = scope.showTime || true;
+            scope.showTime = scope.showTime;
 
             var TYPE2PATH =["app.user",
                             "app.user",
@@ -24,7 +24,6 @@ angular.module("app").directive("notification", ["$state", function ($state) {
                             "app.user"];
 
             scope.navigateToContext = function (type, context) {
-                console.log("t " + TYPE2PATH[type]);
                 $state.go(TYPE2PATH[type-1], {id: context});
             }
         }

@@ -6,6 +6,7 @@ mincer.logger.use(console);
 
 var mincerEnvironment = new mincer.Environment();
 mincerEnvironment.appendPath(appConfig.assetsPath);
+mincerEnvironment.enable("autoprefixer");
 
 if(appConfig.mode == "production") {
     mincerEnvironment.jsCompressor  = 'uglify';

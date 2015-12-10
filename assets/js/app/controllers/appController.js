@@ -20,11 +20,10 @@ angular.module("app").controller("appController", ["$scope", "$state", "notifica
     $rootScope.$on("$stateChangeSuccess", function () {
         progress.complete();
     });
-
     notificationService.trackNotifications(function(not){
         $scope.notifications = not;
         $scope.notifications.forEach(function(item){
-            item.relative = moment($scope.notifications.created_at).fromNow();
+            item.relative = moment.tz(item.created_at, 'America/Los_Angeles').fromNow();
         });
         $scope.notificationsCount = not.length;
     });

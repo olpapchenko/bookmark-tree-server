@@ -1,4 +1,4 @@
 <a ng-click="navigateToContext(notif.type, notif.context)" style="white-space: normal; cursor: pointer">
     {{notif.message}}
-    <span  class="small italic pull-right" ns-show="showTime">{{notif.relative}}</span>
+    <span  class="small italic pull-right" ng-show="showTime">{{notif.relative}}</span>
 </a>

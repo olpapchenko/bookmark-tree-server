@@ -26,6 +26,7 @@
     "ncp": "^2.0.0",
     "node-cache": "^3.0.0",
     "pg": "^4.3.0",
+    "postcss": "^5.0.12",
     "serve-favicon": "~2.2.1",
     "session-file-store": "0.0.14",
     "uglify-js": "^2.6.1",

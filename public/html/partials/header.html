@@ -23,7 +23,7 @@
                         <p class="blue">You have {{notificationsCount}} new notification<span ng-show="notificationsCount > 1">s</span></p>
                     </li>
                     <li ng-repeat="notification in notifications">
-                        <notification notif = "notification"></notification>
+                        <notification notif = "notification" show-time="true"></notification>
                     </li>
                     <li>
                         <p style="cursor: pointer" ng-click="allNotifications()">See all notifications</p>
