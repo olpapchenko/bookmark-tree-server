@@ -1,5 +1,4 @@
-Welcome to bookmark tree home repository
-To the new bookmark manager - Bookmark tree The bookmark manager consists of two parts - web application and chrome extension.
+Welcome To the new bookmark manager repository - Bookmark tree The bookmark manager consists of two parts - web application and chrome extension.
 With chrome extension you can create new bookmarks leave comments on arbitrary web-pages, make assotiations between pages and mark some text.
 Using web-ui you can watch your bookmarks share you bookmarks with another users or give them rights to view or edit bookmarks.
 Killing Features:
