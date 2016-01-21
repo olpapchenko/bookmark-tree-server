@@ -6,10 +6,15 @@ var notificationService = require("../helpers/notificationService");
 
 module.exports = {
 
-    get: function(req, resp){
+    //uses cache store; returns only unread questions
+    getUnread: function(req, resp){
         notificationService.getAllByUserId(req.session.userId).then(function (notifications) {
             resp.send(notifications);
         })
+    },
+
+    getUnreadCount: function (req, resp) {
+        notificationService.getAllByUserId(req.session.userId)
     },
 
     read: function(req, resp){

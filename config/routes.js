@@ -35,7 +35,8 @@ router.post("/branch/remove", branch.remove);
 router.post("/branch/share", branch.share);
 
 //notifications routes
-router.get("/notifications", notifications.get);
+router.get("/notifications", notifications.getUnread);
+router.get("/notifications/count", notifications.getUnreadCount);
 router.get("/notifications/all", notifications.all);
 router.post("/notifications/read", notifications.read);
 
