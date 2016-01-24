@@ -1,7 +1,7 @@
-var     getassetPath = require('../../config/assetsPipelineEnvironment').getAssetPath;
+var getAssetPath = require('../../config/assetsPipelineEnvironment').getAssetPath;
 
 module.exports = {
     baseContext: {
-        asset_path: getassetPath
+        asset_path: getAssetPath
     }
 }
