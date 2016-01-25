@@ -6,17 +6,17 @@ angular.module("app").service("preferencesService", ["$http", function ($http) {
     var PREFERENCES_KEYS = "overviewListView friendsBranchListView friendsBookmarkListView bookmarkListView".split(" "),
         _this = this;
 
-    PREFERENCES_KEYS.forEach(function (key) {
+    PREFERENCES_KEYS.forEach(function (key, index) {
         _this["get" + key.capitalizeFirstLetter()] = function () {
-            return $http.get("/preferences", {params: {key: key}}).then(function (preference) {
+            return $http.get("/preferences", {params: {key: index}}).then(function (preference) {
                 return !preference.data || preference.data.value === 'true';
             });
         }
     });
 
-    PREFERENCES_KEYS.forEach(function (key) {
+    PREFERENCES_KEYS.forEach(function (key, index) {
         _this["save" + key.capitalizeFirstLetter()] = function (preference) {
-            return $http.post("/preferences", {key: key, value: preference});
+            return $http.post("/preferences", {key: index, value: preference});
         }
     });
 

@@ -20,6 +20,7 @@ angular.module("app").controller("appController", ["$scope", "$state", "notifica
     $rootScope.$on("$stateChangeSuccess", function () {
         progress.complete();
     });
+
     notificationService.trackNotifications(function(not){
         $scope.notifications = not;
         $scope.notifications.forEach(function(item){
