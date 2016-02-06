@@ -3,7 +3,7 @@ var Preferences = require("../models/preferences"),
 
 module.exports = {
     get: actionComposer({action: function (req, resp) {
-        return Preferences.forge({user_id: req.session.userId, key: req.query.key}).fetch().then(function (preference) {
+        return Preferences.getPreferencesOrDefault({user_id: req.session.userId, key: req.query.key}).then(function (preference) {
             resp.json(preference);
         });
     }}),
