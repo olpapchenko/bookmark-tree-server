@@ -19,7 +19,4 @@ angular.module("app").service("preferencesService", ["$http", function ($http) {
             return $http.post("/preferences", {key: index, value: preference});
         }
     });
-
-
-
 }]);

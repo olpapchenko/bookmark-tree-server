@@ -14,7 +14,9 @@ module.exports = {
     },
 
     getUnreadCount: function (req, resp) {
-        notificationService.getAllByUserId(req.session.userId)
+        notificationService.getAllByUserId(req.session.userId).then(function (notifications) {
+            resp.json({size: notifications.length});
+        });
     },
 
     read: function(req, resp){
