@@ -13,7 +13,11 @@ function getTransport (options) {
     }
     if(options.file) {
         transport.push(new (winston.transports.File)({ filename: getLogPath(options.file),
-            level: appConfig.mode === "dev" ? "debug" : "error"}));
+            level: appConfig.mode === "dev" ? "debug" : "error",
+            json: false,
+            humanReadableUnhandledException: true,
+            handleExceptions: true
+        }));
     }
     return transport;
 }

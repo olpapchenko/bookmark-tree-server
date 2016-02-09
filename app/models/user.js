@@ -41,8 +41,8 @@ var user = bookshelf.Model.extend({
         })
     },
 
-    preference: function () {
-      return this.hasOne("Preference");
+    preferences: function () {
+      return this.hasMany("Preference");
     },
 
     defaultBranch: function() {

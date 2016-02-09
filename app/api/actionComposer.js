@@ -26,10 +26,10 @@ module.exports = function(options){
                 if(e.type && e.type == "FilterError"){
                     resp.status(400).send(e.message);
                 } else {
-                    return Promise.reject(e.message);
+                    return Promise.reject(e);
                 }
             }).catch(function (e) {
-                logger.error(e.message);
+                logger.error(e);
                 resp.status(500).send("Something went wrong, please report the problem");
             });
     }
