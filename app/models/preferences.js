@@ -18,19 +18,19 @@ var preferences = AbstractModel.extend({
     REFRESH_PERIOD: 7,
 
     getPreferencesOrDefault: function (preferences) {
-        return this.forge(preferences).fetch().then(function (preferences) {
+        return this.forge(preferences).fetchAll().then(function (preferences) {
             return preferences ? preferences: defaultPreferences;
         });
     }
 });
 
-var defaultPreferences  = {};
-defaultPreferences[preferences.EXTENSION_ENABLED] = true;
-defaultPreferences[preferences.BOOKMARK_LINKS_ENABLED] = true;
-defaultPreferences[preferences.MARKS_ENABLED] = true;
-defaultPreferences[preferences.COMMENTS_ENABLED] = true;
-defaultPreferences[preferences.NOTIFICATIONS_ENABLED] = true;
-defaultPreferences[preferences.MARK_COLOR] = "";
-defaultPreferences[preferences.REFRESH_PERIOD] = 10;
+var defaultPreferences  = [
+    {key: preferences.EXTENSION_ENABLED, value: true},
+    {key: preferences.BOOKMARK_LINKS_ENABLED, value: true},
+    {key: preferences.MARKS_ENABLED, value: true},
+    {key: preferences.COMMENTS_ENABLED, value: true},
+    {key: preferences.NOTIFICATIONS_ENABLED, value: true},
+    {key: preferences.MARK_COLOR, value: '#F8F503'},
+    {key: preferences.REFRESH_PERIOD, value: 10}];
 
 module.exports = bookshelf.model("Preference", preferences);

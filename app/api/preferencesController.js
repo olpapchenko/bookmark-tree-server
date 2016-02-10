@@ -5,37 +5,21 @@ var Promise = require("bluebird"),
 
 module.exports = {
     get: actionComposer({action: function (req, resp) {
-        return Preferences.getPreferencesOrDefault({user_id: req.session.userId, key: req.query.key}).then(function (preference) {
+        return Preferences.getPreferencesOrDefault({user_id: req.session.userId}).then(function (preference) {
             resp.json(preference);
         });
     }}),
 
     post: actionComposer({action: function (req, resp) {
 
-        var newPreferences  = Object.keys(req.body).map(function (key) {
-            return {key: key, value: req.body[key]}
+        var preferences = req.body.preferences.map(function (preference) {
+            preference.user_id = req.session.userId;
+            return preference
         });
 
-        var user = User.forge({id: req.session.userId});
-
-        user.preferences().fetch().then(function (preferences) {
-            if(preferences.size() == 0) {
-                return Promise.map(newPreferences, function (preference) {
-                    return user.preferences().create(preference);
-                })
-            } else {
-                var promises = [];
-                preferences.forEach(function (preference) {
-                    var newPreference = newPreferences.filter(function (p) {
-                        return p.key == preference.get("key");
-                    });
-
-                    promises.push(preference.save(newPreference[0], {method: 'update'}));
-                });
-                return Promise.all(promises);
-            }
-            }
-        ).then(function(){
+        Promise.map(preferences, function (pereference) {
+            return Promise.forge(pereference).save();
+        }).then(function(){
             resp.sendStatus(200);
         });
     }})
