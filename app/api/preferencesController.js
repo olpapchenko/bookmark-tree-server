@@ -5,20 +5,19 @@ var Promise = require("bluebird"),
 
 module.exports = {
     get: actionComposer({action: function (req, resp) {
-        return Preferences.getPreferencesOrDefault({user_id: req.session.userId}).then(function (preference) {
-            resp.json(preference);
+        return Preferences.getPreferencesOrDefault({user_id: req.session.userId}).then(function (preferences) {
+            resp.json({preferences: preferences});
         });
     }}),
 
     post: actionComposer({action: function (req, resp) {
-
         var preferences = req.body.preferences.map(function (preference) {
             preference.user_id = req.session.userId;
             return preference
         });
 
-        Promise.map(preferences, function (pereference) {
-            return Promise.forge(pereference).save();
+        return Promise.map(preferences, function (pereference) {
+            return Preferences.forge(pereference).save();
         }).then(function(){
             resp.sendStatus(200);
         });
