@@ -42,7 +42,7 @@ module.exports.allByBranch = actionComposer({
 module.exports.get = actionComposer({
     beforeFilters: [mandatoryParamFilter(["id"])],
     action: function (req, resp) {
-        User.forge({id: req.session.userId}).bookmark(req.query.id).fetchOne().then(function (m) {
+        User.forge({id: req.session.userId}).bookmark(req.query.id).fetch({withRelated: ["markers", "comments", "bookmarks"]}).then(function (m) {
             resp.json(m);
         });
     }

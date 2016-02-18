@@ -19,6 +19,7 @@ var bookmark        = require("../app/api/bookmarkController"),
 
 ///=====api section=====
 ///bookmarks routes
+router.get("/bookmarks", bookmark.all);
 router.get("/bookmark/share", bookmark.getShareInformation);
 router.get("/bookmark", bookmark.get);
 router.get("/bookmark/branch", bookmark.allByBranch);

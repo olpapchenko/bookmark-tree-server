@@ -1,7 +1,9 @@
 var Promise = require("bluebird"),
     Preferences = require("../models/preferences"),
     User = require("../models/user"),
-    actionComposer = require("./actionComposer");
+    actionComposer = require("./actionComposer"),
+    mandatoryParamFilter = require("../filters/mandatoryParamFilter");
+
 
 module.exports = {
     get: actionComposer({action: function (req, resp) {
@@ -10,7 +12,9 @@ module.exports = {
         });
     }}),
 
-    post: actionComposer({action: function (req, resp) {
+    post: actionComposer({
+        beforeFilters: [mandatoryParamFilter(["preferences"])],
+        action: function (req, resp) {
         var preferences = req.body.preferences.map(function (preference) {
             preference.user_id = req.session.userId;
             return preference

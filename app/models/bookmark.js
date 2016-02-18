@@ -25,6 +25,10 @@ bookmark = AbstractModel.extend({
         return this.hasMany("Marker");
     },
 
+    bookmarks: function () {
+        return this.belongsToMany("Bookmark", "bookmarks_bookmarks", "bookmark", "references");
+    },
+
     users: function () {
         return this.belongsToMany("User").through("Bookmark_rights");
     },
