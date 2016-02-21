@@ -6,7 +6,6 @@ var mandatoryParamFilter = require("../filters/mandatoryParamFilter");
 
 module.exports.all = function (req, resp) {
     User.forge({id: req.session.userId}).tags().fetch().then(function (tags) {
-        console.log(tags.size());
         resp.json(tags);
     })
 }

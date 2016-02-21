@@ -16,7 +16,7 @@ var validateBranchOwnership = require("../filters/validateBranchOwnership")
 var actionComposer = require("./actionComposer");
 
 module.exports.all = function (req, resp) {
-    Bookmark.getByUserId(req.session.userId).then(function(bookmarks){
+    User.forge({id: req.session.userId}).bookmarks().fetch({withRelated: ["tags", "branches"]}).then(function(bookmarks){
         resp.json(bookmarks);
     });
 }
