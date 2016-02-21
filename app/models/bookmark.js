@@ -3,13 +3,14 @@ var Promise = require("bluebird");
 var Bookshelf = require("../../config/db/bookshelf");
 
 var AbstractModel = require('./AbstractModel');
-var Links = require("./Links");
+var Links = require("./links");
 var Comment = require('./comment');
 var User =   require('./user');
 var Marker = require('./marker');
 var Rights = require('./bookmarkRights');
 var BookmarksBranches = require('./BookmarksBranches');
 var BookmarkRights = require('./BookmarkRights');
+var Tags = require("./tags");
 
 var logger = require("../utils/log/modelLog");
 
@@ -24,6 +25,10 @@ bookmark = AbstractModel.extend({
 
     markers: function () {
         return this.hasMany("Marker");
+    },
+
+    tags: function () {
+        return this.belongsToMany("Tag");
     },
 
     links: function () {

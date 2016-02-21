@@ -13,7 +13,8 @@ var bookmark        = require("../app/api/bookmarkController"),
     notifications   = require("../app/api/notificationsController"),
     friends         = require("../app/api/friendsController"),
     files           = require("../app/api/filesController"),
-    preferences     = require("../app/api/preferencesController");
+    preferences     = require("../app/api/preferencesController"),
+    tags            = require("../app/api/tagsController");
 
 ///routes
 
@@ -26,6 +27,13 @@ router.get("/bookmark/branch", bookmark.allByBranch);
 router.post("/bookmark", bookmark.post);
 router.post("/bookmark/share", bookmark.share);
 router.post("/bookmark/remove", bookmark.remove);
+
+router.get("/tags", tags.all);
+router.post("/tag", tags.post);
+router.post("/bookmark/tag", tags.attachToBookmark);
+router.post("/bookmark/tag/delete", tags.detachFromBookmark);
+router.post("/tag/delete", tags.remove);
+
 
 //branches routes
 router.get("/branch", branch.get);

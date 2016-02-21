@@ -7,6 +7,7 @@ var Rights = require('./bookmarkRights');
 var Branch = require('./branch');
 var Preference = require("./preferences");
 var BookmarksBranches = require('./BookmarksBranches');
+var Tag = require("./tags");
 
 var BookmarksBranches = bookshelf.model("BookmarksBranches");
 
@@ -27,6 +28,17 @@ var user = bookshelf.Model.extend({
             qb.where("bookmarks.id", id);
         })
     },
+
+    bookmarkOwner: function (id) {
+      return this.bookmark(id).query(function (qb) {
+          qb.where("owner", true);
+      })
+    },
+
+    tags: function () {
+        return this.hasMany("Tag");
+    },
+
     rights: function () {
         return this.hasMany("Bookmark_rights");
     },

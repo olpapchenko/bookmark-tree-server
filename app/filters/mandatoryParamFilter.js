@@ -4,6 +4,7 @@ var FilterError = require("./FilterError");
 module.exports = function(args) {
      return function(req) {
          var queryStorages = [req.body, req.params, req.query];
+         console.log(req.body);
          var keys = [];
          queryStorages.forEach(function(storage){
              keys.push(_.keys(storage));
