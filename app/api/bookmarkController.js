@@ -42,8 +42,11 @@ module.exports.allByBranch = actionComposer({
 module.exports.get = actionComposer({
     beforeFilters: [mandatoryParamFilter(["id"])],
     action: function (req, resp) {
-        User.forge({id: req.session.userId}).bookmark(req.query.id).fetchOne({withRelated: ["markers", "comments", "links"]}).then(function (m) {
-            resp.json(m);
+       return User.forge({id: req.session.userId}).bookmark(req.query.id).fetchOne({withRelated: ["markers", "comments", "links"]}).then(function (m) {
+            return m.branchOfUser(req.session.userId).fetchOne().then(function (branch) {
+                m.set("branch_id", branch.id);
+               resp.json(m);
+            });
         });
     }
 });
