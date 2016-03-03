@@ -123,7 +123,7 @@ bookmark = AbstractModel.extend({
                      return bookshelf.model("User").forge({id: userId})
                         .load(["defaultBranch"])
                         .then(function(user) {
-                                bookmark.branch_id = bookmark.branch_id || user.related("defaultBranch").models[0];
+                                bookmark.branch_id = bookmark.branch_id || user.related("defaultBranch").models[0].id;
                                 return bookmark;})
                      .then(function(bookmark) {
                          return  _this.forge(_.omit(bookmark, "comments", "markers", "branch_id"))

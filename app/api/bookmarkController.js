@@ -66,7 +66,7 @@ module.exports.getShareInformation = actionComposer({
 module.exports.post = actionComposer({
     beforeFilters: [validateBookmarkOwnership],
     action: function (req, resp) {
-        return Bookmark.persist(_.pick(req.body, "id", "name", "comments", "markers", "branch_id"), req.session.userId)
+        return Bookmark.persist(_.pick(req.body, "id", "name", "comments", "markers", "branch_id", "url"), req.session.userId)
         .then(function(res){
             return Bookmark.forge({id: req.body.id}).users().fetch()
         })
