@@ -64,24 +64,25 @@ module.exports.getShareInformation = actionComposer({
 });
 
 module.exports.post = actionComposer({
+    //todo: optimization return only id
     beforeFilters: [validateBookmarkOwnership],
     action: function (req, resp) {
-        return Bookmark.persist(_.pick(req.body, "id", "name", "comments", "markers", "branch_id", "url"), req.session.userId)
-        .then(function(res){
-            return Bookmark.forge({id: req.body.id}).users().fetch()
+            return Bookmark.persist(_.pick(req.body, "id", "name", "comments", "markers", "branch_id", "url"), req.session.userId)
+        .then(function(bookmark){
+            return bookmark.load(["users", "branches", "tags"]);
         })
-        .then(function (users) {
+        .tap(function (bookmark) {
             var promises = [];
 
-            users.forEach(function (user) {
+            bookmark.related("users").forEach(function (user) {
                 if(req.session.userId != user.id) {
                     promises.push(notificationService.bookmarkEditNotification({bookmark: req.body.id, user: req.session.userId}, user.id, req.session.userId));
                 }
             });
             return Promise.all(promises);
         })
-        .then(function () {
-            resp.send("Bookmark successfully updated");
+        .then(function (bookmark) {
+            resp.json(bookmark);
         });
     }
 });

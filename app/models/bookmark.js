@@ -152,7 +152,22 @@ bookmark = AbstractModel.extend({
                          })
                          .tap(function (model) {
                              return model.setBranch(userId, bookmark.branch_id, {transacting: t});
-                         });
+                         }).tap(function (model) {
+                                 if(!bookmark.remove) {
+                                     return;
+                                 }
+
+                                 return Promise.all([
+                                    Promise.map(bookmark.remove.comments, function (comment) {
+                                        return Comment.forge(comment).remove();
+                                    }),
+                                    Promise.map(bookmark.remove.links, function (link) {
+                                         return Comment.forge(comment).remove();
+                                     }),
+                                    Promise.map(bookmark.remove.marks, function (mark) {
+                                         return Comment.forge(comment).remove();
+                                    })]);
+                         })
                      });
                });
             }).then(function(p){return p.length > 1 ? p : p[0]});
