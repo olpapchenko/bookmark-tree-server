@@ -21,7 +21,7 @@
         </a>
         <div class="portfolio-caption">
             <a href="{{navigatePath(entity)}}" ng-attr-target="{{linkTarget}}">
-                <h4 class="ng-binding">{{entity.name}}</h4>
+                <h4 class="ng-binding">{{entity.name | limitTo:15}}</h4>
             </a>
         </div>
     </div>

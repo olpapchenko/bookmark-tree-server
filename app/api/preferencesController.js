@@ -21,7 +21,7 @@ module.exports = {
         });
 
         return Promise.map(preferences, function (pereference) {
-            return Preferences.forge(pereference).save();
+            return Preferences.forge({user_id: pereference.user_id, key: pereference.key}).saveBasedOnParams(pereference);
         }).then(function(){
             resp.sendStatus(200);
         });

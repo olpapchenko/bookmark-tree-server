@@ -2,15 +2,18 @@ angular.module("app").controller("bookmarksController",["$scope",
     "branch",
     "bookmarks",
     "preferencesService",
-    "bookmarksDisplayMode",
     function ($scope,
               branch,
               bookmarks,
-              preferencesService,
-              bookmarksDisplayMode) {
+              preferencesService
+               ) {
     $scope.entities = bookmarks;
     $scope.branch = branch;
-    $scope.isDisplayModeList = bookmarksDisplayMode;
+
+    preferencesService.getBookmarkListView().then(function (value) {
+        console.log(value);
+        $scope.isDisplayModeList = value;
+    });
     $scope.scope = $scope;
 
     $scope.savePreferedView = function (mode) {

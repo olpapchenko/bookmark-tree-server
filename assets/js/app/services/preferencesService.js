@@ -3,20 +3,25 @@ angular.module("app").service("preferencesService", ["$http", function ($http) {
         return this.charAt(0).toUpperCase() + this.slice(1);
     }
 
-    var PREFERENCES_KEYS = "overviewListView friendsBranchListView friendsBookmarkListView bookmarkListView".split(" "),
+    var PREFERENCES_KEYS = "extensionEnabled bookmarkLisEnabled marksEnabled commentEnabled notificationEnabled markColor refreshPeriod overviewListView friendsBranchListView friendsBookmarkListView bookmarkListView".split(" "),
         _this = this;
 
     PREFERENCES_KEYS.forEach(function (key, index) {
+        'use strict'
         _this["get" + key.capitalizeFirstLetter()] = function () {
             return $http.get("/preferences", {params: {key: index}}).then(function (preference) {
-                return !preference.data || preference.data.value === 'true';
+                var pref = preference.data.preferences.find(function (curPreference) {
+                    return curPreference.key == index;
+                });
+                console.log(pref);
+                return pref && pref.value == "true";
             });
         }
     });
 
     PREFERENCES_KEYS.forEach(function (key, index) {
         _this["save" + key.capitalizeFirstLetter()] = function (preference) {
-            return $http.post("/preferences", {key: index, value: preference});
+            return $http.post("/preferences", {preferences: [{key: index, value: preference}]});
         }
     });
 }]);
