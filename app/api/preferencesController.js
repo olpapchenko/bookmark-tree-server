@@ -4,8 +4,8 @@ var Promise = require("bluebird"),
     actionComposer = require("./actionComposer"),
     mandatoryParamFilter = require("../filters/mandatoryParamFilter");
 
-
 module.exports = {
+
     get: actionComposer({action: function (req, resp) {
         return Preferences.getPreferencesOrDefault({user_id: req.session.userId}).then(function (preferences) {
             resp.json({preferences: preferences});
@@ -23,7 +23,7 @@ module.exports = {
         return Promise.map(preferences, function (pereference) {
             return Preferences.forge({user_id: pereference.user_id, key: pereference.key}).saveBasedOnParams(pereference);
         }).then(function(){
-            resp.sendStatus(200);
+            resp.json(preferences);
         });
     }})
 }
