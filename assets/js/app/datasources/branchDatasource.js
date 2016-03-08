@@ -2,8 +2,8 @@ angular.module("app").factory("branchDatasource", ["$state", "abstractEntityData
     var STATE = "app.branch";
 
     var ds = {
-        path: function (id) {
-            return abstractDatasource.path(STATE)(id);
+        path: function (entity) {
+            return abstractDatasource.path(STATE)(entity.id);
         }
     };
 

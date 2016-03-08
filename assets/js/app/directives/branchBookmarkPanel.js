@@ -41,6 +41,7 @@
             link: function(scope, iElement, attrs) {
 
                 scope.navigatePath = scope.isBranch ? branchDatasource.path : bookmarkDatasource.path;
+                scope.linkTarget = scope.isBranch ? "_self" : "_blank";
 
                 var rmHandler = scope.remove || removeHandler(scope.isBranch);
 
