@@ -91,9 +91,10 @@ module.exports.remove = actionComposer({
     beforeFilters: [validateBookmarkOwnership],
     action: function (req, resp) {
 
-        Bookmark.forge({id : req.body.id}).fetch({withRelated: "users"})
+       return Bookmark.forge({id : req.body.id}).fetch({withRelated: "users"})
             .tap(function (bookmark) {
                 var promises = [];
+
                 bookmark.related("users").forEach(function (user) {
                     if(req.session.userId != user.id) {
                         promises.push(notificationService.bookmarkRemoveNotification({bookmark: bookmark.id, user: req.session.userId}, user.id, req.session.userId));
