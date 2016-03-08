@@ -260,5 +260,9 @@ input:focus.ng-invalid.ng-touched {
   text-decoration: none;
 }
 
+.list-path {
+  font-family: Lato, Arial, sans-serif;
+}
+
 
 

@@ -35,6 +35,7 @@ angular.module("app").directive("branchBookmarkList", ["editHandler",
 
             var rmHandler = scope.remove || removeHandler(scope.isBranch);
             scope.navigatePath = scope.isBranch ? branchDatasource.path : bookmarkDatasource.path;
+            scope.linkPath = scope.isBranch ? "_self" : "_blank";
 
             scope.removeHandler = function (id) {
                 rmHandler(id).then(function (value) {
