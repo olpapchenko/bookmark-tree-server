@@ -64,12 +64,17 @@ module.exports.getShareInformation = actionComposer({
 });
 
 module.exports.post = actionComposer({
-    //todo: optimization return only id
-    beforeFilters: [validateBookmarkOwnership],
+     beforeFilters: [validateBookmarkOwnership],
     action: function (req, resp) {
             return Bookmark.persist(_.pick(req.body, "id", "name", "comments", "markers", "branch_id", "url"), req.session.userId)
         .then(function(bookmark){
-            return bookmark.load(["users", "branches", "tags"]);
+            return bookmark.load(["users", "tags"]);
+        })
+        .then(function (bookmark) {
+            return bookmark.branchOfUser(req.session.userId).fetch().then(function (branchesOfUser) {
+                bookmark.set("branches", branchesOfUser.models);
+                return bookmark;
+            });
         })
         .tap(function (bookmark) {
             var promises = [];
@@ -87,6 +92,7 @@ module.exports.post = actionComposer({
     }
 });
 
+//todo check all actions return promises
 module.exports.remove = actionComposer({
     beforeFilters: [validateBookmarkOwnership],
     action: function (req, resp) {
