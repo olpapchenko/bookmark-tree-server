@@ -126,7 +126,7 @@ bookmark = AbstractModel.extend({
                                 bookmark.branch_id = bookmark.branch_id || user.related("defaultBranch").models[0].id;
                                 return bookmark;})
                      .then(function(bookmark) {
-                         return  _this.forge(_.omit(bookmark, "comments", "markers", "branch_id"))
+                         return  _this.forge(_.omit(bookmark, "comments", "markers", "branch_id", "links", "remove"))
                              .save(null, {transacting: t})
                              .tap(function(model){
                                  if(!bookmark.id) {
@@ -156,17 +156,17 @@ bookmark = AbstractModel.extend({
                                  if(!bookmark.remove) {
                                      return;
                                  }
-
+                                    console.log(bookmark.remove);
                                  return Promise.all([
                                     Promise.map(bookmark.remove.comments, function (comment) {
-                                        return Comment.forge(comment).remove();
+                                        return Comment.forge({id: comment}).destroy();
                                     }),
                                     Promise.map(bookmark.remove.links, function (link) {
-                                         return Comment.forge(comment).remove();
+                                         return Links.forge({id: link}).destroy();
                                      }),
-                                    Promise.map(bookmark.remove.marks, function (mark) {
-                                         return Comment.forge(comment).remove();
-                                    })]);
+                                    Promise.map(bookmark.remove.markers, function (mark) {
+                                         return Marker.forge({id: mark}).destroy();
+                                })]);
                          })
                      });
                });
