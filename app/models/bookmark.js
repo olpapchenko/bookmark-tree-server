@@ -156,8 +156,7 @@ bookmark = AbstractModel.extend({
                                  if(!bookmark.remove) {
                                      return;
                                  }
-                                    console.log(bookmark.remove);
-                                 return Promise.all([
+                                  return Promise.all([
                                     Promise.map(bookmark.remove.comments, function (comment) {
                                         return Comment.forge({id: comment}).destroy();
                                     }),
