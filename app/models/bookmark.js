@@ -127,8 +127,8 @@ bookmark = AbstractModel.extend({
                                 return bookmark;})
                      .then(function(bookmark) {
                          return  _this.forge(_.omit(bookmark, "comments", "markers", "branch_id", "links", "remove"))
-                             .save(null, {transacting: t})
-                             .tap(function(model){
+                         .save(null, {transacting: t})
+                         .tap(function(model){
                                  if(!bookmark.id) {
                                      return BookmarkRights.forge({user_id: userId, bookmark_id: model.id, owner: true}).save(null, {transacting: t});
                                  }
@@ -148,6 +148,14 @@ bookmark = AbstractModel.extend({
                              }
                              return Promise.map(bookmark.markers, function (marker){
                                  return Marker.forge(marker).save({bookmark_id: model.id}, {transacting: t});
+                             });
+                         })
+                         .tap(function(model){
+                             if(!bookmark.links){
+                                 return;
+                             }
+                             return Promise.map(bookmark.links, function (link){
+                                 return Links.forge(link).save({bookmark_id: model.id}, {transacting: t});
                              });
                          })
                          .tap(function (model) {
