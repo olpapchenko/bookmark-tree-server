@@ -5,8 +5,8 @@
 //= require /js/app/datasources/addBranchDatasource.js
 
 //= require /js/app/controllers/overviewController.js
-//= require /js/vendor/jquery.backstretch.min.js
-//= require /js/app/services/branchService.js
+//= require /js/vendor/jquery-backstretch/jquery.backstretch.js
+// = require /js/app/services/branchService.js
 
 //= require /js/app/controllers/shareController.js
 //= require /js/app/services/friendsService.js
