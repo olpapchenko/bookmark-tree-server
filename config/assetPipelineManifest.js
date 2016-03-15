@@ -19,7 +19,7 @@ var moveFiles = function (files) {
 }
 var manifest = new mincer.Manifest(environment, appConfig.compiledAssetsPath);
 
-module.exports.compile(function () {
+module.exports.compile = function () {
     try{
         var compiled = manifest.compile([/(js)$|(css)$/], {
             compress: true,
@@ -32,6 +32,6 @@ module.exports.compile(function () {
     } catch (e) {
         console.error(e.stack );
     }
-});
+};
 
 
