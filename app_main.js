@@ -82,7 +82,7 @@ function onError(error) {
 /**
  * Event listener for HTTP server "listening" event.
  */
-console.log("asdf");
+
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
