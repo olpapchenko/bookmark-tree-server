@@ -9,7 +9,7 @@
 //= require /js/vendor/toaster/toaster.min.js
 //= require /js/app/app.js
 //= require /js/app/config.route.js
-//= require /js/vendor/jquery-1.11.1.min.js
+//= require /js/vendor/jquery/dist/jquery.min.js
 //= require /js/vendor/bootstrap/dist/js/bootstrap.min.js
 //= require /js/vendor/ngDialog/js/ngDialog.min.js
 //= require /js/vendor/moment/moment.js
