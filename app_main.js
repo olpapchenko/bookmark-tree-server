@@ -3,15 +3,17 @@
 /**
  * Module dependencies.
  */
-
 var app = require('./app/app');
-var debug = require('debug')('BookmarkTree:server');
+
+// var debug = require('debug')('BookmarkTree:server');
 var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
-
+process.on('uncaughtException', function (err) {
+  console.log(err);
+})
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
@@ -80,11 +82,11 @@ function onError(error) {
 /**
  * Event listener for HTTP server "listening" event.
  */
-
+console.log("asdf");
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  // debug('Listening on ' + bind);
 }

@@ -19,7 +19,7 @@ var app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', appConfig.views);
-
+console.log("static files");
 // static files
 app.use(appConfig.static);
 app.use(appConfig.avatars);
