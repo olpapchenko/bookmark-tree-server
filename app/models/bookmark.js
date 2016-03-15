@@ -43,7 +43,7 @@ bookmark = AbstractModel.extend({
         return this.belongsToMany("User").through("Bookmark_rights").query({where: {user_id: user_id}});
     },
 
-    obserwers: function() {
+    observers: function() {
         return this.users().query(function(qb){
             qb.whereRaw("(owner is null or owner = false)");
         })
@@ -71,7 +71,7 @@ bookmark = AbstractModel.extend({
     },
 
     getShareInformation: function() {
-        return Promise.all([this.owners().fetch({columns: ["users.id", "users.name"]}), this.obserwers().fetch({columns: ["users.id", "users.name"]})])
+        return Promise.all([this.owners().fetch({columns: ["users.id", "users.name"]}), this.observers().fetch({columns: ["users.id", "users.name"]})])
             .then(function(res){
                 logger.debug("share results for branch: " + this.id + " res " + res);
                 return {owners: res[0].models, observers: res[1].models}

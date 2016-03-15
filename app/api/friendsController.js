@@ -6,27 +6,30 @@ var Bookmark = require("../models/bookmark");
 var Branches = require("../models/branch");
 var BranchRights = require("../models/branchRights");
 var BookmarkRights = require("../models/bookmarkRights");
+var actionComposer = require("./actionComposer");
 
 var _ = require("underscore");
 
 module.exports = {
-    get: function(req, resp) {
-        User.forge({id: req.session.userId}).load(["friends"]).then(function(user){
+    get: actionComposer({
+        action: function(req, resp) {
+        return User.forge({id: req.session.userId}).load(["friends"]).then(function(user){
             resp.json(user.related("friends").map(function(item){return item.omit("password")}));
         });
-    },
-    post: function(req, resp) {
-        User.forge({id: req.session.userId}).related("friends").create(User.forge({id: req.body.id})).then(function(){
+    }}),
+    post: actionComposer({action: function(req, resp) {
+        return User.forge({id: req.session.userId}).related("friends").create(User.forge({id: req.body.id})).then(function(){
             resp.sendStatus(200);
         });
-    },
-    remove: function(req, resp) {
-        User.forge({id: req.session.userId}).related("friends").detach(User.forge({id: req.body.id})).then(function() {
+    }}),
+
+    remove: actionComposer({action: function(req, resp) {
+        return User.forge({id: req.session.userId}).related("friends").detach(User.forge({id: req.body.id})).then(function() {
             resp.sendStatus(200);
         })
-    },
+    }}),
 
-    shared: function(req, resp){
+    shared: actionComposer({action:function(req, resp){
         var sharedResults = {};
         return Promise.all([
             Bookmark.getShared(req.session.userId, req.params.id),
@@ -37,6 +40,6 @@ module.exports = {
             sharedResults.branches =  data[1] || [];
             resp.json(sharedResults);
         });
-    }
+    }})
 }
 

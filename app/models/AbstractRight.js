@@ -17,6 +17,9 @@ var model = AbstractModel.extend({
         logger.info("update right for: ", rights);
 
         return Bookshelf.transaction(function (t) {
+            if(!rights.owners) {
+                return;
+            }
                 return Promise.map(rights.owners, function (userId) {
 
                     logger.info("set user as owner userId: ", userId);
@@ -31,6 +34,9 @@ var model = AbstractModel.extend({
                     });
                 }, {concurrency: 1})
                 .then(function () {
+                        if(!rights.observers) {
+                            return;
+                        }
                         return Promise.map(rights.observers, function (userId) {
 
                             logger.info("set user as observer userId: ", userId);
@@ -46,6 +52,9 @@ var model = AbstractModel.extend({
                         }, {concurrency: 1});
                 })
                 .then(function () {
+                        if(!rights.removed) {
+                            return;
+                        }
                         return Promise.map(rights.removed, function (userId) {
                             var right = {};
                             right[entity_key] = rights.id;

@@ -8,8 +8,8 @@ var path = require("path"),
     Bookshelf = require ('../../config/db/bookshelf'),
     mandatoryParamFilter = require("../filters/mandatoryParamFilter");
 
-module.exports.get = function (req, resp) {
-     User.forge({id: req.params.id}).loadUser().then(function(user) {
+module.exports.get = actionComposer({action: function (req, resp) {
+     return User.forge({id: req.params.id}).loadUser().then(function(user) {
         if(!user) {
             return user;
         }
@@ -17,28 +17,28 @@ module.exports.get = function (req, resp) {
     }).then(function (user) {
         resp.json(user);
     });
-}
+}})
 
-module.exports.byName = function(req, resp){
-    User.byName(req.params.name).then(function(users){
+module.exports.byName = actionComposer({action:function(req, resp){
+    return User.byName(req.params.name).then(function(users){
        return User.forge({id: req.session.userId}).isFriend(users);
     }).then(function(users) {
          return resp.json(users);
     });
-}
+}})
 
-module.exports.checkMailAvailability = function (req, resp) {
-    User.forge({mail: req.query.mail}).fetch().then(function (user) {
+module.exports.checkMailAvailability = actionComposer({action:function (req, resp) {
+    return User.forge({mail: req.query.mail}).fetch().then(function (user) {
         if(user) {
             resp.json({available: false});
         } else {
             resp.json({available: true});
         }
     })
-}
+}})
 
-module.exports.current = function(req,resp){
-    new User({id: req.session.userId}).fetch()
+module.exports.current = actionComposer({action:function(req,resp){
+    return new User({id: req.session.userId}).fetch()
         .then(function(model){
 
             if(model) {
@@ -47,12 +47,12 @@ module.exports.current = function(req,resp){
                 resp.sendStatus(400);
             }
     });
-}
+}})
 
 module.exports.put = actionComposer({
     beforeFilters: [mandatoryParamFilter(["name", "about"])],
     action: function (req, resp) {
-        User.forge({id: req.session.userId}).fetch().then(function (user) {
+        return User.forge({id: req.session.userId}).fetch().then(function (user) {
             if(req.body.avatar) {
                 if(user.get('avatar') && path.extname(user.get('avatar')).toLowerCase() != path.extname(req.body.avatar).toLowerCase()){
                     fs.unlink(path.join(appConfig.avatarDir, user.get('avatar')));
@@ -67,12 +67,12 @@ module.exports.put = actionComposer({
     }
 });
 
-module.exports.login = function (req, resp) {
+module.exports.login = actionComposer({action:function (req, resp) {
     if(req.session.userId) {
         resp.status(400).send("you are already logged in");
     }
     else if(req.body.mail && req.body.password){
-        User.login(req.body.mail, req.body.password).then(function (user) {
+        return User.login(req.body.mail, req.body.password).then(function (user) {
             if (user) {
                 req.session.userId = user.id;
                 resp.json(user);
@@ -83,12 +83,12 @@ module.exports.login = function (req, resp) {
     } else {
         resp.status(403).send("you have not specified password/mail");
     }
-}
+}})
 
 module.exports.post = actionComposer({
     beforeFilters: [mandatoryParamFilter(["name", "mail", "password"])],
     action: function (req,resp) {
-        User.register(req.body)
+        return User.register(req.body)
         .then(function (user) {
            return  Bookshelf.model("Branch").createBranch({name: "Default Branch", default: true}, user.id);
         })

@@ -19,7 +19,7 @@ module.exports = {
 
     all: actionComposer({
         action: function(req, resp){
-            User.forge({id: req.session.userId}).load(["branches"]).then(function(user){
+            return User.forge({id: req.session.userId}).load(["branches"]).then(function(user){
                 return BranchRight.attachBranchesRights(user.related("branches").models, req.session.userId);
             }).then(function (branches) {
                 resp.json(branches);
@@ -30,7 +30,7 @@ module.exports = {
     get: actionComposer({
        beforeFilters: [mandatoryParamFilter(["id"])],
         action: function(req, resp) {
-            User.forge({id: req.session.userId}).branch(req.query.id).fetchOne().then(function (m) {
+            return User.forge({id: req.session.userId}).branch(req.query.id).fetchOne().then(function (m) {
                 resp.json(m);
             });
         }
@@ -40,7 +40,7 @@ module.exports = {
         beforeFilters: [mandatoryParamFilter(["id"])],
         action: function(req, resp) {
             logger.debug("get share info started " + req.params);
-            Branch.forge({id: req.query.id}).getShareInformation().then(function(data) {
+            return Branch.forge({id: req.query.id}).getShareInformation().then(function(data) {
                 logger.info("share data for branch: " + req.query.id + " data:" + JSON.stringify(data));
                 data.owners.splice(_.findIndex(data.owners, function(owner){return owner.id === req.session.userId}),1);
                 resp.json(data);
@@ -66,7 +66,7 @@ module.exports = {
                 }
             }
 
-            BranchRight.updateBranchRights(req.body, saveCallback).then(function () {
+            return BranchRight.updateBranchRights(req.body, saveCallback).then(function () {
                 resp.status(200).send("Branch rights are changed");
             });
         }
@@ -78,7 +78,7 @@ module.exports = {
                         validateBranchNotDefault],
         action: function(req,resp){
             var branch = _.pick(req.body, "name", "id");
-            (function(){
+            return (function(){
                 if(branch.id){
                     return Branch.forge(branch).save().then(function (branch) {
                         return branch.users().fetch();
@@ -102,7 +102,7 @@ module.exports = {
     remove: actionComposer({
         beforeFilters: [mandatoryParamFilter(["id"])],
         action: function(req, resp){
-            Branch.forge({id: req.body.id})
+            return Branch.forge({id: req.body.id})
                 .fetch({withRelated: "users"})
                 .tap(function(model){
                     var promises = [];

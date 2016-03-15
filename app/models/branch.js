@@ -24,7 +24,7 @@ var branch = AbstractModel.extend({
     user: function(user_id){
         return this.users().query({where: {user_id: user_id}});
     },
-    obserwers: function() {
+    observers: function() {
         return this.users().query(function(qb){
             qb.whereRaw("(owner is null or owner = false)");
         })
@@ -46,7 +46,7 @@ var branch = AbstractModel.extend({
         return BranchRights.forge({user_id: user_id, branch_id: this.id}).saveBasedOnParams({owner: ownership});
     },
     getShareInformation: function() {
-        return Promise.all([this.owners().fetch({columns: ["users.id", "users.name"]}), this.obserwers().fetch({columns: ["users.id", "users.name"]})])
+        return Promise.all([this.owners().fetch({columns: ["users.id", "users.name"]}), this.observers().fetch({columns: ["users.id", "users.name"]})])
             .then(function(res){
             logger.debug("share results for branch: " + this.id + " res " + res);
             return {owners: res[0].models, observers: res[1].models}

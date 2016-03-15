@@ -25,7 +25,7 @@ module.exports.allByBranch = actionComposer({
     beforeFilters: [mandatoryParamFilter(["id"]),
                     validateBranchOwnership],
     action: function (req, resp) {
-        Branch.forge({id: req.query.id}).bookmarks().fetch()
+        return Branch.forge({id: req.query.id}).bookmarks().fetch()
             .then(function (bookmarks) {
                 return BookmarkRights.attachBookmarkRights(bookmarks, req.session.userId);
             })
@@ -42,7 +42,7 @@ module.exports.allByBranch = actionComposer({
 module.exports.get = actionComposer({
     beforeFilters: [mandatoryParamFilter(["id"])],
     action: function (req, resp) {
-       return User.forge({id: req.session.userId}).bookmark(req.query.id).fetchOne({withRelated: ["markers", "comments", "links", "owners"]}).then(function (m) {
+       return User.forge({id: req.session.userId}).bookmark(req.query.id).fetchOne({withRelated: ["markers", "comments", "links", "owners", "observers"]}).then(function (m) {
             var isOwner = m.related("owners").some(function (owner) {
                 return owner.id == req.session.userId;
             });
@@ -59,7 +59,7 @@ module.exports.getShareInformation = actionComposer({
     beforeFilters: [mandatoryParamFilter(["id"])],
     action: function(req, resp) {
         logger.debug("get share info started " + req.params);
-        Bookmark.forge({id: req.query.id}).getShareInformation().then(function(data) {
+        return Bookmark.forge({id: req.query.id}).getShareInformation().then(function(data) {
             logger.info("share data for branch: " + req.query.id + " data:" + JSON.stringify(data));
             data.owners.splice(_.findIndex(data.owners, function(owner){return owner.id === req.session.userId}),1);
             resp.json(data);
@@ -70,7 +70,7 @@ module.exports.getShareInformation = actionComposer({
 module.exports.post = actionComposer({
      beforeFilters: [validateBookmarkOwnership],
     action: function (req, resp) {
-            return Bookmark.persist(_.pick(req.body, "id", "name", "comments", "markers", "links", "branch_id", "url", "remove"), req.session.userId)
+        return Bookmark.persist(_.pick(req.body, "id", "name", "comments", "markers", "links", "branch_id", "url", "remove"), req.session.userId)
         .then(function(bookmark){
             return bookmark.load(["users", "tags"]);
         })
@@ -128,7 +128,7 @@ module.exports.share =  actionComposer({
     action: function(req,resp){
         logger.info("save share branch action started " + req.body);
 
-        Promise.all([ BookmarkRights.updateBookmarkRight(req.body, function(isSaved, userId, bookmarkId, operation) {
+        return Promise.all([ BookmarkRights.updateBookmarkRight(req.body, function(isSaved, userId, bookmarkId, operation) {
             if(isSaved) {
                 if(operation == "addOwner") {
                     notificationService.bookmarkShareNotificationOwner({bookmark: bookmarkId, user: req.session.userId}, userId, req.session.userId)
