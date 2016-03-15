@@ -1,4 +1,6 @@
 var exec = require("child_process").exec;
+var fs = require("fs");
+var assetManifest  = require("./config/assetPipelineManifest");
 
 var DB_CONNECTION = {
     client: 'pg',
@@ -46,6 +48,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-knexseed');
     grunt.loadNpmTasks('grunt-knex-migrate');
     grunt.loadNpmTasks('grunt-browser-sync');
+    grunt.loadNpmTasks('');
 
     //blocking task
     grunt.registerTask("test", function (action) {
@@ -101,5 +104,24 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask("setupDB", ['knexmigrate:latest', 'knexseed:run']);
+    grunt.registerTask("createDirs", function () {
+        var dirsToCreate = ["./logs", "./sessions", "./uploads"];
+        dirsToCreate.forEach(function (dir) {
+            if (!fs.existsSync(dir)){
+                fs.mkdirSync(dir);
+            }
+        });
+    });
+
+    grunt.registerTask("copyCustomVendorCode", function () {
+        fs.createReadStream('./app/vendorCustom/bookshelf/registry.js').pipe(fs.createWriteStream('./node_modules/bookshelf/plugins/registry.js'));
+        fs.createReadStream('./app/vendorCustom/mincer/manifest.js').pipe(fs.createWriteStream('./node_modules/mincer/lib/mincer/manifest.js'));
+    });
+
+    grunt.registerTask("compileAssets", function () {
+        assetManifest.compile();
+    });
+
+    grunt.registerTask("setupDB", ['knexmigrate:latest']);
+    grunt.registerTask("deploy", ['createDirs', 'copyCustomVendorCode', 'compileAssets', 'setupDB']);
 };

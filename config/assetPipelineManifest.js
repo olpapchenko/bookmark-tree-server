@@ -19,18 +19,19 @@ var moveFiles = function (files) {
 }
 var manifest = new mincer.Manifest(environment, appConfig.compiledAssetsPath);
 
+module.exports.compile(function () {
+    try{
+        var compiled = manifest.compile([/(js)$|(css)$/], {
+            compress: true,
+            sourceMaps: true,
+            embedMappingComments: true
+        });
 
-try{
-    var compiled = manifest.compile([/(js)$|(css)$/], {
-        compress: true,
-        sourceMaps: true,
-        embedMappingComments: true
-    });
+        moveFiles(movedFiles);
 
-    moveFiles(movedFiles);
-
-} catch (e) {
-    console.error(e.stack );
-}
+    } catch (e) {
+        console.error(e.stack );
+    }
+});
 
 
