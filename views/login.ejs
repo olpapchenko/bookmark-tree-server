@@ -16,6 +16,47 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="<%= asset_path('/bundles/js/loginPage.js')%>"></script>
+    <script>
+        jQuery(document).ready(function() {
+
+            /*
+             Fullscreen background
+             */
+            $.backstretch("vendor/img/backgrounds/1.jpg");
+
+            /*
+             Form validation
+             */
+            $('.login-form input[type="text"], .login-form input[type="password"], .login-form textarea').on('focus', function() {
+                $(this).removeClass('input-error');
+            });
+
+            $('.login-form').on('submit', function(e) {
+
+                $(this).find('input[type="text"], input[type="password"], textarea').each(function(){
+                    if( $(this).val() == "" ) {
+                        e.preventDefault();
+                        $(this).addClass('input-error');
+                    }
+                    else {
+                        $(this).removeClass('input-error');
+                    }
+                });
+
+            });
+
+
+        });
+    </script>
+    <script>
+
+        $(document).ready(function(){
+
+            $(".form-username").val("Username...");
+            $(".form-password").val("Password...");
+
+        });
+    </script>
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="/image/ico/favicon.png">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/image/ico/apple-touch-icon-144-precomposed.png">
