@@ -1,6 +1,6 @@
 var repl = require("repl").start({}),
     promisify = require("repl-promised").promisify,
-    bookmark = require('../app/models/bookmark');
+    bookmark = require('../app/models/Bookmark');
     users = require('../app/models/user');
     rights = require('../app/models/branchRights');
     notifications = require('../app/models/notification');
