@@ -1,3 +1,3 @@
-//= require /js/app/controllers/userController.js
-//= require /js/app/services/avatarService.js
-//= require /js/app/services/userService.js
+"/js/app/controllers/userController.js",
+"/js/app/services/avatarService.js",
+"/js/app/services/userService.js"

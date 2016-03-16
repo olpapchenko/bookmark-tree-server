@@ -1,2 +1,2 @@
-//= require /js/app/controllers/loginController.js
-//= require /js/app/services/userService.js
+"/js/app/controllers/loginController.js",
+"/js/app/services/userService.js"

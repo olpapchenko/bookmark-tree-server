@@ -3,9 +3,7 @@
 /**
  * Module dependencies.
  */
-    try{var app = require('./app/app');}
-    catch(e)
-    {console.log(e.stack || e);}
+    try{var app = require('./app/app');
 
 
 // var debug = require('debug')('BookmarkTree:server');
@@ -93,3 +91,6 @@ function onListening() {
     : 'port ' + addr.port;
   // debug('Listening on ' + bind);
 }
+    }
+    catch(e)
+    {console.log(e.stack || e);}

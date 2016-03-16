@@ -38,8 +38,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             controller: "appController",
             resolve:{
                 currentUser: ["$ocLazyLoad", "$injector", "$rootScope", "$state", function ($ocLazyLoad, $injector, $rootScope, $state) {
-                    return $ocLazyLoad.load(["/js/app/services/userService.js",
-                        "/js/app/services/notificationService.js"]).then(function(){
+                    return $ocLazyLoad.load(["/js/app/services/userService.js", "/js/app/services/notificationService.js"]).then(function(){
                         var userService = $injector.get("userService");
                         return userService.getCurrentUser();
                     }).then(function(user){
@@ -57,13 +56,11 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
                     return $ocLazyLoad.load([
-                        "/js/app/controllers/loginController.js",
-                        "/js/app/services/userService.js"
+                        "<%= asset_path('/bundles/js/login.js"
                     ]);
                 }],
                 currentUser: ["$ocLazyLoad", "$injector", "$rootScope", "$state", function ($ocLazyLoad, $injector, $rootScope, $state) {
-                    return $ocLazyLoad.load(["/js/app/services/userService.js",
-                        "/js/app/services/notificationService.js"]).then(function(){
+                    return $ocLazyLoad.load(["/js/app/services/userService.js", "/js/app/services/notificationService.js"]).then(function(){
                         var userService = $injector.get("userService");
                         return userService.getCurrentUser();
                     }).then(function(user){
@@ -91,9 +88,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             controller: "registerController",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["/js/app/services/userService.js",
-                "/js/app/controllers/registrationController.js",
-                "/js/app/directives/mailAvailabilityValidator.js"]);
+                return $ocLazyLoad.load(["/bundles/js/register.js"]);
             }]}
         })
         .state("app.overview",{
@@ -102,38 +97,40 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             resolve: {
                 files:
                 ["$ocLazyLoad", function($ocLazyLoad){
-                                    return $ocLazyLoad.load(["/js/app/datasources/abstractEntityDatasource.js"
-                                        ," /js/app/datasources/bookmarkDatasource.js"
-                                        ," /js/app/datasources/branchDatasource.js"
-                                        ," /js/app/datasources/editBranchDatasource.js"
-                                        ," /js/app/datasources/addBranchDatasource.js"
+                                    return $ocLazyLoad.load(
+                                        ["/js/app/datasources/abstractEntityDatasource.js"
+                                            ," /js/app/datasources/bookmarkDatasource.js"
+                                            ," /js/app/datasources/branchDatasource.js"
+                                            ," /js/app/datasources/editBranchDatasource.js"
+                                            ," /js/app/datasources/addBranchDatasource.js"
 
-                                        ," /js/app/controllers/overviewController.js"
-                                        ," /js/vendor/jquery-backstretch/jquery.backstretch.js"
-                                        ," /js/app/services/branchService.js"
+                                            ," /js/app/controllers/overviewController.js"
+                                            ," /js/vendor/jquery-backstretch/jquery.backstretch.js"
+                                            ," /js/app/services/branchService.js"
 
-                                        ," /js/app/controllers/shareController.js"
-                                        ," /js/app/services/friendsService.js"
-                                        ," /js/app/controllers/editBranchController.js"
+                                            ," /js/app/controllers/shareController.js"
+                                            ," /js/app/services/friendsService.js"
+                                            ," /js/app/controllers/editBranchController.js"
 
-                                        ," /js/app/controllers/removeBranchController.js"
-                                        ," /js/app/services/bookmarkService.js"
-                                        ," /js/app/services/preferencesService.js"
-                                        ," /js/app/datasources/editBookmarkDatasource.js"
+                                            ," /js/app/controllers/removeBranchController.js"
+                                            ," /js/app/services/bookmarkService.js"
+                                            ," /js/app/services/preferencesService.js"
+                                            ," /js/app/datasources/editBookmarkDatasource.js"
 
-                                        ," /js/app/services/editHandler.js"
-                                        ," /js/app/datasources/shareDatasourceAbstract.js"
+                                            ," /js/app/services/editHandler.js"
+                                            ," /js/app/datasources/shareDatasourceAbstract.js"
 
-                                        ," /js/app/datasources/shareDatasourceAllBookmark.js"
-                                        ," /js/app/datasources/shareDatasourceAllBranch.js"
+                                            ," /js/app/datasources/shareDatasourceAllBookmark.js"
+                                            ," /js/app/datasources/shareDatasourceAllBranch.js"
 
-                                        ," /js/app/services/shareHandler.js"
-                                        ," /js/app/services/removeHandler.js"
+                                            ," /js/app/services/shareHandler.js"
+                                            ," /js/app/services/removeHandler.js"
 
-                                        ," /js/app/directives/branchBookmarkList.js"
-                                        ," /js/app/directives/branchBookmarkPanel.js"
-                                        ," /js/app/directives/switchableView.js"
-                                        ," /js/app/directives/addEntityButton.js"]);
+                                            ," /js/app/directives/branchBookmarkList.js"
+                                            ," /js/app/directives/branchBookmarkPanel.js"
+                                            ," /js/app/directives/switchableView.js"
+                                            ," /js/app/directives/addEntityButton.js"
+                                    ]);
                     }
                 ],
                 preferedView: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {
@@ -166,9 +163,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/user.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                    return $ocLazyLoad.load(["/js/app/controllers/userController.js",
-                        "/js/app/services/avatarService.js",
-                        "/js/app/services/userService.js"]);
+                    return $ocLazyLoad.load(["/bundles/js/user.js"]);
                 }],
                 user: ["userService", "$stateParams", function (userService, $stateParams) {
                     return userService.get($stateParams.id);
@@ -181,8 +176,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/profile.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                    return $ocLazyLoad.load(["/js/app/services/avatarService.js",
-                        "/js/app/controllers/profileController.js"]);
+                    return $ocLazyLoad.load(["/bundles/js/profile.js"]);
                 }]
             },
             controller: "profileController"
@@ -201,25 +195,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/friends.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                    return $ocLazyLoad.load(["/js/app/services/avatarService",
-                        "/js/app/controllers/friendsController",
-                        "/js/app/services/friendsService",
-                        "/js/app/controllers/removeFriendController",
-                        "/js/app/directives/branchBookmarkList",
-                        "/js/app/directives/branchBookmarkPanel",
-
-                        "/js/app/datasources/editBookmarkDatasource",
-                        "/js/app/datasources/editBranchDatasource",
-                        "/js/app/services/editHandler",
-                        "/js/app/services/bookmarkService",
-                        "/js/app/services/branchService",
-
-                        "/js/app/datasources/shareDatasourceAbstract",
-
-                        "/js/app/datasources/shareDatasourceAllBookmark",
-
-                        "/js/app/datasources/shareDatasourceAllBranch",
-                        "/js/app/services/shareHandler"]);
+                    return $ocLazyLoad.load(["/bundles/js/friends.js"]);
                 }],
                 friends: ["$ocLazyLoad", "$injector", function($ocLazyLoad, $injector){
                     return $ocLazyLoad.load("/js/app/services/preferencesService.js").then(function () {
@@ -275,8 +251,7 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "notifications.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                    return $ocLazyLoad.load(["/js/app/controllers/notificationsController.js",
-                        "/js/app/services/notificationService.js"]);
+                    return $ocLazyLoad.load(["/bundles/js/notifications.js"]);
                 }],
                 notifications: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {
                     return $ocLazyLoad.load("/js/app/services/notificationService.js").then(function () {

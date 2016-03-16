@@ -18,6 +18,7 @@ var constructPath = function (path) {
 }
 
 mincerEnvironment.getAssetPath = function (asset, options) {
+    console.log(asset);
     return  constructPath(mincerEnvironment.findAsset(asset, options).digestPath);
 }
 

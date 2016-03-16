@@ -1,2 +1,2 @@
-//= require /js/app/services/avatarService.js
-//= require /js/app/controllers/profileController.js
+"/js/app/services/avatarService.js",
+"/js/app/controllers/profileController.js"

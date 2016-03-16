@@ -1,2 +1,2 @@
-//= require /js/app/controllers/notificationsController.js
-//= require /js/app/services/notificationService.js
+"/js/app/controllers/notificationsController.js",
+"/js/app/services/notificationService.js"
