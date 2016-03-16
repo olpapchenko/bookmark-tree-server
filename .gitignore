@@ -40,3 +40,5 @@ sessions
 uploads
 
 public/assets/*
+
+dbConf.js
