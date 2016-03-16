@@ -1,4 +1,4 @@
-var Branch = require("../models/branch");
+var Branch = require("../models/Branch");
 var FilterError = require("./FilterError");
 
 module.exports = function(req){

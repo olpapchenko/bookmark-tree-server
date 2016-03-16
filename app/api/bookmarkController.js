@@ -2,7 +2,7 @@ var _ = require("underscore");
 var Promise = require("bluebird");
 
 var logger = require("../utils/log/cntrlLog");
-var Branch = require("../models/branch");
+var Branch = require("../models/Branch");
 var Bookmark = require("../models/bookmark");
 var User = require("../models/user");
 var BookmarkRights = require("../models/bookmarkRights");

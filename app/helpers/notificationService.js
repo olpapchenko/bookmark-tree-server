@@ -3,7 +3,7 @@ var cacheManager = require("./cacheManager");
 
 var repos = {};
 var Notification = require("../models/notification");
-    repos.branch = require("../models/branch");
+    repos.branch = require("../models/Branch");
     repos.user = require("../models/user");
     repos.bookmark = require("../models/bookmark");
 

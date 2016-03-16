@@ -4,7 +4,7 @@ var path = require("path"),
     User      = require("../models/user"),
     appConfig = require("../../config/app_config"),
     actionComposer = require("./actionComposer"),
-    Branch = require("../models/branch"),
+    Branch = require("../models/Branch"),
     Bookshelf = require ('../../config/db/bookshelf'),
     mandatoryParamFilter = require("../filters/mandatoryParamFilter");
 

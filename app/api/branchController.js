@@ -3,7 +3,7 @@ var _  = require("underscore");
 
 var logger = require("../utils/log/cntrlLog");
 
-var Branch = require("../models/branch");
+var Branch = require("../models/Branch");
 var User = require("../models/user");
 var BranchRight = require("../models/branchRights");
 
