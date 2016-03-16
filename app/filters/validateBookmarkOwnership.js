@@ -1,4 +1,4 @@
-var BookmarkRights = require("../models/bookmarkRights");
+var BookmarkRights = require("../models/BookmarkRights");
 var FilterError = require("./FilterError");
 
 module.exports = function (req) {

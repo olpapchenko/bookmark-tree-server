@@ -5,7 +5,7 @@ var User = require("../models/user");
 var Bookmark = require("../models/Bookmark");
 var Branches = require("../models/Branch");
 var BranchRights = require("../models/branchRights");
-var BookmarkRights = require("../models/bookmarkRights");
+var BookmarkRights = require("../models/BookmarkRights");
 var actionComposer = require("./actionComposer");
 
 var _ = require("underscore");

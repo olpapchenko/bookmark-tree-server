@@ -5,7 +5,7 @@ var logger = require("../utils/log/cntrlLog");
 var Branch = require("../models/Branch");
 var Bookmark = require("../models/Bookmark");
 var User = require("../models/user");
-var BookmarkRights = require("../models/bookmarkRights");
+var BookmarkRights = require("../models/BookmarkRights");
 var notificationService = require("../helpers/NotificationService");
 
 var mandatoryParamFilter = require("../filters/mandatoryParamFilter");
