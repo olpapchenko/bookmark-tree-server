@@ -2,7 +2,7 @@ var Promise = require("bluebird");
 
 var Bookshelf = require ('../../config/db/bookshelf');
 var AbstractModel = require("./AbstractModel");
-var AbstractRight = require("./abstractRight");
+var AbstractRight = require("./AbstractRight");
 
 var Branch = require("./branch");
 
