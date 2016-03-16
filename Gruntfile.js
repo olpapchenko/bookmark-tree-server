@@ -106,7 +106,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask("createDirs", function () {
-        var dirsToCreate = ["./logs", "./sessions", "./uploads"];
+        var dirsToCreate = ["./logs", "./sessions", "./uploads", "./uploads/avatars"];
         dirsToCreate.forEach(function (dir) {
             if (!fs.existsSync(dir)){
                 fs.mkdirSync(dir);
