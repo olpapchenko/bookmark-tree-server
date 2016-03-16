@@ -1,4 +1,4 @@
-var Bookmark = require("../models/bookmark");
+var Bookmark = require("../models/Bookmark");
 var FilterError = require("./FilterError");
 
 module.exports = function(req){

@@ -1,6 +1,6 @@
 var bookshelf = require ('../../config/db/bookshelf');
 var AbstractModel = require('./AbstractModel');
-var Bookmark = require("./bookmark");
+var Bookmark = require("./Bookmark");
 
 links = AbstractModel.extend({
     tableName: "links",

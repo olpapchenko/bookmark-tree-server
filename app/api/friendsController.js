@@ -2,7 +2,7 @@ var Promise = require("bluebird");
 
 
 var User = require("../models/user");
-var Bookmark = require("../models/bookmark");
+var Bookmark = require("../models/Bookmark");
 var Branches = require("../models/Branch");
 var BranchRights = require("../models/branchRights");
 var BookmarkRights = require("../models/bookmarkRights");

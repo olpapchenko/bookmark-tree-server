@@ -1,7 +1,7 @@
 var bookshelf = require ('../../config/db/bookshelf');
 
 var AbstractModel = require('./AbstractModel');
-var Bookmark = require("./bookmark");
+var Bookmark = require("./Bookmark");
 var User = require("./user");
 
 tags = AbstractModel.extend({
