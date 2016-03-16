@@ -1,6 +1,6 @@
 var Promise = require('bluebird');
 var logger = require("../utils/log/cntrlLog");
-var FilterError = require("../filters/filterError");
+var FilterError = require("../filters/FilterError");
 
 var executeFilter = function(req, filter) {
     try{
