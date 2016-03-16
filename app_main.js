@@ -5,7 +5,7 @@
  */
     try{var app = require('./app/app');}
     catch(e)
-    {console.log(e);}
+    {console.log(e.stack || e);}
 
 
 // var debug = require('debug')('BookmarkTree:server');
