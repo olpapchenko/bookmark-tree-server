@@ -46,7 +46,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //authorize filter
-app.use(/^(?!\/login|\/logout|\/registration|\/user\/mail\/availability|\/$)/, authorizeFilter);
+app.use(/^(?!\/login|\/logout|\/registration|\/js|\/css|\/user\/mail\/availability|\/$)/, authorizeFilter);
 
 //register routes
 app.use("/",routes);
