@@ -3,7 +3,10 @@
 /**
  * Module dependencies.
  */
-var app = require('./app/app');
+    try{var app = require('./app/app');}
+    catch(e)
+    {console.log(e);}
+
 
 // var debug = require('debug')('BookmarkTree:server');
 var http = require('http');
