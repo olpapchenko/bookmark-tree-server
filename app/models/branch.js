@@ -3,7 +3,7 @@ var Promise = require("bluebird");
 
 var Bookshelf = require ('../../config/db/bookshelf');
 var User = require('./user');
-var Bookmark = require('./bookmark');
+var Bookmark = require('./Bookmark');
 var AbstractModel = require("./abstractModel");
 var BranchRights = require("./branchRights");
 

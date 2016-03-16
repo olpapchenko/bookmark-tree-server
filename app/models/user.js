@@ -2,7 +2,7 @@ var _ = require("underscore");
 
 var bookshelf = require ('../../config/db/bookshelf');
 var encodeSHA = require("../helpers/encodeSHA");
-var Bookmark = require('./bookmark');
+var Bookmark = require('./Bookmark');
 var Rights = require('./bookmarkRights');
 var Branch = require('./branch');
 var Preference = require("./preferences");

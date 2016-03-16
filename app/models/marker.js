@@ -1,6 +1,6 @@
 var bookshelf = require ('../../config/db/bookshelf');
 
-var Bookmark = require('./bookmark');
+var Bookmark = require('./Bookmark');
 
 var marker = bookshelf.Model.extend({
     tableName: "markers",

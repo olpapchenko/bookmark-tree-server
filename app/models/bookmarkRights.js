@@ -4,7 +4,7 @@ var Promise = require("bluebird");
 var AbstractModel = require("./AbstractModel");
 var AbstractRight = require("./AbstractRight");
 var User = require('./user');
-var Bookmark = require('./bookmark');
+var Bookmark = require('./Bookmark');
 
 var JOIN_COLUMN = "bookmark_id";
 
