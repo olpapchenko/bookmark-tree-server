@@ -2,7 +2,7 @@ var Promise = require("bluebird");
 
 var notifications = require("../models/notification");
 var user = require("../models/user");
-var notificationService = require("../helpers/notificationService");
+var notificationService = require("../helpers/NotificationService");
 var actionComposer = require("./actionComposer");
 module.exports = {
 
