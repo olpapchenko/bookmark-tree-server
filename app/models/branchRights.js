@@ -4,7 +4,7 @@ var Bookshelf = require ('../../config/db/bookshelf');
 var AbstractModel = require("./AbstractModel");
 var AbstractRight = require("./AbstractRight");
 
-var Branch = require("./branch");
+var Branch = require("./Branch");
 
 var JOIN_COLUMN = "branch_id";
 
