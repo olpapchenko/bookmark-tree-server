@@ -7,27 +7,27 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
     // Credits: Adam's answer in http://stackoverflow.com/a/20786262/69362
 // Paste this in browser's console
 
-    $rootScope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams){
-        console.log('$stateChangeStart to '+toState.to+'- fired when the transition begins. toState,toParams : \n',toState, toParams);
-    });
-
-    $rootScope.$on('$stateChangeError',function(event, toState, toParams, fromState, fromParams){
-        console.log('$stateChangeError - fired when an error occurs during transition.');
-        console.log(arguments);
-    });
-
-    $rootScope.$on('$stateChangeSuccess',function(event, toState, toParams, fromState, fromParams){
-        console.log('$stateChangeSuccess to '+toState.name+'- fired once the state transition is complete.');
-    });
-
-    $rootScope.$on('$viewContentLoaded',function(event){
-        console.log('$viewContentLoaded - fired after dom rendered',event);
-    });
-
-    $rootScope.$on('$stateNotFound',function(event, unfoundState, fromState, fromParams){
-        console.log('$stateNotFound '+unfoundState.to+'  - fired when a state cannot be found by its name.');
-        console.log(unfoundState, fromState, fromParams);
-    });
+    //$rootScope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams){
+    //    console.log('$stateChangeStart to '+toState.to+'- fired when the transition begins. toState,toParams : \n',toState, toParams);
+    //});
+    //
+    //$rootScope.$on('$stateChangeError',function(event, toState, toParams, fromState, fromParams){
+    //    console.log('$stateChangeError - fired when an error occurs during transition.');
+    //    console.log(arguments);
+    //});
+    //
+    //$rootScope.$on('$stateChangeSuccess',function(event, toState, toParams, fromState, fromParams){
+    //    console.log('$stateChangeSuccess to '+toState.name+'- fired once the state transition is complete.');
+    //});
+    //
+    //$rootScope.$on('$viewContentLoaded',function(event){
+    //    console.log('$viewContentLoaded - fired after dom rendered',event);
+    //});
+    //
+    //$rootScope.$on('$stateNotFound',function(event, unfoundState, fromState, fromParams){
+    //    console.log('$stateNotFound '+unfoundState.to+'  - fired when a state cannot be found by its name.');
+    //    console.log(unfoundState, fromState, fromParams);
+    //});
 
 }]).config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/overview");
@@ -56,7 +56,8 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
                     return $ocLazyLoad.load([
-                        "<%= asset_path('/bundles/js/login.js"
+                        "/js/app/controllers/loginController.js",
+                        "/js/app/services/userService.js"
                     ]);
                 }],
                 currentUser: ["$ocLazyLoad", "$injector", "$rootScope", "$state", function ($ocLazyLoad, $injector, $rootScope, $state) {
@@ -88,7 +89,9 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             controller: "registerController",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                return $ocLazyLoad.load(["/bundles/js/register.js"]);
+                return $ocLazyLoad.load(["/js/app/services/userService.js",
+                    "/js/app/controllers/registrationController.js",
+                    "/js/app/directives/mailAvailabilityValidator.js"]);
             }]}
         })
         .state("app.overview",{
@@ -163,7 +166,9 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/user.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                    return $ocLazyLoad.load(["/bundles/js/user.js"]);
+                    return $ocLazyLoad.load(["/js/app/controllers/userController.js",
+                        "/js/app/services/avatarService.js",
+                        "/js/app/services/userService.js"]);
                 }],
                 user: ["userService", "$stateParams", function (userService, $stateParams) {
                     return userService.get($stateParams.id);
@@ -176,7 +181,8 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/profile.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                    return $ocLazyLoad.load(["/bundles/js/profile.js"]);
+                    return $ocLazyLoad.load(["/js/app/services/avatarService.js",
+                        "/js/app/controllers/profileController.js"]);
                 }]
             },
             controller: "profileController"
@@ -195,7 +201,25 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "/friends.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                    return $ocLazyLoad.load(["/bundles/js/friends.js"]);
+                    return $ocLazyLoad.load(["/js/app/services/avatarService.js",
+                        "/js/app/controllers/friendsController.js",
+                        "/js/app/services/friendsService.js",
+                        "/js/app/controllers/removeFriendController.js",
+                        "/js/app/directives/branchBookmarkList.js",
+                        "/js/app/directives/branchBookmarkPanel.js",
+
+                        "/js/app/datasources/editBookmarkDatasource.js",
+                        "/js/app/datasources/editBranchDatasource.js",
+                        "/js/app/services/editHandler.js",
+                        "/js/app/services/bookmarkService.js",
+                        "/js/app/services/branchService.js",
+
+                        "/js/app/datasources/shareDatasourceAbstract.js",
+
+                        "/js/app/datasources/shareDatasourceAllBookmark.js",
+
+                        "/js/app/datasources/shareDatasourceAllBranch.js",
+                        "/js/app/services/shareHandler.js"]);
                 }],
                 friends: ["$ocLazyLoad", "$injector", function($ocLazyLoad, $injector){
                     return $ocLazyLoad.load("/js/app/services/preferencesService.js").then(function () {
@@ -251,7 +275,8 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             templateUrl: PAGES_URL + "notifications.html",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
-                    return $ocLazyLoad.load(["/bundles/js/notifications.js"]);
+                    return $ocLazyLoad.load(["/js/app/controllers/notificationsController.js",
+                        "/js/app/services/notificationService.js"]);
                 }],
                 notifications: ["$ocLazyLoad", "$injector", function ($ocLazyLoad, $injector) {
                     return $ocLazyLoad.load("/js/app/services/notificationService.js").then(function () {

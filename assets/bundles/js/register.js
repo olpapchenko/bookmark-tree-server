@@ -1,3 +1,3 @@
-//= require /js/app/services/userService.js
-//= require /js/app/controllers/registrationController.js
-//= require /js/app/directives/mailAvailabilityValidator.js
+"/js/app/services/userService.js",
+"/js/app/controllers/registrationController.js",
+"/js/app/directives/mailAvailabilityValidator.js"
