@@ -1,4 +1,5 @@
 var _ = require("underscore");
+var Promise = require("bluebird");
 
 var bookshelf = require ('../../config/db/bookshelf');
 var encodeSHA = require("../helpers/encodeSHA");
@@ -63,6 +64,26 @@ var user = bookshelf.Model.extend({
 
     friends: function(){
         return this.belongsToMany("User", "friends", "user_id", "friend_id");
+    },
+
+    reverseFriends: function () {
+        return this.belongsToMany("User", "friends", "friend_id", "user_id");
+    },
+
+    allFriends: function () {
+        var _this = this;
+        function friends () {
+            return _this.friends();
+        }
+
+        function reverseFriends () {
+            return _this.reverseFriends();
+        }
+        return Promise.map([friends, reverseFriends], function (friends) {
+            return friends().fetch();
+        }, {concurrency: 2}).then(function (friends) {
+            return friends[0].models.concat(friends[1].models).map(function (friend) {return _.omit(friend, "password")});
+        });
     },
 
     notifications: function(){

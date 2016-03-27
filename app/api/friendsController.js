@@ -13,8 +13,8 @@ var _ = require("underscore");
 module.exports = {
     get: actionComposer({
         action: function(req, resp) {
-        return User.forge({id: req.session.userId}).load(["friends"]).then(function(user){
-            resp.json(user.related("friends").map(function(item){return item.omit("password")}));
+        return User.forge({id: req.session.userId}).allFriends().then(function(allFriends){
+            resp.json(allFriends);
         });
     }}),
     post: actionComposer({action: function(req, resp) {
