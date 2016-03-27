@@ -108,6 +108,11 @@
                                     <label class="sr-only" for="form-password">Password</label>
                                     <input type="password" ng-model="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
                                 </div>
+
+                                <ul class="validations">
+                                    <li ng-repeat="error in errors">{{error}}</li>
+                                </ul>
+
                                 <div>
                                     <button ng-click ="submit()" type="submit" class="btn">Sign in!</button>
                                 </div>

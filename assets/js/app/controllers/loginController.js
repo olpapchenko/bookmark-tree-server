@@ -1,11 +1,14 @@
 var SITE_URL="http://localhost:3000",
     APP_ID = 5038582;
-angular.module("app").controller("loginController",["$scope", "userService","$state", function($scope, userService, $state){
+angular.module("app").controller("loginController",["$scope", "userService","$state", "ngProgressFactory", function($scope, userService, $state, ngProgressFactory){
 
     $scope.submit=function(){
+        var progress = ngProgressFactory.createInstance();
         userService.login($scope.login, $scope.password).then(function(d){
             $state.go("app.overview");
+            progress.start();
         },function(){
+            progress.stop();
            $scope.error = "Username/Password incorrect";
 
         });
