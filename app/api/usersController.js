@@ -40,7 +40,6 @@ module.exports.checkMailAvailability = actionComposer({action:function (req, res
 module.exports.current = actionComposer({action:function(req,resp){
     return new User({id: req.session.userId}).fetch()
         .then(function(model){
-
             if(model) {
                 resp.json(model.omit("password"));
             }else {

@@ -29,11 +29,13 @@ if(appConfig.mode == "dev") {
 
 //session store
 app.use(session({
-  store: new FileStore({ttl: 3600*24*30, reapInterval: 3600}),
+  store: new FileStore({ttl: appConfig.sessionMaxAge, reapInterval: appConfig.sessionReapInterval}),
   resave: false,
   saveUninitialized: true,
   secret: appConfig.salt,
-  maxAge: 1000*60*60*24*500
+  cookie: {maxAge: appConfig.sessionMaxAge},
+  rolling: true,
+  maxAge: appConfig.sessionMaxAge
 }));
 
 // uncomment after placing your favicon in /public

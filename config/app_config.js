@@ -2,6 +2,12 @@ var path = require('path');
 
 module.exports.mode = "dev";
 
+// time in milliseconds
+module.exports.sessionMaxAge = 1000*60*60*24*500;
+
+//time in seconds
+module.exports.sessionReapInterval = 3600;
+
 module.exports.static = require("express").static(path.resolve(__dirname, "../", "./public"));
 
 module.exports.views =  path.resolve(__dirname, "../", "./views");
