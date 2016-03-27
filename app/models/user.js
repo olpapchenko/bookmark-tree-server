@@ -122,6 +122,8 @@ var user = bookshelf.Model.extend({
                     friend.isFriend  = false;
                 };
                 return friend;
+            }).filter(function (friend) {
+                return friend.id != _this.id;
             });
         }).then(function (friends) {
            return users instanceof Array ? friends : friends [0];
