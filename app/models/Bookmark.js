@@ -99,7 +99,7 @@ bookmark = AbstractModel.extend({
 
         getByUserId: function (userId, rights) {
             rights = rights || {read: true};
-            return  Rights.forge(_.extend(rights, {user_id: userId})).fetchAll({withRelated: ["bookmark"]})
+            return  Rights.query({where: _.extend(rights, {user_id: userId})}).fetchAll({withRelated: ["bookmark"]})
                 .then(function(rights) {
                     if(rights) {
                         return rights.map(function (r){return r.related("bookmark")});
