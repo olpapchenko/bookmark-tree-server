@@ -22,7 +22,7 @@ var preferences = AbstractModel.extend({
     BOOKMARK_LIST_VIEW: 10,
 
     getPreferencesOrDefault: function (preferences) {
-        return this.forge(preferences).fetchAll().then(function (preferences) {
+        return this.query({where: preferences}).fetchAll().then(function (preferences) {
             defaultPreferences.forEach(function (defPreference) {
                 if(!preferences.some(function (model) {return model.get("key") == String(defPreference.key)})) {
                     preferences.push(defPreference);
