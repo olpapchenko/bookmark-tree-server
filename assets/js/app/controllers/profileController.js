@@ -29,7 +29,7 @@ angular.module("app").controller("profileController", ["$scope", "userService", 
             return userService.save($scope.currentUser);
         }).then(function () {
             toaster.pop('success', "User updated", "User successfully updated");
-                $state.reload();
+
         }, function () {
             toaster.pop('error', 'Error', 'Some error occurred');
         });

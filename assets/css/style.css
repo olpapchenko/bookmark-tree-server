@@ -140,6 +140,11 @@ input[type="checkbox"] {
   width: 100%;
 }
 
+.upload {
+  width: 80%;
+  float: left;
+}
+
 .avatar-img img {
   width: 100%;
   height: auto;

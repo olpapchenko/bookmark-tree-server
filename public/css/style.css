@@ -228,6 +228,11 @@ input:focus.ng-invalid.ng-touched {
   background-color: #23B7E5;
 }
 
+.upload {
+  float: left;
+  width: 80%;
+}
+
 .back-green {
   background-color: #C24C27;
 }

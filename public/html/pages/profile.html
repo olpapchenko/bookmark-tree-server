@@ -8,17 +8,17 @@
                         <div class="form-group">
                             <div class="col-sm-3 col-sm-offset-1 "  id = "avatar-container">
                                 <div class="form-group avatar-img">
-                                    <img   ng-src="{{avatar}}" alt="" ng-show= "!avatarFile" />
-                                    <img   ngf-thumbnail="avatarFile" ng-style="avatarPreview" ng-show="avatarFile"/>
+                                    <img   ng-src="{{avatar}}" alt=""   />
                                 </div>
-                                <div class="form-group">
-                                    <form method="post" action="/files/avatar" class="avatar" name="avatars" enctype="multipart/form-data">
+                                <div class="form-group" style="postioin: relative;">
+                                    <form method="post" action="/files/avatar" class="avatar" name="avatars" enctype="multipart/form-data" ng-class="{upload: avatarFile}">
                                         <label class="btn btn-success">upload
                                         <span>
                                            <input ngf-select ngf-max-size="2MB" type="file" ng-model="avatarFile" name="avatar"/>
                                         </span>
                                         </label>
                                     </form>
+                                    <img   ngf-thumbnail="avatarFile" style = "width: 32px; height: 32px; position: absolute; right: 0px;" ng-show="avatarFile"/>
                                 </div>
                             </div>
                             <div class="col-sm-8">
