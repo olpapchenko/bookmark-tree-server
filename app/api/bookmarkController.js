@@ -72,7 +72,7 @@ module.exports.post = actionComposer({
     action: function (req, resp) {
         return Bookmark.persist(_.pick(req.body, "id", "name", "comments", "markers", "links", "branch_id", "url", "remove"), req.session.userId)
         .then(function(bookmark){
-            return bookmark.load(["users", "tags"]);
+            return bookmark.load(["users", "tags", "comments", "links", "markers"]);
         })
         .then(function (bookmark) {
             return bookmark.branchOfUser(req.session.userId).fetch().then(function (branchesOfUser) {
