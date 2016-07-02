@@ -67,6 +67,7 @@ router.get("/friends/shared/:id(\\d+)", friends.shared);
 
 // files routes
 router.post("/uploads/avatar", files.avatar);
+router.post("/uploads/screenshot", files.screenshot);
 
 //preferences
 router.post("/preferences", preferences.post);
