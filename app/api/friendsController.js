@@ -24,7 +24,7 @@ module.exports = {
     }}),
 
     remove: actionComposer({action: function(req, resp) {
-        return User.forge({id: req.session.userId}).related("friends").detach(User.forge({id: req.body.id})).then(function() {
+        return User.forge({id: req.session.userId}).removeFriend(req.body.id).then(function() {
             resp.sendStatus(200);
         })
     }}),

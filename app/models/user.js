@@ -86,6 +86,11 @@ var user = bookshelf.Model.extend({
         });
     },
 
+    removeFriend: function (friendId) {
+        return Promise.all(this.related("friends").detach(user.forge({id: friendId})),
+            user.forge({id: friendId}).related("friends").detach(this));
+    },
+
     notifications: function(){
         return this.hasMany("Notification").query(function(qb){
             qb.orderBy('created_at', 'desc');
