@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-lg-5">
                             <span ng-class="{'glyphicon-chevron-down': !friend.showDetails, 'glyphicon-chevron-up': friend.showDetails}" style="margin-left: 10px;" class="pull-right glyphicon" title="expand/hide"></span>
-                            <span ng-click="removeFriend(friend.id)" class="pull-right glyphicon glyphicon-remove-sign" title="remove"></span>
+                            <span ng-click="removeFriend(friend.id, $event)" class="pull-right glyphicon glyphicon-remove-sign" title="remove"></span>
                         </div>
                     </div>
                 </div>
