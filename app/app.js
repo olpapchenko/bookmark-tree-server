@@ -21,7 +21,7 @@ app.set('view engine', 'ejs');
 app.set('views', appConfig.views);
 // static files
 app.use(appConfig.static);
-app.use(appConfig.avatars);
+app.use(appConfig.staticResource);
 
 if(appConfig.mode == "dev") {
   app.use("/assets", mincer.createServer(mincerEnv));

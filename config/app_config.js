@@ -12,7 +12,7 @@ module.exports.static = require("express").static(path.resolve(__dirname, "../",
 
 module.exports.views =  path.resolve(__dirname, "../", "./views");
 
-module.exports.avatars = require("express").static(path.resolve(__dirname, "../", "./uploads"));
+module.exports.staticResource = require("express").static(path.resolve(__dirname, "../", "./uploads"));
 
 module.exports.salt = "GameOfThrones";
 
