@@ -24,7 +24,7 @@ module.exports.logDir = path.resolve("./logs");
 
 module.exports.avatarDir = path.resolve("./uploads/avatars");
 
-module.exports.screenshotsStorage = path.resolve("/uploads/screenshots");
+module.exports.screenshotsStorage = path.resolve("./uploads/screenshots");
 
 module.exports.defaultAvatarModerate = path.resolve("./public/images/user-moderate.png");
 
