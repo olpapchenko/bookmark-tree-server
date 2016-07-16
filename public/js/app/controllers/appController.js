@@ -1,7 +1,7 @@
 angular.module("app").controller("appController", ["$scope", "$state", "notificationService", "ngProgressFactory", "$rootScope", "avatarService",
     function($scope, $state, notificationService, ngProgressFactory, $rootScope, avatarService){
 
-    $scope.avatar = avatarService.getPath($scope.currentUser.avatar);
+    $scope.avatar = avatarService.getPath($scope.currentUser.avatar, $scope.currentUser.origin);
 
     $scope.allNotifications = function () {
         $state.go("app.notifications");
