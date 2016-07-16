@@ -1,12 +1,15 @@
-angular.module("app").controller("profileController", ["$scope", "userService", "toaster", "Upload", "$q", "$state", "avatarService",
-    function($scope, userService, toaster, upload, $q, $state, avatarService){
+angular.module("app").controller("profileController", ["$scope", "userService", "toaster", "Upload", "$q", "$state", "avatarService", "ngProgressFactory",
+    function($scope, userService, toaster, upload, $q, $state, avatarService, ngProgressFactory){
 
     var UPLOAD_PATH = "/uploads/avatar";
+    var progress = ngProgressFactory.createInstance();
 
     $scope.avatar = avatarService.getPath($scope.currentUser.avatar);
+
     $scope.avatarPreview = { height: "200px", width:  document.getElementById("avatar-container").offsetWidth};
 
     $scope.save = function () {
+        progress.start();
         if($scope.nameForm.$invalid || $scope.avatars.$invalid) {
             return;
         }
