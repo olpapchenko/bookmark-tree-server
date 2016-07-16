@@ -1,5 +1,6 @@
 var path = require("path"),
     fs = require("fs"),
+    googleTokenVerifier = require('google-id-token-verifier'),
 
     User      = require("../models/user"),
     appConfig = require("../../config/app_config"),
@@ -7,6 +8,7 @@ var path = require("path"),
     Branch = require("../models/Branch"),
     Bookshelf = require ('../../config/db/bookshelf'),
     mandatoryParamFilter = require("../filters/mandatoryParamFilter");
+    validateNotAuthorizedFilter  = require("../filters/validateNotAuthorizedFilter");
 
 module.exports.get = actionComposer({action: function (req, resp) {
      return User.forge({id: req.params.id}).loadUser().then(function(user) {
@@ -66,23 +68,40 @@ module.exports.put = actionComposer({
     }
 });
 
-module.exports.login = actionComposer({action:function (req, resp) {
-    if(req.session.userId) {
-        resp.status(400).send("you are already logged in");
-    }
-    else if(req.body.mail && req.body.password){
-        return User.login(req.body.mail, req.body.password).then(function (user) {
-            if (user) {
-                req.session.userId = user.id;
-                resp.json(user);
+module.exports.login = actionComposer({beforeFilters: [mandatoryParamFilter(["mail", "password"]), validateNotAuthorizedFilter], action:function (req, resp) {
+    return User.login(req.body.mail, req.body.password).then(function (user) {
+        if (user) {
+            req.session.userId = user.id;
+            resp.json(user);
+        } else {
+            resp.status(400).send("mail/password is incorrect");
+        }
+    });
+}});
+
+module.exports.loginByGoogle = actionComposer({beforeFilters: [validateNotAuthorizedFilter, mandatoryParamFilter(["id_token"])],  action: function (req, resp) {
+
+        googleTokenVerifier.verify(req.body.id_token, appConfig.auth.google.clientId, function (err, tokenInfo) {
+            if(!err) {
+                 User.forge({mail: tokenInfo.email}).fetch().then(function (user) {
+                    if(user) {
+                        req.session.userId = user.id;
+                        resp.json(user);
+                    } else {
+                        return User.register({origin: User.origin.google, mail: tokenInfo.email, name: tokenInfo.name, avatar: tokenInfo.picture})
+                            .tap(function (user) {
+                                return  Bookshelf.model("Branch").createBranch({name: "Default Branch", default: true}, user.id);
+                            }).then(function (user) {
+                                req.session.userId = user.id;
+                                resp.json(user);
+                            });
+                    }
+                });
             } else {
-                resp.status(400).send("mail/password is incorrect");
+                resp.status(400).send("authentification is not passed");
             }
         });
-    } else {
-        resp.status(403).send("you have not specified password/mail");
-    }
-}})
+}});
 
 module.exports.post = actionComposer({
     beforeFilters: [mandatoryParamFilter(["name", "mail", "password"])],

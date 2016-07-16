@@ -56,6 +56,7 @@ router.get("/user/:name", user.byName);
 router.get("/user/mail/availability", user.checkMailAvailability);
 router.post("/user/update", user.put);
 router.post("/registration", user.post);
+router.post("/login/google", user.loginByGoogle);
 router.post("/login", user.login);
 router.post("/logout", user.logout);
 

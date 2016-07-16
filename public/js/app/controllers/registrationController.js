@@ -4,7 +4,7 @@ angular.module("app").controller("registerController", ["userService", "$state",
             return;
         }
 
-        console.log("register");
+        $scope.user.origin = 1;
         userService.register($scope.user).then(function () {
             $state.go("app.overview");
         });

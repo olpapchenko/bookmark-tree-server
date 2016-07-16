@@ -148,6 +148,14 @@ var user = bookshelf.Model.extend({
         });
     }
 }, {
+
+    origin: {
+        bookmarktree: 1,
+        google: 2,
+        facebook: 3,
+        vkontacte: 4
+    },
+
     login: function (mail, password) {
         return new this({mail: mail}).fetch().then(function (user) {
             if (user) {
@@ -158,11 +166,10 @@ var user = bookshelf.Model.extend({
     },
 
     register: function (userData){
-        return new this({name: userData.name,
-                  password: encodeSHA(userData.password),
-                  about: userData.about,
-                  mail: userData.mail}).save();
+        userData.password = userData.origin == user.origin.bookmarktree ? encodeSHA(userData.password) : 1;
+        return new this(userData).save();
     },
+
 
     byName: function(name){
         return this.query(function(qb) {

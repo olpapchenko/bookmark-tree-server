@@ -16,6 +16,12 @@ module.exports.staticResource = require("express").static(path.resolve(__dirname
 
 module.exports.salt = "GameOfThrones";
 
+module.exports.auth = {
+    google: {
+        clientId: "238683449094-b9flp4812pgjssfo6mn9uoqvniaggi1k.apps.googleusercontent.com"
+    }
+}
+
 module.exports.cacheTTL = 3500;
 
 module.exports.checkCachePeriod = 3600;
