@@ -52,7 +52,6 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
         .state("login",{
             url: "/login",
             templateUrl: "/login",
-            controller: "loginController",
             resolve: {
                 files: ["$ocLazyLoad", function($ocLazyLoad){
                     return $ocLazyLoad.load([
