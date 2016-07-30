@@ -60,7 +60,7 @@ router.post("/registration", user.post);
 router.post("/login/google", user.loginByGoogle);
 router.post("/login/facebook", user.loginByFacebook);
 router.post("/login", user.login);
-router.get(appConfig.fbMailVerificationPath, user.verifyMailFB);
+router.get("/" + appConfig.fbMailVerificationPath, user.verifyMailFB);
 router.post("/logout", user.logout);
 
 // friends routes

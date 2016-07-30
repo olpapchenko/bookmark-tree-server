@@ -16,8 +16,10 @@ angular.module("app").controller("loginController",["$scope", "userService","$st
     $scope.errors = [];
 
     $scope.submit=function(){
+        var progress = ngProgressFactory.createInstance();
 
         if($scope.origins = ORIGINS.faceBook) {
+            progress.start();
             return userService.loginByFacebook({access_token: $scope.accessToken, user: {mail: $scope.login, name: $scope.name}})
             .then(function (response) {
                 if(response.mailNotVerified) {
@@ -25,12 +27,14 @@ angular.module("app").controller("loginController",["$scope", "userService","$st
                 } else {
                     $state.go("app.overview");
                 }
+
             }, function () {
                 $scope.errors.push("Error occurred while performing log in");
+            }).finally(function () {
+                progress.complete();
             });
         }
 
-        var progress = ngProgressFactory.createInstance();
         progress.start();
         $scope.errors = [];
 
@@ -39,8 +43,8 @@ angular.module("app").controller("loginController",["$scope", "userService","$st
         },function(){
             $scope.errors.push("Username/Password incorrect");
         }).finally(function () {
-            progress.stop();
-            progress.stop();
+            progress.complete();
+            progress.complete();
         });
     }
 

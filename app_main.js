@@ -6,6 +6,8 @@
     try{var app = require('./app/app');
 
 
+var log = require("./app/utils/log/cntrlLog");
+
 // var debug = require('debug')('BookmarkTree:server');
 var http = require('http');
 
@@ -13,7 +15,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 process.on('uncaughtException', function (err) {
-  console.log(err);
+  log.error(err);
 })
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);

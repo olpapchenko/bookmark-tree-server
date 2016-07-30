@@ -29,6 +29,7 @@ if(appConfig.mode == "dev") {
 
 //session store
 app.use(session({
+  logFn: log.info,
   store: new FileStore({ttl: appConfig.sessionMaxAge, reapInterval: appConfig.sessionReapInterval}),
   resave: false,
   saveUninitialized: true,
@@ -48,7 +49,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //authorize filter
-app.use(/^(?!\/login|\/logout\/logout|\/html|\/images|\/registration|\/js|\/css|\/user\/mail\/availability|\/$)/, authorizeFilter);
+app.use(/^(?!\/verify|\/login|\/logout\/logout|\/html|\/images|\/registration|\/js|\/css|\/user\/mail\/availability|\/$)/, authorizeFilter);
 
 //register routes
 app.use("/",routes);

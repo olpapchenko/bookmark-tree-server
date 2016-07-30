@@ -141,24 +141,24 @@ module.exports.loginByFacebook = actionComposer({beforeFilters: [validateNotAuth
 //todo add avatar
 module.exports.verifyMailFB = actionComposer({action: function (req, resp) {
 
-        if(mailUtils.encodeMailVerificationKey(req) != req.key) {
+        if(mailUtils.encodeMailVerificationKey(req.query) != req.query.key) {
             resp.status(400).json("Verification is not passed!");
             return;
         }
 
-        return User.forge({mail: req.mail})
+        return User.forge({mail: req.query.mail})
         .fetch()
-        .tap(function (user) {
+        .then(function (user) {
             if (user) {
-                return user.set({"facebook_id": req.facebook_id}).save();
+                return user.set({"facebook_id": req.query.facebook_id}).save();
             } else {
                 return User.register({
                     origin: User.origin.facebook,
-                    mail: req.mail,
-                    name: req.name,
+                    mail: req.query.mail,
+                    name: req.query.name,
                     avatar: "",
-                    facebook_id: req.facebook_id
-                }).tap(function (user) {
+                    facebook_id: req.query.facebook_id
+                }).then(function (user) {
                         return Bookshelf.model("Branch").createBranch({name: "Default Branch", default: true}, user.id);
                 });
             }

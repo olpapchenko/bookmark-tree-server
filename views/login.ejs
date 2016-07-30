@@ -88,7 +88,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6 col-sm-offset-3 form-box">
-                        <div class="form-top">
+                        <div class="form-top" ng-show="!showMailVerificationMessage">
                             <div class="form-top-left">
                                 <h3>Login to start</h3>
                                 <p>Enter your username and password to log on:</p>
@@ -98,7 +98,8 @@
                             </div>
                         </div>
                         <div class="form-bottom">
-                            <form role="form" class="login-form">
+                            <h3 style="text-align: center; color: white;" ng-show="showMailVerificationMessage">Verification mail was sent. Please folow instructions indicated at the mail.</h3>
+                            <form role="form" class="login-form" ng-show="!showMailVerificationMessage">
                                 <div class="form-group">
                                     <label class="sr-only" for="form-username">Username</label>
                                     <input type="text" ng-model="login" name="form-username" placeholder="Mail..." class="form-username form-control" id="form-username">

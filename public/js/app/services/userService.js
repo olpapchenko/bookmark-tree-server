@@ -8,7 +8,9 @@ angular.module("app").service("userService", ["$http", "$q", function($http, $q)
     }
 
     this.loginByFacebook = function (userData) {
-        return $http.post("/login/facebook", userData);
+        return $http.post("/login/facebook", userData).then(function (data) {
+            return data.data;
+        });
     }
 
     this.getCurrentUser = function(){

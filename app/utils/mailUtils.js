@@ -41,16 +41,16 @@ module.exports.sendMail = function (mailText, subject, mailAddress) {
 }
 
 module.exports.encodeMailVerificationKey = function (data) {
-    var encodedData = {
-        salt: appConfig.salt
-    }
-
-    _.extend(encodedData, data);
-
-    var unencodedString = JSON.stringify(data);
-    return encodeSHA(unencodedString);
+    return encodeSHA(data.mail + appConfig.salt);
 }
 
 module.exports.getMailVerificationLinkForFB = function (data) {
-    return appConfig.baseUrl + appConfig.fbMailVerificationPath + "?key=" + module.exports.encodeMailVerificationKey(data);
+    'use strict';
+    var encodedName = encodeURIComponent(data.name),
+        encodedMail = encodeURIComponent(data.mail),
+        encodeFacebookId = encodeURIComponent(data.facebook_id),
+        key = encodeURIComponent(module.exports.encodeMailVerificationKey(data));
+
+
+    return appConfig.baseUrl + appConfig.fbMailVerificationPath + `?key=${key}&name=${encodedName}&mail=${encodedMail}&facebook_id=${encodeFacebookId}`;
 }
