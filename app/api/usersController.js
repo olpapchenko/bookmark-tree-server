@@ -7,8 +7,13 @@ var path = require("path"),
     actionComposer = require("./actionComposer"),
     Branch = require("../models/Branch"),
     Bookshelf = require ('../../config/db/bookshelf'),
-    mandatoryParamFilter = require("../filters/mandatoryParamFilter");
-    validateNotAuthorizedFilter  = require("../filters/validateNotAuthorizedFilter");
+    mandatoryParamFilter = require("../filters/mandatoryParamFilter"),
+    validateNotAuthorizedFilter  = require("../filters/validateNotAuthorizedFilter"),
+
+    facebookUtils = require("../utils/faceBookUtils"),
+    mailUtils = require("../utils/mailUtils"),
+
+    mailTemplates = require("../../config/mailTemplates");
 
 module.exports.get = actionComposer({action: function (req, resp) {
      return User.forge({id: req.params.id}).loadUser().then(function(user) {
@@ -102,6 +107,67 @@ module.exports.loginByGoogle = actionComposer({beforeFilters: [validateNotAuthor
             }
         });
 }});
+
+module.exports.loginByFacebook = actionComposer({beforeFilters: [validateNotAuthorizedFilter, mandatoryParamFilter(["access_token", "user"])], action: function (req, resp) {
+    function sendVerificationMail(mail, facebookUserId) {
+        var MAIL_SUBJECT = "Bookmarktree mail verification";
+        req.body.user.facebook_id = facebookUserId;
+
+        var context = {
+            name: req.body.user.name,
+            link: mailUtils.getMailVerificationLinkForFB(req.body.user)
+        }
+
+        return mailUtils.sendMail(mailTemplates.mailVerificationTemplate(context), MAIL_SUBJECT, mail);
+    }
+
+    return facebookUtils.verifyToken(req.body.access_token).then(function (response) {
+        return User.forge({mail: req.body.user.mail}).fetch().then(function (user) {
+            if(user) {
+                if(response.data.is_valid && response.data.user_id == user.get("facebook_id")) {
+                    req.session.userId = user.id;
+                    resp.json(user);
+                    return;
+                }
+            }
+
+            return sendVerificationMail(req.body.user.mail, response.data.user_id).then(function () {
+                    resp.json({mailNotVerified: true});
+            });
+        });
+    });
+}});
+
+//todo add avatar
+module.exports.verifyMailFB = actionComposer({action: function (req, resp) {
+
+        if(mailUtils.encodeMailVerificationKey(req) != req.key) {
+            resp.status(400).json("Verification is not passed!");
+            return;
+        }
+
+        return User.forge({mail: req.mail})
+        .fetch()
+        .tap(function (user) {
+            if (user) {
+                return user.set({"facebook_id": req.facebook_id}).save();
+            } else {
+                return User.register({
+                    origin: User.origin.facebook,
+                    mail: req.mail,
+                    name: req.name,
+                    avatar: "",
+                    facebook_id: req.facebook_id
+                }).tap(function (user) {
+                        return Bookshelf.model("Branch").createBranch({name: "Default Branch", default: true}, user.id);
+                });
+            }
+        }).then(function (user) {
+            req.session.userId = user.id;
+            resp.redirect(appConfig.baseUrl);
+        });
+    }
+});
 
 module.exports.post = actionComposer({
     beforeFilters: [mandatoryParamFilter(["name", "mail", "password"])],

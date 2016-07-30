@@ -1,5 +1,6 @@
 var router = require("express").Router(),
-    getassetPath = require('./assetsPipelineEnvironment').getAssetPath;
+    getassetPath = require('./assetsPipelineEnvironment').getAssetPath,
+    appConfig = require("./app_config");
 
 ///=====controllers section
 var loginController     = require("../app/controllers/loginController"),
@@ -57,7 +58,9 @@ router.get("/user/mail/availability", user.checkMailAvailability);
 router.post("/user/update", user.put);
 router.post("/registration", user.post);
 router.post("/login/google", user.loginByGoogle);
+router.post("/login/facebook", user.loginByFacebook);
 router.post("/login", user.login);
+router.get(appConfig.fbMailVerificationPath, user.verifyMailFB);
 router.post("/logout", user.logout);
 
 // friends routes

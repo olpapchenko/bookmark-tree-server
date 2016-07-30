@@ -19,8 +19,20 @@ module.exports.salt = "GameOfThrones";
 module.exports.auth = {
     google: {
         clientId: "238683449094-b9flp4812pgjssfo6mn9uoqvniaggi1k.apps.googleusercontent.com"
+    },
+    facebook: {
+        appId: 1658456254475560,
+        appSecret: "0301a66d607069999f48edac6ab56efc"
     }
 }
+
+module.exports.smtp = 'smtps://bookmarktrees:fwbakohhsfhclyjj@smtp.gmail.com';
+
+module.exports.smtpHost = 'smtp.gmail.com';
+
+module.exports.smtpUser = 'bookmarktrees@gmail.com';
+
+module.exports.smtpPassword = 'fwbakohhsfhclyjj';
 
 module.exports.cacheTTL = 3500;
 
@@ -41,3 +53,8 @@ module.exports.sessionsPath = path.resolve(__dirname, "../sessions");
 module.exports.assetsPath = path.resolve("./assets");
 
 module.exports.compiledAssetsPath = path.resolve("./public/assets");
+
+
+module.exports.baseUrl = "http://localhost:3000/";
+
+module.exports.fbMailVerificationPath = "verify/mail/facebook";
