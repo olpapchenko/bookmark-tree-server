@@ -88,10 +88,10 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6 col-sm-offset-3 form-box">
-                        <div class="form-top" ng-show="!showMailVerificationMessage">
-                            <div class="form-top-left">
+                        <div class="form-top">
+                            <div class="form-top-left" >
                                 <h3>Login to start</h3>
-                                <p>Enter your username and password to log on:</p>
+                                <p ng-show="!showMailOnly">Enter your username and password to log on:</p>
                             </div>
                             <div class="form-top-right">
                                 <i class="fa fa-lock"></i>
@@ -115,6 +115,14 @@
 
                                 <div>
                                     <button ng-click ="submit()" type="submit" class="btn">Sign in!</button>
+                                </div>
+                                <div style="text-align: center; padding-top: 30px;" ng-show="facebookId">
+                                    <span style="color: white; font-size: 1.5em;">Login as: {{name}}</span>
+                                    <br/>
+                                    <img style="display: inline-block;" ng-src="http://graph.facebook.com/{{facebookId}}/picture?type=square" alt="avatar"/>
+                                </div>
+                                <div class="form-group" ng-show="showMailOnly">
+                                    <button  class="btn" ng-click="changeUser()" style="background: #49B775; margin-top: 10px;">Change user</button>
                                 </div>
                                 <div class="row" ng-show="!showMailOnly">
                                     <div class="col-sm-4 col-sm-offset-4" style="text-align: center;">

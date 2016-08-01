@@ -38,7 +38,10 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
             controller: "appController",
             resolve:{
                 currentUser: ["$ocLazyLoad", "$injector", "$rootScope", "$state", function ($ocLazyLoad, $injector, $rootScope, $state) {
-                    return $ocLazyLoad.load(["/js/app/services/userService.js", "/js/app/services/notificationService.js"]).then(function(){
+                    return $ocLazyLoad.load(["/js/app/services/userService.js",
+                        "/js/app/services/notificationService.js",
+                        "/js/app/services/fbService.js",
+                    ]).then(function(){
                         var userService = $injector.get("userService");
                         return userService.getCurrentUser();
                     }).then(function(user){
@@ -60,7 +63,10 @@ angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($ro
                     ]);
                 }],
                 currentUser: ["$ocLazyLoad", "$injector", "$rootScope", "$state", function ($ocLazyLoad, $injector, $rootScope, $state) {
-                    return $ocLazyLoad.load(["/js/app/services/userService.js", "/js/app/services/notificationService.js"]).then(function(){
+                    return $ocLazyLoad.load(["/js/app/services/userService.js",
+                        "/js/app/services/notificationService.js",
+                        "/js/app/services/fbService.js"
+                    ]).then(function(){
                         var userService = $injector.get("userService");
                         return userService.getCurrentUser();
                     }).then(function(user){

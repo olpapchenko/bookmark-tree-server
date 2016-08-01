@@ -166,7 +166,7 @@ var user = bookshelf.Model.extend({
     },
 
     register: function (userData){
-        userData.password = userData.origin == user.origin.bookmarktree ? encodeSHA(userData.password) : encodeSHA(Math.random() * 100000);
+        userData.password = userData.origin == user.origin.bookmarktree ? encodeSHA(userData.password) : encodeSHA(String(Math.random() * 100000));
         return new this(userData).save();
     },
 

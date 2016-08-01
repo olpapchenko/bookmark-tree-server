@@ -10,15 +10,15 @@ var SITE_URL="http://localhost:3000",
         vkontakte: 4
     };
 
-angular.module("app").controller("loginController",["$scope", "userService","$state", "ngProgressFactory", "$timeout",
-    function($scope, userService, $state, ngProgressFactory, $timeout){
+angular.module("app").controller("loginController",["$scope", "userService","$state", "ngProgressFactory", "$timeout", "fbService",
+    function($scope, userService, $state, ngProgressFactory, $timeout, fbService){
 
     $scope.errors = [];
 
     $scope.submit=function(){
         var progress = ngProgressFactory.createInstance();
 
-        if($scope.origins = ORIGINS.faceBook) {
+        if($scope.origins == ORIGINS.faceBook) {
             progress.start();
             return userService.loginByFacebook({access_token: $scope.accessToken, user: {mail: $scope.login, name: $scope.name}})
             .then(function (response) {
@@ -45,6 +45,12 @@ angular.module("app").controller("loginController",["$scope", "userService","$st
         }).finally(function () {
             progress.complete();
             progress.complete();
+        });
+    }
+
+    $scope.changeUser = function () {
+        fbService.logout().then(function () {
+            $state.reload();
         });
     }
 
@@ -75,45 +81,43 @@ angular.module("app").controller("loginController",["$scope", "userService","$st
         });
     });
 
-    //setup facebook auth
-    FB.init({
-        appId      : FB_APP_ID,
-        cookie     : true,  // enable cookies to allow the server to access
-                            // the session
-        xfbml      : true,  // parse social plugins on this page
-        version    : 'v2.2' // use version 2.2
-    });
-
     function processFBLogin(token) {
-        $scope.origin = ORIGINS.faceBook;
-
-        FB.api('/me?fields=name,email', function(response) {
-            if(response.email) {
-                return userService.loginByFaceBook({access_token: token, user: {mail: response.email, name: $scope.name}})
-                    .then(function (response) {
-                        if(response.mailNotverified) {
-                            $scope.showMailVerificationMessage = true;
-                        } else {
-                            $state.go("app.overview");
-                        }
-                    });
-            } else {
-                $scope.accessToken = token;
-                $scope.showMailOnly = true;
-                $scope.name = response.name;
-                $scope.errors.push("Please enter email address and press Sign in to continue login");
-            }
+        FB.api('/me?fields=name,email', function (response) {
+            $scope.$apply(function () {
+                if (response.email) {
+                    return userService.loginByFaceBook({
+                        access_token: token,
+                        user: {mail: response.email, name: $scope.name}
+                    })
+                        .then(function (response) {
+                            if (response.mailNotverified) {
+                                $scope.showMailVerificationMessage = true;
+                            } else {
+                                $state.go("app.overview");
+                            }
+                        });
+                } else {
+                    $scope.facebookId = response.id;
+                    $scope.origins = ORIGINS.faceBook;
+                    $scope.accessToken = token;
+                    $scope.showMailOnly = true;
+                    $scope.name = response.name;
+                    $scope.errors.push("Please enter email address and press Sign in to continue login");
+                }
+            });
         });
     }
 
-    FB.getLoginStatus(function (response) {
+
+    fbService.getLoginStatus().then(function (response) {
         if(response.status == "connected") {
             processFBLogin(response.authResponse.accessToken);
         }
     });
 
+
     $scope.fbLogin = function () {
-        FB.login(function (response) {
+        fbService.login().then(function (response) {
             if(response.authResponse) {
                 processFBLogin(response.authResponse.accessToken);
             }

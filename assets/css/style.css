@@ -214,7 +214,7 @@ input:focus.ng-invalid.ng-touched {
   font-weight: 200;
   font-size: 15px;
   overflow: hidden;
-  color: #CA3755 !important;
+  color: white !important;
   display: block;
   animation: stretch 5s;
   -webkit-animation: stretch 5s;
