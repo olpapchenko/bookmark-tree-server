@@ -45,6 +45,7 @@ module.exports.get = actionComposer({
        return User.forge({id: req.session.userId}).bookmark(req.query.id).fetchOne({withRelated: ["markers", "comments", "links", "owners", "observers"]}).then(function (m) {
             if(!m) {
                 resp.status(400).json("Bookmark does not exist");
+                return;
             }
             var isOwner = m.related("owners").some(function (owner) {
                 return owner.id == req.session.userId;
