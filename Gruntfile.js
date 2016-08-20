@@ -119,17 +119,6 @@ module.exports = function(grunt) {
         fs.createReadStream('./app/vendorCustom/mincer/manifest.js').pipe(fs.createWriteStream('./node_modules/mincer/lib/mincer/manifest.js'));
     });
 
-    grunt.registerTask("removeFiles", function () {
-        var removeFiles = ["./assets/js/vendor/bootstrap/nuget", "./assets/js/vendor/bootstrap/less"];
-        removeFiles.forEach(function (file) {
-            rimraf.sync(file, null);
-        });
-    });
-
-    grunt.registerTask("compileAssets", function () {
-        assetManifest.compile();
-    });
-
     grunt.registerTask("setupDB", ['knexmigrate:latest']);
-    grunt.registerTask("deploy", ['createDirs', 'copyCustomVendorCode', 'removeFiles','compileAssets', 'setupDB']);
+    grunt.registerTask("deploy", ['createDirs', 'copyCustomVendorCode', 'setupDB']);
 };
