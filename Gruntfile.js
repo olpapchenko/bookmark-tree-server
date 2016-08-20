@@ -43,13 +43,32 @@ module.exports = function(grunt) {
                     proxy: 'localhost:3000'
                 }
             }
+        },
+        requirejs: {
+            compile: {
+                options: {
+                    dir: "./public/js",
+                    baseUrl: "./assets/js/app",
+                    optimize: "uglify",
+                    paths: {
+                        "underscore": "../vendor/underscore/underscore-min"
+                    },
+                    modules: [
+                        {
+                            name: "./bundles/app"
+                        }, {
+                            name: "./bundles/index"
+                        }
+                    ]
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-knexseed');
     grunt.loadNpmTasks('grunt-knex-migrate');
     grunt.loadNpmTasks('grunt-browser-sync');
-    grunt.loadNpmTasks('');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
 
     //blocking task
     grunt.registerTask("test", function (action) {

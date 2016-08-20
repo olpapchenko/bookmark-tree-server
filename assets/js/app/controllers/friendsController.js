@@ -45,8 +45,11 @@ angular.module("app").controller("friendsController", ["friends",
         });
     };
 
-    $scope.removeFriend = function(id) {
+    $scope.removeFriend = function(id, event) {
+        event.preventDefault();
+        event.stopPropagation();
         $scope.id = id;
+        $scope.header = "friend";
         var dialog = ngDialog.open({
             template: '/html/templates/removeBranch.html',
             controller: "removeFriendController",

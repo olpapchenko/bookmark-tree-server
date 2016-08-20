@@ -3,6 +3,16 @@ angular.module("app").service("userService", ["$http", "$q", function($http, $q)
         return $http.post("/login", {mail: user, password: password});
     }
 
+    this.loginByGoogle = function (tokenData) {
+        return $http.post("/login/google", tokenData);
+    }
+
+    this.loginByFacebook = function (userData) {
+        return $http.post("/login/facebook", userData).then(function (data) {
+            return data.data;
+        });
+    }
+
     this.getCurrentUser = function(){
         return $http.get("/user").then(function(data){
             return data.data;
