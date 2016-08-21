@@ -1,4 +1,5 @@
-angular.module("app").directive("mailAvailability", ["userService", function (userService) {
+define(["app", "services/userService"], function() {
+    angular.module("app").directive("mailAvailability", ["userService", function (userService) {
     return {
         require: 'ngModel',
         restrict: 'A',
@@ -8,4 +9,4 @@ angular.module("app").directive("mailAvailability", ["userService", function (us
             }
         }
     }
-}])
+}])});

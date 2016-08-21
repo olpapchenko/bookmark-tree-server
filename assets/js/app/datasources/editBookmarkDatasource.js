@@ -1,4 +1,5 @@
-angular.module("app").factory("editBookmarkDatasource", ["bookmarkService", "branchService", function (bookmarkService, branchService) {
+define(["angular","app", "services/bookmarkService", "services/branchService"], function() {
+    angular.module("app").factory("editBookmarkDatasource", ["bookmarkService", "branchService", function (bookmarkService, branchService) {
     var datasource = {};
     datasource.header = "Edit Bookmark";
     datasource.displayBranchPicker = true;
@@ -13,4 +14,4 @@ angular.module("app").factory("editBookmarkDatasource", ["bookmarkService", "bra
     }
 
     return datasource;
-}]);
+}]);});

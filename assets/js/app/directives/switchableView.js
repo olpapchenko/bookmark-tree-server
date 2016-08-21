@@ -1,4 +1,5 @@
-angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope", "$compile", "$controller", "$timeout",
+define(["app"], function() {
+    angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope", "$compile", "$controller", "$timeout",
     function ($http, $q, $rootScope, $compile , $controller, $timeout) {
         return {
             restrict: "E",
@@ -81,4 +82,4 @@ angular.module("app").directive("switcheableView", ["$http", "$q", "$rootScope",
                 });
             }
     }
-}]);
+}]);});

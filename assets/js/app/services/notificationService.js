@@ -1,4 +1,5 @@
-angular.module("app").service("notificationService", ["$http","$interval", function($http, $interval){
+define(["angular", "app"], function() {
+    angular.module("app").service("notificationService", ["$http","$interval", function($http, $interval){
     var TRACK_PERIOD = 30;
 
     this.trackNotifications = function(fn){
@@ -21,4 +22,4 @@ angular.module("app").service("notificationService", ["$http","$interval", funct
     this.markAllRead = function(id) {
         return $http.post("/notifications/read");
     }
-}]);
+}]);});

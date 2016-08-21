@@ -1,7 +1,5 @@
 var exec = require("child_process").exec;
 var fs = require("fs");
-var assetManifest  = require("./config/assetPipelineManifest");
-var rimraf = require("rimraf");
 
 var DB_CONNECTION = {
     client: 'pg',
@@ -43,13 +41,44 @@ module.exports = function(grunt) {
                     proxy: 'localhost:3000'
                 }
             }
+        },
+        requirejs: {
+            compile: {
+                options: {
+                    dir: "./public/js",
+                    baseUrl: "./assets/js/app",
+                    optimize: "uglify",
+                    paths: {
+                        "underscore": "../vendor/underscore/underscore-min",
+                        "angular": "../vendor/angular/angular",
+                        "ocLazyLoad": "../vendor/oclazyload/dist/ocLazyLoad",
+                        "angular-drag-and-drop-lists": "../vendor/angular-drag-and-drop-lists/angular-drag-and-drop-lists",
+                        "angular-ui-router": "../vendor/angular-ui-router/release/angular-ui-router",
+                        "ng-file-upload-all" : "../vendor/ng-file-upload/ng-file-upload-all",
+                        "ngprogress": "../vendor/ngprogress/build/ngprogress.min",
+                        "jquery": "../vendor/jquery/jquery.min",
+                        "toaster": "../vendor/toaster/toaster.min",
+                        "ngDialog": "../vendor/ngDialog/js/ngDialog.min",
+                        "moment": "../vendor/moment/moment",
+                        "moment-timezone-with-data": "../vendor/moment-timezone/builds/moment-timezone-with-data",
+                        "moment-timezone-with-data-2010-2020": "../vendor/moment-timezone/builds/moment-timezone-with-data-2010-2020",
+                        "bootstrap": "../vendor/bootstrap/dist/js/bootstrap.min",
+                        "jquery.backstretch": "../vendor/jquery-backstretch/jquery.backstretch"
+                    },
+                    modules: [
+                        {
+                            name: "./config.route"
+                        }
+                    ]
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-knexseed');
     grunt.loadNpmTasks('grunt-knex-migrate');
     grunt.loadNpmTasks('grunt-browser-sync');
-    grunt.loadNpmTasks('');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
 
     //blocking task
     grunt.registerTask("test", function (action) {
@@ -119,17 +148,6 @@ module.exports = function(grunt) {
         fs.createReadStream('./app/vendorCustom/mincer/manifest.js').pipe(fs.createWriteStream('./node_modules/mincer/lib/mincer/manifest.js'));
     });
 
-    grunt.registerTask("removeFiles", function () {
-        var removeFiles = ["./assets/js/vendor/bootstrap/nuget", "./assets/js/vendor/bootstrap/less"];
-        removeFiles.forEach(function (file) {
-            rimraf.sync(file, null);
-        });
-    });
-
-    grunt.registerTask("compileAssets", function () {
-        assetManifest.compile();
-    });
-
     grunt.registerTask("setupDB", ['knexmigrate:latest']);
-    grunt.registerTask("deploy", ['createDirs', 'copyCustomVendorCode', 'removeFiles','compileAssets', 'setupDB']);
+    grunt.registerTask("deploy", ['createDirs', 'copyCustomVendorCode', 'setupDB', "requirejs"]);
 };

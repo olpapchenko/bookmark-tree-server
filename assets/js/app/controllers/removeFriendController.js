@@ -1,4 +1,5 @@
-angular.module("app").controller("removeFriendController", ["$scope", "friendsService", function($scope, friendsService){
+define(["angular", "app", "services/friendsService"], function() {
+    angular.module("app").controller("removeFriendController", ["$scope", "friendsService", function($scope, friendsService){
     $scope.entity = "friend";
 
     $scope.remove = function(){
@@ -9,4 +10,4 @@ angular.module("app").controller("removeFriendController", ["$scope", "friendsSe
             //todo add toaster message
         });
     }
-}]);
+}]);});

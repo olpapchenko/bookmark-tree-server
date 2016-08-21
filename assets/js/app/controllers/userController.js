@@ -1,4 +1,5 @@
-angular.module("app").controller("userController", ["$scope", "user", "avatarService", "friendsService", "$state", "toaster",
+require(["angular", "app", "services/avatarService", "services/friendsService", "toaster"], function() {
+    angular.module("app").controller("userController", ["$scope", "user", "avatarService", "friendsService", "$state", "toaster",
     function ($scope, user, avatarService, friendsService, $state, toaster) {
 
         if(!user) {
@@ -20,4 +21,4 @@ angular.module("app").controller("userController", ["$scope", "user", "avatarSer
             toaster.pop('success', "Friend removed", "User " + user.name + "removed from friends");
             $state.reload();
         }
-}]);
+}]);});

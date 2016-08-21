@@ -1,4 +1,5 @@
-angular.module("app").factory("bookmarkDatasource", ["$state", "abstractEntityDatasource", function ($state, abstractDatasource) {
+define(["angular", "app", "datasources/abstractEntityDatasource"], function() {
+    angular.module("app").factory("bookmarkDatasource", ["$state", "abstractEntityDatasource", function ($state, abstractDatasource) {
     var STATE = "app.bookmark";
 
     var ds = {
@@ -8,4 +9,4 @@ angular.module("app").factory("bookmarkDatasource", ["$state", "abstractEntityDa
     };
 
     return ds;
-}]);
+}]);});

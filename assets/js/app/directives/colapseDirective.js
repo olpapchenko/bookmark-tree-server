@@ -1,5 +1,5 @@
 
-angular.module('app')
+define(["app"], function() {angular.module('app')
     .directive('collapse', ['$injector', '$controller', '$rootScope', '$compile', "$http", function ($injector, $controller, $rootScope, $compile, $http) {
         return {
             transclude: true,
@@ -48,5 +48,5 @@ angular.module('app')
                 transclude(contentScope, transclFunction);
             }
         };
-    }]);
+    }]);});
 

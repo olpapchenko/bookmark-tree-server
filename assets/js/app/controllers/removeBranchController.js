@@ -1,4 +1,5 @@
-angular.module("app").controller("removeBranchController", ["$scope", "branchService", "bookmarkService", function($scope, branchService, bookmarkService){
+define(["angular", "app", "services/branchService", "services/bookmarkService"], function() {
+    angular.module("app").controller("removeBranchController", ["$scope", "branchService", "bookmarkService", function($scope, branchService, bookmarkService){
     $scope.header = $scope.isBranch ? "branch": "bookmark";
 
     var persistService = $scope.isBranch ? branchService : bookmarkService;
@@ -10,4 +11,4 @@ angular.module("app").controller("removeBranchController", ["$scope", "branchSer
             //todo add toaster message
         });
     }
-}]);
+}]);});

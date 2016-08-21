@@ -3,49 +3,88 @@
 <head lang="en">
     <meta charset="UTF-8">
 
-
     <link rel="stylesheet" href="/css/vendor/style-theme.css">
-
-    <link rel="stylesheet" href="/js/vendor/ngprogress/ngProgress.css">
+    <link rel="stylesheet" href="/static/js/vendor/ngprogress/ngProgress.css">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/js/vendor/ngDialog/css/ngDialog.min.css">
-    <link rel="stylesheet" href="/js/vendor/ngDialog/css/ngDialog-theme-default.min.css">
-    <link rel="stylesheet" href="/js/vendor/toaster/toaster.css">
-    <link rel="stylesheet" href="/js/vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/js/vendor/ngDialog/css/ngDialog.min.css">
+    <link rel="stylesheet" href="/static/js/vendor/ngDialog/css/ngDialog-theme-default.min.css">
+    <link rel="stylesheet" href="/static/js/vendor/toaster/toaster.css">
+    <link rel="stylesheet" href="/static/js/vendor/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/vendor/line-icons.css">
     <link rel="stylesheet" href="/css/vendor/five.css">
     <link rel="stylesheet" href="/css/vendor/elegant-icons-style.css">
     <link rel="stylesheet" href="/css/fonts/font-awesome.css">
     <link rel="stylesheet" href="/css/vendor/bootstrap-theme.css">
 
-
-    <script type="text/javascript" src="/js/vendor/underscore/underscore-min.js"></script>
-    <script type="text/javascript" src="/js/vendor/angular/angular.js"></script>
-    <script type="text/javascript" src="/js/vendor/oclazyload/dist/ocLazyLoad.js"></script>
-    <script type="text/javascript" src="/js/vendor/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js"></script>
-    <script type="text/javascript" src="/js/vendor/angular-ui-router/release/angular-ui-router.js"></script>
-    <script type="text/javascript" src="/js/vendor/ng-file-upload/ng-file-upload-all.js"></script>
-    <script type="text/javascript" src="/js/vendor/ngprogress/build/ngprogress.min.js"></script>
-
-    <script type="text/javascript" src="/js/vendor/toaster/toaster.min.js"></script>
-    <script type="text/javascript" src="/js/app/app.js"></script>
-    <script type="text/javascript" src="/js/app/config.route.js"></script>
-    <script type="text/javascript" src="/js/vendor/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/vendor/ngDialog/js/ngDialog.min.js"></script>
-    <script type="text/javascript" src="/js/vendor/moment/moment.js"></script>
-    <script type="text/javascript" src="/js/vendor/moment-timezone/builds/moment-timezone-with-data.js"></script>
-    <script type="text/javascript" src="/js/vendor/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
     <script src="https://apis.google.com/js/api:client.js"></script>
     <script src="https://connect.facebook.net/en_US/sdk.js"></script>
 
-    <script type="text/javascript" src="/js/app/services/avatarService.js"></script>
-    <script type="text/javascript" src="/js/app/controllers/appController.js"></script>
-    <script type="text/javascript" src="/js/app/directives/notification.js"></script>
+    <script>
+        jsVersion = 1;
+    </script>
+    <script src="/static/js/vendor/requirejs/require.js"></script>
+     <script>
+        require.config({
+            baseUrl: "/static/js/",
+            paths: {
+                "underscore": "vendor/underscore/underscore-min",
+                "angular": "vendor/angular/angular",
+                "ocLazyLoad": "vendor/oclazyload/dist/ocLazyLoad",
+                "angular-drag-and-drop-lists": "vendor/angular-drag-and-drop-lists/angular-drag-and-drop-lists",
+                "angular-ui-router": "vendor/angular-ui-router/release/angular-ui-router",
+                "ng-file-upload-all" : "vendor/ng-file-upload/ng-file-upload-all",
+                "ngProgress": "vendor/ngprogress/build/ngprogress.min",
+                "jquery": "vendor/jquery/jquery.min",
+                "toaster": "vendor/toaster/toaster.min",
+                "ngDialog": "vendor/ngDialog/js/ngDialog.min",
+                "moment": "vendor/moment/moment",
+                "moment-timezone-with-data": "vendor/moment-timezone/builds/moment-timezone-with-data",
+                "moment-timezone-with-data-2010-2020": "vendor/moment-timezone/builds/moment-timezone-with-data-2010-2020",
+                "bootstrap": "vendor/bootstrap/dist/js/bootstrap.min",
+                "jquery.backstretch": "vendor/jquery-backstretch/jquery.backstretch"
+            },
+            shim: {
+                angular: {
+                    exports: "angular"
+                },
+                jquery: {
+                    exports: "$"
+                } ,
+                bootstrap: {
+                    deps: ["jquery"]
+                },
+                "angular-ui-router": {
+                    deps: ["angular"]
+                },
+                "angular-drag-and-drop-lists": {
+                    exports: "",
+                    deps: ["angular"]
+                },
+                ngDialog: {
+                    deps: ["angular"]
+                },
+                toaster: {
+                    deps: ["angular"]
+                },
+                ngProgress: {
+                    deps: ["angular"]
+                },
+                "ng-file-upload-all": {
+                    deps: ["angular"]
+                }
+            }
+        });
+
+        require(["config.route"], function () {});
+
+        requirejs.onResourceLoad = function(context, map, depArray) {
+             console.log("onResourceLoad" , map.id);
+        }
+     </script>
     <title>Bookmark Tree</title>
 </head>
 <body>
-<div ng-app="app">
+<div>
     <toaster-container></toaster-container>
     <div ui-view></div>
 </div>

@@ -1,4 +1,4 @@
-angular.module("app").controller("bookmarksController",["$scope",
+define(["angular", "app", "services/preferencesService"], function() {angular.module("app").controller("bookmarksController",["$scope",
     "branch",
     "bookmarks",
     "preferencesService",
@@ -19,4 +19,4 @@ angular.module("app").controller("bookmarksController",["$scope",
     $scope.savePreferedView = function (mode) {
         return preferencesService.saveBookmarkListView(mode);
     }
-}]);
+}])});

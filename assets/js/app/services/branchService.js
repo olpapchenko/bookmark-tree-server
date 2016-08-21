@@ -1,4 +1,5 @@
-angular.module("app").service("branchService", ["$http",function($http){
+define(["angular", "app"], function() {
+    angular.module("app").service("branchService", ["$http",function($http){
     this.all = function() {
         return $http.get("/branches").then(function (data) {
             var branches = data.data;
@@ -38,4 +39,4 @@ angular.module("app").service("branchService", ["$http",function($http){
     this.getFriends = function (id) {
         return $http.get("/branch/friends", {id: id});
     }
-}]);
+}]);});

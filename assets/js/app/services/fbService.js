@@ -1,4 +1,5 @@
-angular.module("app").service("fbService", ["$q", function ($q) {
+define(["angular", "app"], function() {
+    angular.module("app").service("fbService", ["$q", function ($q) {
     var FB_APP_ID = 1658456254475560;
 
     this.getLoginStatus = function () {
@@ -44,4 +45,4 @@ angular.module("app").service("fbService", ["$q", function ($q) {
             version    : 'v2.2' // use version 2.2
         });
     }
-}]);
+}]);});

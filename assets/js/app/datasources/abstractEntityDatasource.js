@@ -1,4 +1,5 @@
-angular.module("app").factory("abstractEntityDatasource", ["$state", function ($state) {
+define(["angular", "app"],
+    function() {angular.module("app").factory("abstractEntityDatasource", ["$state", function ($state) {
     var datasource = {};
 
     datasource.path = function(state) {
@@ -8,4 +9,4 @@ angular.module("app").factory("abstractEntityDatasource", ["$state", function ($
     };
 
     return datasource;
-}]);
+}]);});

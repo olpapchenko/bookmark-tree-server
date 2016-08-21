@@ -1,5 +1,4 @@
 var express = require('express');
-var mincer = require("mincer");
 var path = require('path');
 var appConfig = require("../config/app_config");
 var logger = require('morgan');
@@ -13,7 +12,6 @@ var FileStore = require("session-file-store")(session);
 
 //filters
 var authorizeFilter = require("./filters/authorizeFilter");
-var mincerEnv = require("../config/assetsPipelineEnvironment");
 
 var app = express();
 
@@ -23,8 +21,12 @@ app.set('views', appConfig.views);
 app.use(appConfig.static);
 app.use(appConfig.staticResource);
 
+//set static resource for serving js files
 if(appConfig.mode == "dev") {
-  app.use("/assets", mincer.createServer(mincerEnv));
+  app.use("/static/js/vendor", appConfig.assetsVendorJs)
+  app.use("/static/js", appConfig.assetsJs);
+} else {
+  app.use("/static/js", appConfig.prodJs);
 }
 
 //session store

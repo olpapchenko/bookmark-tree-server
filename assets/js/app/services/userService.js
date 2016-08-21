@@ -1,6 +1,17 @@
-angular.module("app").service("userService", ["$http", "$q", function($http, $q){
+define(["angular", "app"], function() {
+    angular.module("app").service("userService", ["$http", "$q", function($http, $q){
     this.login = function(user, password){
         return $http.post("/login", {mail: user, password: password});
+    }
+
+    this.loginByGoogle = function (tokenData) {
+        return $http.post("/login/google", tokenData);
+    }
+
+    this.loginByFacebook = function (userData) {
+        return $http.post("/login/facebook", userData).then(function (data) {
+            return data.data;
+        });
     }
 
     this.getCurrentUser = function(){
@@ -34,4 +45,4 @@ angular.module("app").service("userService", ["$http", "$q", function($http, $q)
     this.save = function (user) {
         return $http.post("/user/update", user);
     }
-}]);
+}]);});

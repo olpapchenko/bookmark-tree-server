@@ -1,4 +1,5 @@
-angular.module("app").factory("addBranchDatasource", ["editBranchDatasource",  function (editBranchDatasource) {
+define(["angular","app"], function() {
+    angular.module("app").factory("addBranchDatasource", ["editBranchDatasource",  function (editBranchDatasource) {
     editBranchDatasource.header = "Add branch"
     return editBranchDatasource;
-}]);
+}]);});
