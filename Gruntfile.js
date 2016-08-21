@@ -55,7 +55,7 @@ module.exports = function(grunt) {
                         "angular-drag-and-drop-lists": "../vendor/angular-drag-and-drop-lists/angular-drag-and-drop-lists",
                         "angular-ui-router": "../vendor/angular-ui-router/release/angular-ui-router",
                         "ng-file-upload-all" : "../vendor/ng-file-upload/ng-file-upload-all",
-                        "ngprogress": "../vendor/ngprogress/build/ngprogress.min",
+                        "ngProgress": "../vendor/ngprogress/build/ngprogress.min",
                         "jquery": "../vendor/jquery/jquery.min",
                         "toaster": "../vendor/toaster/toaster.min",
                         "ngDialog": "../vendor/ngDialog/js/ngDialog.min",
