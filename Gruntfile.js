@@ -1,7 +1,5 @@
 var exec = require("child_process").exec;
 var fs = require("fs");
-var assetManifest  = require("./config/assetPipelineManifest");
-var rimraf = require("rimraf");
 
 var DB_CONNECTION = {
     client: 'pg',
@@ -69,9 +67,7 @@ module.exports = function(grunt) {
                     },
                     modules: [
                         {
-                            name: "./bundles/app"
-                        }, {
-                            name: "./bundles/index"
+                            name: "./config.route"
                         }
                     ]
                 }
