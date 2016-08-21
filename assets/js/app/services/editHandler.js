@@ -1,4 +1,5 @@
-angular.module("app").factory("editHandler", ["$rootScope", "ngDialog", function ($rootScope, ngDialog){
+define(["angular", "app"], function() {
+    angular.module("app").factory("editHandler", ["$rootScope", "ngDialog", function ($rootScope, ngDialog){
     return function (datasource) {
         return function  (entity) {
             var scope = $rootScope.$new();
@@ -11,4 +12,4 @@ angular.module("app").factory("editHandler", ["$rootScope", "ngDialog", function
             });
         }
     }
-}]);
+}]);});

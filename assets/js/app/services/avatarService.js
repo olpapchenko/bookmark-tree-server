@@ -1,4 +1,4 @@
-angular.module("app").service("avatarService", function () {
+ define(["angular", "app"], function() {angular.module("app").service("avatarService", function () {
 
     this.getPath = function (avatar, origin) {
         var DEFAULT_AVATAR = "/images/user-moderate.png",
@@ -8,4 +8,4 @@ angular.module("app").service("avatarService", function () {
         }
         return avatar ? AVATAR_PATH + avatar : DEFAULT_AVATAR;
     }
-});
+});});

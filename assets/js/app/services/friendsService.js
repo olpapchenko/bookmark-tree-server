@@ -1,4 +1,5 @@
-angular.module("app").service("friendsService", ["$http", function($http){
+define(["angular", "app"], function() {
+    angular.module("app").service("friendsService", ["$http", function($http){
 
     this.all= function(){
         return $http.get("/friends").then(function(data){
@@ -19,4 +20,4 @@ angular.module("app").service("friendsService", ["$http", function($http){
     this.getSharedEntities = function (id){
         return $http.get("/friends/shared/" + id).then(function(data) {return data.data;});
     }
-}]);
+}]);});

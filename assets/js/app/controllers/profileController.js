@@ -1,4 +1,5 @@
-angular.module("app").controller("profileController", ["$scope", "userService", "toaster", "Upload", "$q", "$state", "avatarService", "ngProgressFactory",
+define(["angular", "app", "services/userService", "toaster", "services/avatarService", "ngProgress"], function() {
+    angular.module("app").controller("profileController", ["$scope", "userService", "toaster", "Upload", "$q", "$state", "avatarService", "ngProgressFactory",
     function($scope, userService, toaster, upload, $q, $state, avatarService, ngProgressFactory){
 
     var UPLOAD_PATH = "/uploads/avatar";
@@ -39,4 +40,4 @@ angular.module("app").controller("profileController", ["$scope", "userService", 
 
 
 
-}]);
+}]);});

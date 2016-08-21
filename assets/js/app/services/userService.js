@@ -1,4 +1,5 @@
-angular.module("app").service("userService", ["$http", "$q", function($http, $q){
+define(["angular", "app"], function() {
+    angular.module("app").service("userService", ["$http", "$q", function($http, $q){
     this.login = function(user, password){
         return $http.post("/login", {mail: user, password: password});
     }
@@ -44,4 +45,4 @@ angular.module("app").service("userService", ["$http", "$q", function($http, $q)
     this.save = function (user) {
         return $http.post("/user/update", user);
     }
-}]);
+}]);});

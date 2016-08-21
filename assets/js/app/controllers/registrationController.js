@@ -1,4 +1,5 @@
-angular.module("app").controller("registerController", ["userService", "$state", "$scope", function (userService, $state, $scope) {
+define(["angular", "app", "services/userService"], function() {
+    angular.module("app").controller("registerController", ["userService", "$state", "$scope", function (userService, $state, $scope) {
     $scope.register = function () {
         if($scope.register_form.$invalid) {
             return;
@@ -9,4 +10,4 @@ angular.module("app").controller("registerController", ["userService", "$state",
             $state.go("app.overview");
         });
     }
-}]);
+}]);});

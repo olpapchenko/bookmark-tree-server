@@ -1,4 +1,5 @@
-angular.module("app").directive("addEntity", ["editHandler", "addBranchDatasource", function (editHandler, addBranchDatasource) {
+define(["app", "datasources/addBranchDatasource"], function() {
+    angular.module("app").directive("addEntity", ["editHandler", "addBranchDatasource", function (editHandler, addBranchDatasource) {
     return {
         scope: {
             isBranch: "="
@@ -8,4 +9,4 @@ angular.module("app").directive("addEntity", ["editHandler", "addBranchDatasourc
             scope.add = editHandler(addBranchDatasource);
         }
     }
-}]);
+}]);});

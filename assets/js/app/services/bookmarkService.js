@@ -1,4 +1,4 @@
-angular.module("app")
+define(["angular", "app"], function() {angular.module("app")
 .service("bookmarkService",["$http", function ($http) {
     this.get = function (id) {
         return $http.get("/bookmark", {params: {id: id}}).then(function (bookmark) {
@@ -31,4 +31,4 @@ angular.module("app")
     this.getShareInformation = function (id) {
         return $http.get("/bookmark/share", {params:{id: id}}).then(function(data) {return data.data;});
     }
-}]);
+}]);});

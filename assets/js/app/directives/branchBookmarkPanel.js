@@ -1,4 +1,7 @@
- angular.module("app")
+define(["app", "services/editHandler",
+"datasources/branchDatasource","datasources/bookmarkDatasource",
+"datasources/shareDatasourceAllBranch","datasources/shareDatasourceAllBookmark",
+"datasources/editBookmarkDatasource", "datasources/editBranchDatasource", "services/removeHandler"], function() { angular.module("app")
 .directive("bookmarkPanel",[
          "$rootScope",
          "ngDialog",
@@ -64,4 +67,4 @@
                 scope.shareHandler = scope.share || shareHandler(scope.isBranch ? shareDatasourceAllBranch : shareDatasourceAllBookmark);
             }
         }
-    }]);
+    }]);});

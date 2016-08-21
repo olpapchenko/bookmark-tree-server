@@ -1,4 +1,5 @@
-angular.module("app").factory("removeHandler", ["$rootScope", "ngDialog", function ($rootScope, ngDialog) {
+define(["angular", "app"], function() {
+    angular.module("app").factory("removeHandler", ["$rootScope", "ngDialog", function ($rootScope, ngDialog) {
     return function getRemoveHandler(isBranch) {
         return function (id) {
 
@@ -15,4 +16,4 @@ angular.module("app").factory("removeHandler", ["$rootScope", "ngDialog", functi
             return dialog.closePromise;
         }
     };
-}]);
+}]);});

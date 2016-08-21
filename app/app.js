@@ -23,6 +23,7 @@ app.use(appConfig.staticResource);
 
 //set static resource for serving js files
 if(appConfig.mode == "dev") {
+  app.use("/static/js/vendor", appConfig.assetsVendorJs)
   app.use("/static/js", appConfig.assetsJs);
 } else {
   app.use("/static/js", appConfig.prodJs);

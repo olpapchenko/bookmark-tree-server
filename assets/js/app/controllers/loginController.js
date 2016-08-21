@@ -1,4 +1,4 @@
-var SITE_URL="http://localhost:3000",
+define(["angular", "app", "services/userService", "services/fbService", "ngProgress"], function() {var SITE_URL="http://localhost:3000",
     APP_ID = 5038582,
     GOOGLE_CLIENT_ID = '238683449094-b9flp4812pgjssfo6mn9uoqvniaggi1k.apps.googleusercontent.com';
     FB_APP_ID = 1658456254475560,
@@ -123,4 +123,4 @@ angular.module("app").controller("loginController",["$scope", "userService","$st
             }
         });
     }
-}]);
+}]);});

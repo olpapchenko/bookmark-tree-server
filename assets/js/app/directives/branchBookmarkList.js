@@ -1,4 +1,11 @@
-angular.module("app").directive("branchBookmarkList", ["editHandler",
+define(["app", "services/shareHandler",
+    "datasources/editBranchDatasource",
+    "datasources/editBookmarkDatasource",
+    "datasources/shareDatasourceAllBranch",
+    "datasources/shareDatasourceAllBookmark",
+    "datasources/branchDatasource",
+    "datasources/bookmarkDatasource"], function() {
+    angular.module("app").directive("branchBookmarkList", ["editHandler",
     "removeHandler",
     "shareHandler",
     "editBranchDatasource",
@@ -56,4 +63,4 @@ angular.module("app").directive("branchBookmarkList", ["editHandler",
             scope.shareHandler = scope.share || shareHandler(scope.isBranch ? shareDatasourceAllBranch : shareDatasourceAllBookmark);
         }
     }
-}]);
+}]);});

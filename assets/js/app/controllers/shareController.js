@@ -1,4 +1,5 @@
-angular.module("app").controller("shareController",["$scope", "avatarService",
+define(["angular", "app", "services/avatarService"], function() {
+    angular.module("app").controller("shareController",["$scope", "avatarService",
     function($scope, avatarService){
     var friendsList,
         persistanceService = $scope.datasource.persistanceService;
@@ -63,4 +64,4 @@ angular.module("app").controller("shareController",["$scope", "avatarService",
             $scope.userList = data;
         });
     });
-}]);
+}]);});

@@ -1,4 +1,5 @@
-angular.module("app").service("preferencesService", ["$http", function ($http) {
+define(["angular", "app"], function() {
+    angular.module("app").service("preferencesService", ["$http", function ($http) {
     String.prototype.capitalizeFirstLetter = function() {
         return this.charAt(0).toUpperCase() + this.slice(1);
     }
@@ -13,7 +14,6 @@ angular.module("app").service("preferencesService", ["$http", function ($http) {
                 var pref = preference.data.preferences.find(function (curPreference) {
                     return curPreference.key == index;
                 });
-                console.log(pref);
                 return pref && pref.value == "true";
             });
         }
@@ -24,4 +24,4 @@ angular.module("app").service("preferencesService", ["$http", function ($http) {
             return $http.post("/preferences", {preferences: [{key: index, value: preference}]});
         }
     });
-}]);
+}]);});

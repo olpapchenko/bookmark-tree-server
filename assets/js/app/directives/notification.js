@@ -1,4 +1,4 @@
-angular.module("app").directive("notification", ["$state", function ($state) {
+define(["app"], function() {angular.module("app").directive("notification", ["$state", function ($state) {
     return {
         scope: {
             notif: "=",
@@ -28,4 +28,4 @@ angular.module("app").directive("notification", ["$state", function ($state) {
             }
         }
     }
-}]);
+}]);});

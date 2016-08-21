@@ -64,8 +64,8 @@ module.exports = function(grunt) {
                         "moment": "../vendor/moment/moment",
                         "moment-timezone-with-data": "../vendor/moment-timezone/builds/moment-timezone-with-data",
                         "moment-timezone-with-data-2010-2020": "../vendor/moment-timezone/builds/moment-timezone-with-data-2010-2020",
-                        "bootstrap": "../vendor/bootstrap/dist/js/bootstrap.min"
-
+                        "bootstrap": "../vendor/bootstrap/dist/js/bootstrap.min",
+                        "jquery.backstretch": "../vendor/jquery-backstretch/jquery.backstretch"
                     },
                     modules: [
                         {
