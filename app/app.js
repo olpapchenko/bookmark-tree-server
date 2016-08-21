@@ -26,6 +26,7 @@ if(appConfig.mode == "dev") {
   app.use("/static/js/vendor", appConfig.assetsVendorJs)
   app.use("/static/js", appConfig.assetsJs);
 } else {
+  app.use("/static/js/vendor", appConfig.prodVendorJs);
   app.use("/static/js", appConfig.prodJs);
 }
 

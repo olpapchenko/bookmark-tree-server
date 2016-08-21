@@ -42,6 +42,14 @@ module.exports = function(grunt) {
                 }
             }
         },
+        copy: {
+            main: {
+                expand: true,
+                src: "vendor/*",
+                dest: "./public/js/",
+                cwd: "./assets/js/"
+            }
+        },
         requirejs: {
             compile: {
                 options: {
@@ -79,6 +87,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-knex-migrate');
     grunt.loadNpmTasks('grunt-browser-sync');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+
 
     //blocking task
     grunt.registerTask("test", function (action) {
@@ -149,5 +159,5 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask("setupDB", ['knexmigrate:latest']);
-    grunt.registerTask("deploy", ['createDirs', 'copyCustomVendorCode', 'setupDB', "requirejs"]);
+    grunt.registerTask("deploy", ['createDirs', 'copyCustomVendorCode', 'setupDB', "requirejs", "copy"]);
 };

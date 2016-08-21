@@ -56,6 +56,8 @@ module.exports.assetsVendorJs = require("express").static(path.resolve(__dirname
 
 module.exports.prodJs = require("express").static(path.resolve(__dirname, "../", "./public/js"));
 
+module.exports.prodVendorJs = require("express").static(path.resolve(__dirname, "../", "./public/js/vendor"));
+
 module.exports.compiledAssetsPath = path.resolve("./public/assets");
 
 
