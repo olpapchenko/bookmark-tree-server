@@ -5,7 +5,8 @@ require(["angular",
         "app",
         "controllers/all",
         "services/all",
-    "directives/all"
+        "directives/all",
+        "bootstrap"
 ], function() {
     angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($rootScope, $state, $stateParams) {
         $rootScope.$state = $state;
