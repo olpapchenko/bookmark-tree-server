@@ -1,5 +1,4 @@
 var PAGES_URL = "/html/pages/";
-
 require(["angular",
         "angular-ui-router",
         "app",
