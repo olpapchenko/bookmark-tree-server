@@ -45,7 +45,7 @@ module.exports = function(grunt) {
         copy: {
             main: {
                 expand: true,
-                src: "vendor/*",
+                src: "vendor/**",
                 dest: "./public/js/",
                 cwd: "./assets/js/"
             }
@@ -72,6 +72,36 @@ module.exports = function(grunt) {
                         "moment-timezone-with-data-2010-2020": "../vendor/moment-timezone/builds/moment-timezone-with-data-2010-2020",
                         "bootstrap": "../vendor/bootstrap/dist/js/bootstrap.min",
                         "jquery.backstretch": "../vendor/jquery-backstretch/jquery.backstretch"
+                    },
+                    shim: {
+                        angular: {
+                            exports: "angular"
+                        },
+                        jquery: {
+                            exports: "$"
+                        } ,
+                        bootstrap: {
+                            deps: ["jquery"]
+                        },
+                        "angular-ui-router": {
+                            deps: ["angular"]
+                        },
+                        "angular-drag-and-drop-lists": {
+                            exports: "",
+                            deps: ["angular"]
+                        },
+                        ngDialog: {
+                            deps: ["angular"]
+                        },
+                        toaster: {
+                            deps: ["angular"]
+                        },
+                        ngProgress: {
+                            deps: ["angular"]
+                        },
+                        "ng-file-upload-all": {
+                            deps: ["angular"]
+                        }
                     },
                     modules: [
                         {
