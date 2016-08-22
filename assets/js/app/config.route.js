@@ -7,6 +7,11 @@ require(["angular",
         "directives/all",
         "bootstrap"
 ], function() {
+    $(document).ready(function () {
+        angular.bootstrap(document, ['app']);
+    });
+
+
     angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($rootScope, $state, $stateParams) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
