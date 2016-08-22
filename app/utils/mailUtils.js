@@ -28,7 +28,7 @@ module.exports.sendMail = function (mailText, subject, mailAddress) {
 
         transporter.sendMail(opts, function(error, info){
             if(error){
-                log("error occurred while sending verification mail");
+                log.error("error occurred while sending verification mail");
                 reject(error);
 
             }
