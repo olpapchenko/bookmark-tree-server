@@ -60,7 +60,6 @@ angular.module("app").controller("loginController",["$scope", "userService","$st
     //setup google auth
     $timeout(function() {
         gapi.load('auth2', function(){
-            console.log("loaded");
             // Retrieve the singleton for the GoogleAuth library and set up the client.
             window.auth2 = window.auth2 ||  gapi.auth2.init({
                 client_id: GOOGLE_CLIENT_ID,

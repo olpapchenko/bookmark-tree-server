@@ -7,13 +7,6 @@ require(["angular",
         "directives/all",
         "bootstrap"
 ], function() {
-    console.log("loadeds");
-    $(document).ready(function () {
-        angular.bootstrap(document, ['app']);
-        console.log("bootstrap");
-    });
-
-
     angular.module("app").run(["$rootScope", "$state", "$stateParams", function ($rootScope, $state, $stateParams) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -168,4 +161,8 @@ require(["angular",
                 controller: "notificationsController"
             })
     }]);
+
+    $(document).ready(function () {
+        angular.bootstrap(document, ['app']);
+    });
 });
