@@ -9,7 +9,11 @@ define(["angular", "underscore", "app", "services/avatarService"], function() {
     $scope.avatarService = avatarService;
 
     persistanceService.get($scope.id).then(function (entity) {
+        var encodedEntityUrl = encodeURIComponent(entity.url);
         $scope.fbShareLink = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(entity.url);
+        $scope.vkShare = "https://vk.com/share.php?url=" + encodeURIComponent(entity.url);
+        $scope.googleShare = "https://plus.google.com/share?url=" + encodedEntityUrl;
+        $scope.showShare = entity.url;
         $scope.isPublic = entity.is_public;
     });
 
