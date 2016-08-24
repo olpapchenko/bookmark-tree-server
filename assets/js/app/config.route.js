@@ -155,7 +155,7 @@ require(["angular",
                 templateUrl: PAGES_URL + "notifications.html",
                 resolve: {
                     notifications: ["notificationService", function (notificationService) {
-                        return notificationsService.all();
+                        return notificationService.all();
                     }]
                 },
                 controller: "notificationsController"
