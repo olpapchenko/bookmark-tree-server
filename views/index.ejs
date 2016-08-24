@@ -18,6 +18,7 @@
 
     <script src="https://apis.google.com/js/api:client.js"></script>
     <script src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <script type="text/javascript" src="http://vk.com/js/api/share.js?94" charset="windows-1251"></script>
 
     <script>
         jsVersion = 1;
@@ -84,6 +85,14 @@
     <title>Bookmark Tree</title>
 </head>
 <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.7&appId=1658456254475560";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 <div>
     <toaster-container></toaster-container>
     <div ui-view></div>

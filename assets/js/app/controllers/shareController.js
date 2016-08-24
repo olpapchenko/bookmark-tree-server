@@ -1,4 +1,4 @@
-define(["angular", "app", "services/avatarService"], function() {
+define(["angular", "underscore", "app", "services/avatarService"], function() {
     angular.module("app").controller("shareController",["$scope", "avatarService",
     function($scope, avatarService){
     var friendsList,
@@ -9,6 +9,7 @@ define(["angular", "app", "services/avatarService"], function() {
     $scope.avatarService = avatarService;
 
     persistanceService.get($scope.id).then(function (entity) {
+        $scope.fbShareLink = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(entity.url);
         $scope.isPublic = entity.is_public;
     });
 
