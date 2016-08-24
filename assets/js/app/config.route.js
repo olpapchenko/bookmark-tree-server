@@ -44,12 +44,15 @@ require(["angular",
                 templateUrl: PAGES_URL + "/app.html",
                 controller: "appController",
                 resolve:{
-                    currentUser: ["userService", "$rootScope", "$state", function (userService, $rootScope, $state) {
+                    currentUser: ["userService", "$rootScope", "$state", "$timeout", function (userService, $rootScope, $state, $timeout) {
                         return userService.getCurrentUser()
                         .then(function(user){
                             $rootScope.currentUser = user;
                         },  function( ){
-                            $state.go("login");
+                                $timeout(function () {
+                                    $state.go("login")
+                                }, 0);
+                            ;
                         });
                     }]
                 }
@@ -58,11 +61,13 @@ require(["angular",
                 url: "/login",
                 templateUrl: "/login",
                 resolve: {
-                    currentUser: ["userService", "$rootScope", "$state", function (userService, $rootScope, $state) {
+                    currentUser: ["userService", "$rootScope", "$state", "$timeout", function (userService, $rootScope, $state, $timeout) {
                             return userService.getCurrentUser()
                                 .then(function(user){
                             if(user) {
-                                $state.go("app.overview");
+                                $timeout(function () {
+                                    $state.go("app.overview");
+                                }, 0);
                             }
                         }, function () {
                         });

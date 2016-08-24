@@ -75,7 +75,8 @@ angular.module("app").controller("loginController",["$scope", "userService","$st
                         $scope.errors.push("Internal server error");
                     })
                 }, function(error) {
-                    alert(JSON.stringify(error, undefined, 2));
+                    console.log("failed to attach handler");
+                    console.error(error);
                 });
         });
     });
