@@ -8,9 +8,8 @@ function getLogPath (fileName) {
 
 function getTransport (options) {
     var transport = [];
-    if(appConfig.mode === "dev") {
-        transport.push(new (winston.transports.Console)());
-    }
+    transport.push(new (winston.transports.Console)());
+
     if(options.file) {
         transport.push(new (winston.transports.File)({ filename: getLogPath(options.file),
             level: appConfig.mode === "dev" ? "debug" : "error",
