@@ -1,4 +1,5 @@
-require(["angular", "app", "services/branchService", "datasources/addBranchDatasource", "services/preferencesService", "services/editHandler"], function() {angular.module("app").controller("overviewController", [
+require(["angular", "app", "services/branchService", "datasources/addBranchDatasource", "services/preferencesService", "services/editHandler"], function() {
+    angular.module("app").controller("overviewController", [
     "$scope",
     "branchService",
     "editHandler",
