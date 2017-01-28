@@ -17,7 +17,7 @@ exports.up = function(knex, Promise) {
         }),
         knex.schema.createTable("bookmarks", function (t) {
             t.increments("id").primary();
-            t.string("name", 20).notNull();
+            t.text("name").notNull();
             t.text("url").notNull();
             t.timestamp("created_at").defaultTo(knex.raw('current_timestamp'));
         }),

@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
         [knex.schema.createTable("branches", function (t) {
         t.increments("id").primary();
         t.integer("branch_id").references("id").inTable("branches").onDelete("cascade");
-        t.string("name", 20).notNull();
+        t.text("name").notNull();
         t.timestamp("created_at").defaultTo(knex.raw('current_timestamp'));
     }),
 

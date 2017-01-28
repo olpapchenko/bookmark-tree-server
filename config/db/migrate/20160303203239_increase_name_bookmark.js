@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
         t.dropColumn("name");
     }).then(function () {
         return knex.schema.table("bookmarks", function (t) {
-            t.string("name", 50);
+            t.text("name");
         });
     });
 };

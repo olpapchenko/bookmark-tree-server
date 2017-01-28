@@ -16,6 +16,7 @@ var bookmark        = require("../app/api/bookmarkController"),
     files           = require("../app/api/filesController"),
     preferences     = require("../app/api/preferencesController"),
     tags            = require("../app/api/tagsController");
+    summarize       = require("../app/api/summarize");
 
 ///routes
 
@@ -76,6 +77,9 @@ router.post("/uploads/screenshot", files.screenshot);
 //preferences
 router.post("/preferences", preferences.post);
 router.get("/preferences", preferences.get);
+
+//sumurazition
+router.post("/summarize", summarize.post);
 
 ///controllers
 
