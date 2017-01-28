@@ -20,6 +20,8 @@ var preferences = AbstractModel.extend({
     FRIENDS_BRANCH_LIST_VIEW: 8,
     FRIENDS_BOOKMARKS_LIST_VIEW: 9,
     BOOKMARK_LIST_VIEW: 10,
+    SUMMARIZE_PERCENTAGE: 11,
+    SUMMARIZE_COLOR: 12,
 
     getPreferencesOrDefault: function (preferences) {
         return this.query({where: preferences}).fetchAll().then(function (preferences) {
@@ -34,6 +36,8 @@ var preferences = AbstractModel.extend({
 });
 
 var defaultPreferences  = [
+    {key: preferences.SUMMARIZE_PERCENTAGE, value: 0.75},
+    {key: preferences.SUMMARIZE_COLOR, value: '#F8F503'},
     {key: preferences.EXTENSION_ENABLED, value: true},
     {key: preferences.BOOKMARK_LINKS_ENABLED, value: true},
     {key: preferences.MARKS_ENABLED, value: true},
@@ -45,7 +49,6 @@ var defaultPreferences  = [
     {key: preferences.FRIENDS_BRANCH_LIST_VIEW, value: false},
     {key: preferences.FRIENDS_BOOKMARKS_LIST_VIEW, value: false},
     {key: preferences.BOOKMARK_LIST_VIEW, value: false}
-
 ];
 
 module.exports = bookshelf.model("Preference", preferences);
