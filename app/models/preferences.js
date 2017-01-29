@@ -36,7 +36,7 @@ var preferences = AbstractModel.extend({
 });
 
 var defaultPreferences  = [
-    {key: preferences.SUMMARIZE_PERCENTAGE, value: 0.75},
+    {key: preferences.SUMMARIZE_PERCENTAGE, value: 75},
     {key: preferences.SUMMARIZE_COLOR, value: '#F8F503'},
     {key: preferences.EXTENSION_ENABLED, value: true},
     {key: preferences.BOOKMARK_LINKS_ENABLED, value: true},
