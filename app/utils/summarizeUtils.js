@@ -6,7 +6,7 @@
     var natural = require('natural');
     var wuzzy = require('wuzzy');
 
-    function summarize(text, lines, callback) {
+    function summarize(text, percentage, callback) {
         var sentenceTokenizer = new Tokenizer('utterer');
         sentenceTokenizer.setEntry(text);
         var sentences = sentenceTokenizer.getSentences();
@@ -21,7 +21,8 @@
         var sortedSentences = pageRank(matrix, sentencesOriginal);
 
         var topLines = [];
-
+        var lines = Math.floor(sentences.length * percentage);
+        lines = lines >= 1 ? lines : 1;
         for (var i = 0; i < Math.min(lines, sortedSentences.length); i++) {
             topLines.push(sortedSentences[i]);
         }
