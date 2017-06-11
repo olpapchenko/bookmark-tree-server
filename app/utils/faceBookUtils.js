@@ -32,7 +32,7 @@ module.exports.getApplicationMarker = function () {
             grant_type: "client_credentials"
         }
     }).then(function (token) {
-        return token.data.replace("access_token=", "");
+        return token.data.access_token;
         log.info("facebook app token successfuly retrived");
     }, function (e) {
         log.error("error occurred while retrieving facebook token");

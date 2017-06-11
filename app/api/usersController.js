@@ -108,7 +108,9 @@ module.exports.loginByGoogle = actionComposer({beforeFilters: [validateNotAuthor
         });
 }});
 
-module.exports.loginByFacebook = actionComposer({beforeFilters: [validateNotAuthorizedFilter, mandatoryParamFilter(["access_token", "user"])], action: function (req, resp) {
+module.exports.loginByFacebook = actionComposer({beforeFilters:
+    [validateNotAuthorizedFilter,
+        mandatoryParamFilter(["access_token", "user"])], action: function (req, resp) {
     function sendVerificationMail(mail, facebookUserId) {
         var MAIL_SUBJECT = "Bookmarktree mail verification";
         req.body.user.facebook_id = facebookUserId;

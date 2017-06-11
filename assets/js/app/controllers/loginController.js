@@ -88,8 +88,7 @@ angular.module("app").controller("loginController",["$scope", "userService","$st
                     return userService.loginByFaceBook({
                         access_token: token,
                         user: {mail: response.email, name: $scope.name}
-                    })
-                        .then(function (response) {
+                    }).then(function (response) {
                             if (response.mailNotverified) {
                                 $scope.showMailVerificationMessage = true;
                             } else {
