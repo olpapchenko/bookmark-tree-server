@@ -118,6 +118,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-browser-sync');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-npm-install');
 
 
     //blocking task
@@ -189,5 +190,5 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask("setupDB", ['knexmigrate:latest']);
-    grunt.registerTask("deploy", ['createDirs', 'copyCustomVendorCode', 'setupDB', "requirejs", "copy"]);
+    grunt.registerTask("deploy", ['createDirs', 'copyCustomVendorCode', 'setupDB', "requirejs", "copy" , "npm-install"]);
 };
