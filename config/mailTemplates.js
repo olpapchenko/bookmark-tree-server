@@ -16,8 +16,8 @@ module.exports.mailVerificationTemplate = function (context) {
               <img style="margin-left: 10px; vertical-align: middle;" width="47" height="57" title="" alt="" src="${appConfig.baseUrl}images/mailIcon.png" />
               <h2 style="display: inline-block; font-family: sans-serif; font-weight: 100; color: white; vertical-align: middle;">BookmarkTree Chrome extension</h2>
             </header>
-            <div id="content" style=" height: 400px;  background-image: url(${appConfig.baseUrl}images/workplace.jpg); text-align: center;">
-              <h2 style="margin-top: 0px; padding-top: 30px; font-weight: 100; text-align: center; color: #1a3a1b; opacity: 1;">${context.name} Welcome to BookmarkTree extension!</h2>
+            <div id="content" style=" height: 400px;  background-image: url(${appConfig.baseUrl}images/workplace.jpeg); text-align: center;">
+              <h2 style="margin-top: 0px; padding-top: 30px; font-weight: 100; text-align: center; opacity: 1;">${context.name} Welcome to BookmarkTree extension!</h2>
               <h3 style="text-align: center; padding-top: 200px; font-weight: 100; text-align: center; color: #1a3a1b; opacity: 1;">
                  Bookmark tree will make you <span style="color: #e24242;">love</span> your bookmarks
               </h3>
