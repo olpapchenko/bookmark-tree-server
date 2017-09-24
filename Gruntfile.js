@@ -20,12 +20,12 @@ module.exports = function(grunt) {
                 database: DB_CONNECTION
             }
         },
-        knexseed: {
-            config: {
-                directory: './config/db/seeds',
-                database: DB_CONNECTION
-            }
-        },
+        //knexseed: {
+        //    config: {
+        //        directory: './config/db/seeds',
+        //        database: DB_CONNECTION
+        //    }
+        //},
         browserSync: {
             default_options: {
                 bsFiles: {
@@ -113,7 +113,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-knexseed');
+    //grunt.loadNpmTasks('grunt-knexseed');
     grunt.loadNpmTasks('grunt-knex-migrate');
     grunt.loadNpmTasks('grunt-browser-sync');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
